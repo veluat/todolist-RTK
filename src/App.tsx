@@ -2,6 +2,7 @@ import React, {useState} from "react";
 import './App.css';
 import {TasksType, TodoList} from "./TodoList";
 import {v1} from "uuid";
+import AddItemForm from "./AddItemForm";
 
 export type FilterButtonType = 'All' | 'Active' | 'Completed'
 export type TodoListType = {
@@ -54,9 +55,17 @@ export function App() {
     const changeTaskStatus = (taskId: string, isDone: boolean, todoListId: string) => {
         setTasks({...tasks, [todoListId]: tasks[todoListId].map(el => el.id === taskId ? {...el, isDone} : el)})
     }
+    const changeTaskTitle = (taskId: string, title: string, todoListId: string) => {
+        setTasks({...tasks, [todoListId]: tasks[todoListId].map(el => el.id === taskId ? {...el, title} : el)})
+    }
+
 
     const changeTodoListFilter = (filter: FilterButtonType, todoListId: string) => {
         setTodoLists(todoLists.map(tl => tl.id === todoListId ? {...tl, filter: filter} : tl))
+    }
+
+    const changeTodoListTitle = (title: string, todoListId: string) => {
+        setTodoLists(todoLists.map(tl => tl.id === todoListId ? {...tl, title} : tl))
     }
 
     const removeTodoList = (todoListId: string) => {
@@ -64,6 +73,16 @@ export function App() {
         delete tasks[todoListId]
     }
 
+    const addTodoList = (title: string) => {
+        const newTodoListId = v1()
+        const newTodoList: TodoListType = {
+            id: newTodoListId,
+            title,
+            filter: 'All'
+        }
+        setTodoLists([...todoLists, newTodoList])
+        setTasks({...tasks, [newTodoListId]: []})
+    }
 
     const getFilteredTasks = (tasks: TasksType[], filterValue: FilterButtonType) => {
         let filteredTasks = tasks;
@@ -95,6 +114,8 @@ export function App() {
                         removeTodoList={removeTodoList}
                         changeTaskStatus={changeTaskStatus}
                         changeTodoListFilter={changeTodoListFilter}
+                        changeTaskTitle={changeTaskTitle}
+                        changeTodoListTitle={changeTodoListTitle}
                     />
                 )
             }
@@ -103,6 +124,8 @@ export function App() {
 
     return (
         <div className="App">
+            <div><h3>Add new todoList</h3>
+                <AddItemForm addItem={addTodoList}/></div>
             {todoListComponents}
         </div>
     );
