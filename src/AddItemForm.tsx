@@ -1,7 +1,10 @@
 import React, {ChangeEvent, KeyboardEvent, useState} from 'react';
+import {AddBoxOutlined, AddCircleOutline, DeleteForeverOutlined} from "@material-ui/icons";
+import {IconButton, TextField} from "@material-ui/core";
 
 type AddItemFormPropsType = {
     addItem: (title: string) => void
+    placeholder: string
 }
 
 const AddItemForm = (props: AddItemFormPropsType) => {
@@ -23,18 +26,20 @@ const AddItemForm = (props: AddItemFormPropsType) => {
     const onKeyDownEnterAddItem = (e: KeyboardEvent<HTMLInputElement>) => e.key === 'Enter' && onClickAddItem()
     return (
         <div>
-            <input
+            <TextField
+                size='small'
+                variant='outlined'
                 value={title}
                 onChange={onChangeSetLocalTitle}
                 onKeyDown={onKeyDownEnterAddItem}
-                className={error ? 'error' : ''}
-
+                label={props.placeholder}
+                error={error}
+                helperText={error && 'Title is required'}
             />
-            <button onClick={onClickAddItem}>+</button>
-            {error &&
-                <div style={{fontWeight: 'bold', color: 'hotpink'}}>
-                    Title is required
-                </div>}
+            <IconButton onClick={onClickAddItem} size='small'>
+                <AddBoxOutlined/>
+            </IconButton>
+
         </div>
     );
 };
