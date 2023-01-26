@@ -7,7 +7,7 @@ type EditableSpanPropsType = {
 }
 
 const EditableSpan = (props: EditableSpanPropsType) => {
-    const [isEditMode, setIsEditMode] = useState<boolean>(true)
+    const [isEditMode, setIsEditMode] = useState<boolean>(false)
     const [title, setTitle] = useState(props.title)
 
     const onEditMode = () => {
@@ -23,7 +23,10 @@ const EditableSpan = (props: EditableSpanPropsType) => {
     const onKeyDownEnterAddItem = (e: KeyboardEvent<HTMLInputElement>) => e.key === 'Enter' && offEditMode()
     return (
         isEditMode
-            ? <TextField value={title} onBlur={offEditMode} autoFocus onChange={onChangeSetLocalTitle}
+            ? <TextField value={title}
+                         onBlur={offEditMode}
+                         autoFocus
+                         onChange={onChangeSetLocalTitle}
                          onKeyDown={onKeyDownEnterAddItem}/>
             : <span onDoubleClick={onEditMode}>{props.title}</span>
     );

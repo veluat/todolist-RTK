@@ -25,7 +25,6 @@ export function App() {
         {id: todoListId_1, title: 'What to learn', filter: 'All'},
         {id: todoListId_2, title: 'What to buy', filter: 'All'},
     ])
-
     const [tasks, setTasks] = useState<TasksStateType>({
         [todoListId_1]: [
             {id: v1(), title: "HTML&CSS", isDone: true},
@@ -42,6 +41,7 @@ export function App() {
             {id: v1(), title: "Meet", isDone: false},
         ]
     })
+
     const removeTask = (taskId: string, todoListId: string) => {
         /*const copyTasks = {...tasks}
         copyTasks[todoListId] = copyTasks[todoListId].filter(el => el.id !== taskId)

@@ -1,6 +1,6 @@
 import React, {ChangeEvent, KeyboardEvent, useState} from 'react';
 import {AddBoxOutlined, AddCircleOutline, DeleteForeverOutlined} from "@material-ui/icons";
-import {IconButton, TextField} from "@material-ui/core";
+import {Button, IconButton, TextField} from "@material-ui/core";
 
 type AddItemFormPropsType = {
     addItem: (title: string) => void
@@ -36,9 +36,13 @@ const AddItemForm = (props: AddItemFormPropsType) => {
                 error={error}
                 helperText={error && 'Title is required'}
             />
-            <IconButton onClick={onClickAddItem} size='small'>
-                <AddBoxOutlined/>
-            </IconButton>
+            <Button onClick={onClickAddItem}
+                    size='small'
+                    variant='contained'
+                    color='primary'
+                    style={{'marginLeft': '3px', 'marginTop': '5px'}}
+                    endIcon={<AddBoxOutlined/>}>ADD
+            </Button>
 
         </div>
     );
