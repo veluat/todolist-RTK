@@ -4,10 +4,8 @@ import {
     AddTodoListAT,
     ChangeTodoListFilterAT,
     ChangeTodoListTitleAT, RemoveTodoListAC,
-    RemoveTodoListAT,
     todoListsReducer
 } from "./todolists-reducer";
-import {REMOVE_TODOLIST} from "./constants";
 
 test('correct todolist should be removed', () => {
     //
@@ -43,7 +41,8 @@ test('correct todolist should be added', () => {
     //
     const action: AddTodoListAT = {
         type: 'ADD-TODOLIST',
-        title: newTodolistTitle
+        title: newTodolistTitle,
+        todolistId: v1()
     }
     const endState = todoListsReducer(startState, action)
     //
@@ -70,8 +69,8 @@ test('correct todolist should change its name', () => {
     }
     const endState = todoListsReducer(startState, action);
 
-    expect(endState[0].title).toBe("What to learn");
-    expect(endState[1].title).toBe(newTodolistTitle);
+    expect(endState[0].title).toBe(newTodolistTitle);
+    expect(endState[1].title).toBe("What to buy");
 });
 
 
@@ -94,6 +93,6 @@ test('correct filter of todolist should be changed', () => {
 
     const endState = todoListsReducer(startState, action);
 
-    expect(endState[0].filter).toBe("ALL");
+    expect(endState[0].filter).toBe("All");
     expect(endState[1].filter).toBe(newFilter);
 });

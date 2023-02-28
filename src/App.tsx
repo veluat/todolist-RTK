@@ -13,7 +13,7 @@ export type TodoListType = {
     title: string
     filter: FilterButtonType
 }
-type TasksStateType = {
+export type TasksStateType = {
     [todoListId: string]: Array<TasksType>
 }
 
@@ -83,7 +83,7 @@ export function App() {
             title,
             filter: 'All'
         }
-        setTodoLists([...todoLists, newTodoList])
+        setTodoLists([newTodoList, ...todoLists])
         setTasks({...tasks, [newTodoListId]: []})
     }
 
