@@ -4,8 +4,10 @@ import './index.css';
 import * as serviceWorker from './serviceWorker';
 import {App} from "./App";
 import {createTheme, CssBaseline, ThemeProvider} from "@material-ui/core";
-import {green, purple} from "@material-ui/core/colors";
-import {dark} from "@material-ui/core/styles/createPalette";
+import {AppWithReducers} from "./AppWithReducers";
+import {AppWithRedux} from "./AppWithRedux";
+import {Provider} from "react-redux";
+import {store} from "./store/store";
 
 const theme = createTheme({
     palette: {
@@ -22,7 +24,9 @@ const theme = createTheme({
 ReactDOM.render(
     <ThemeProvider theme={theme}>
         <CssBaseline/>
-        <App/>
+        <Provider store={store}>
+            <AppWithRedux/>
+        </Provider>
     </ThemeProvider>,
     document.getElementById('root'));
 
