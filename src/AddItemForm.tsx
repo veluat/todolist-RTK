@@ -1,15 +1,16 @@
-import React, {ChangeEvent, KeyboardEvent, useState} from 'react';
-import {AddBoxOutlined, AddCircleOutline, DeleteForeverOutlined} from "@material-ui/icons";
-import {Button, IconButton, TextField} from "@material-ui/core";
+import React, {ChangeEvent, KeyboardEvent, memo, useState} from 'react';
+import {AddBoxOutlined} from "@material-ui/icons";
+import {Button, TextField} from "@material-ui/core";
 
 type AddItemFormPropsType = {
     addItem: (title: string) => void
     placeholder: string
 }
 
-const AddItemForm = (props: AddItemFormPropsType) => {
+export const AddItemForm = memo((props: AddItemFormPropsType) => {
     const [title, setTitle] = useState<string>("")
     const [error, setError] = useState<boolean>(false)
+
     const onChangeSetLocalTitle = (e: ChangeEvent<HTMLInputElement>) => {
         error && setError(false)
         setTitle(e.currentTarget.value)
@@ -43,9 +44,7 @@ const AddItemForm = (props: AddItemFormPropsType) => {
                     style={{'marginLeft': '3px', 'marginTop': '5px'}}
                     endIcon={<AddBoxOutlined/>}>ADD
             </Button>
-
         </div>
     );
-};
+});
 
-export default AddItemForm;

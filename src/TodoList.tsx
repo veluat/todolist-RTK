@@ -1,6 +1,6 @@
-import React, {ChangeEvent, KeyboardEvent, useState} from "react";
+import React, {ChangeEvent, KeyboardEvent, useCallback, useState} from "react";
 import {FilterButtonType} from "./App";
-import AddItemForm from "./AddItemForm";
+import {AddItemForm} from "./AddItemForm";
 import EditableSpan from "./EditableSpan";
 import {Button, Checkbox, IconButton, List, ListItem} from "@material-ui/core";
 import {DeleteForeverOutlined} from "@material-ui/icons";
@@ -59,7 +59,7 @@ export const TodoList = (props: TodoListPropsType) => {
         return () => props.changeTodoListFilter(filter, props.todoListId)
     }
     const removeTodoList = () => props.removeTodoList(props.todoListId)
-    const addTask = (title: string) => props.addTask(title, props.todoListId)
+    const addTask = useCallback((title: string) => props.addTask(title, props.todoListId), [props.addTask, props.todoListId])
     const btnStyle = {marginRight: '3px'}
 
     return (

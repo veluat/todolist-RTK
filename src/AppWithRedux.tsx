@@ -1,8 +1,8 @@
-import React from "react";
+import React, {useCallback} from "react";
 import './App.css';
 import {TasksType, TodoList} from "./TodoList";
 import {v1} from "uuid";
-import AddItemForm from "./AddItemForm";
+import {AddItemForm} from "./AddItemForm";
 import {AppBar, Button, Container, Grid, IconButton, Paper, Toolbar, Typography} from "@material-ui/core";
 import {Menu} from "@material-ui/icons";
 import {
@@ -63,9 +63,9 @@ export function AppWithRedux() {
          dispatch(RemoveTodoListAC(todoListId))
      }*/
 
-    const addTodoList = (title: string) => {
+    const addTodoList = useCallback((title: string) => {
         dispatch(AddTodolistAC(title))
-    }
+    }, [dispatch])
 
     /* const getFilteredTasks = (tasks: TasksType[], filterValue: FilterButtonType) => {
          switch (filterValue) {
@@ -80,7 +80,6 @@ export function AppWithRedux() {
     const todoListComponents = todoLists.length
         ? todoLists.map(tl => {
                 /*const filteredTasks = getFilteredTasks(tasks[tl.id], tl.filter)*/
-
                 return (
                     <Grid item key={tl.id}>
                         <Paper elevation={8} style={{padding: '20px'}}>
@@ -91,8 +90,6 @@ export function AppWithRedux() {
                             />
                         </Paper>
                     </Grid>
-
-
                 )
             }
         )
