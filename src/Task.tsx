@@ -1,25 +1,28 @@
-import React, {ChangeEvent, memo} from 'react';
+import React, {ChangeEvent, memo, useCallback} from 'react';
 import {Checkbox, IconButton, ListItem} from "@material-ui/core";
 import EditableSpan from "./EditableSpan";
 import {DeleteForeverOutlined} from "@material-ui/icons";
 import {TasksType} from "./TodoListWithRedux";
+import {changeTaskStatusAC, changeTaskTitleAC, removeTaskAC} from "./store/tasks-reducer";
+import {useDispatch} from "react-redux";
 
 type TaskPropsType = {
     task: TasksType
-    changeTaskStatus: (id: string, isDone: boolean) => void
-    changeTaskTitle: (taskId: string, nextTitle: string) => void
-    removeTask: (taskId: string)=>void
+    todoListId: string
 }
 
 export const Task = memo(({
-                         task,
-                         changeTaskStatus,
-                         changeTaskTitle,
-                         removeTask
-                     }: TaskPropsType) => {
-    const onClickHandler = () => removeTask(task.id)
-    const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => changeTaskStatus(task.id, e.currentTarget.checked)
-    const onTitleChangeHandler = (nextTitle: string) => changeTaskTitle(task.id, nextTitle)
+                              task,
+                              todoListId
+                          }: TaskPropsType) => {
+
+    const dispatch = useDispatch();
+
+    const removeTask = useCallback(() => dispatch(removeTaskAC(task.id, todoListId)), [dispatch, task.id, todoListId])
+    const changeTaskStatus = useCallback((e: ChangeEvent<HTMLInputElement>) => dispatch(changeTaskStatusAC(task.id, e.currentTarget.checked, todoListId)), [dispatch, todoListId, task.id])
+    const changeTaskTitle = useCallback((newTitle: string) => dispatch(changeTaskTitleAC(task.id, newTitle, todoListId)), [dispatch, todoListId, task.id])
+
+    console.log('Task')
 
     return (
         <ListItem key={task.id} style={{padding: '0'}} className={task.isDone ? 'isDone' : ''}>
@@ -27,10 +30,10 @@ export const Task = memo(({
                 size='small'
                 color='primary'
                 checked={task.isDone}
-                onChange={onChangeHandler}
+                onChange={changeTaskStatus}
             />
-            <EditableSpan title={task.title} changeTitle={onTitleChangeHandler}/>
-            <IconButton onClick={onClickHandler} size='small'>
+            <EditableSpan title={task.title} changeTitle={changeTaskTitle}/>
+            <IconButton onClick={removeTask} size='small'>
                 <DeleteForeverOutlined/>
             </IconButton>
         </ListItem>
