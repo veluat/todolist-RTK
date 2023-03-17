@@ -1,14 +1,15 @@
-import React, {ChangeEvent, memo, useCallback, useState} from "react";
+import React, {memo, useCallback} from "react";
 import {FilterButtonType} from "./App";
 import {AddItemForm} from "./AddItemForm";
 import EditableSpan from "./EditableSpan";
-import {Button, Checkbox, IconButton, List, ListItem} from "@material-ui/core";
+import {IconButton, List} from "@material-ui/core";
 import {DeleteForeverOutlined} from "@material-ui/icons";
 import {useDispatch, useSelector} from "react-redux";
 import {AppRootStateType} from "./store/store";
 import {addTaskAC, changeTaskStatusAC, changeTaskTitleAC, removeTaskAC} from "./store/tasks-reducer";
 import {ChangeTodoListFilterAT, ChangeTodoListTitleAT, RemoveTodoListAC} from "./store/todolists-reducer";
 import {FilterButton} from "./FilterButton";
+import {Task} from "./Task";
 
 export type TodoListPropsType = {
     todoListId: string
@@ -28,9 +29,10 @@ export const TodoListWithRedux = memo((props: TodoListPropsType) => {
 
     const dispatch = useDispatch()
 
-    const changeTodoListTitle = (title: string) => {
+    const changeTodoListTitle = useCallback((title: string) => {
         dispatch(ChangeTodoListTitleAT(title, props.todoListId))
-    }
+    }, [dispatch, props.todoListId])
+
     const changeFilterHandlerCreator = useCallback((filter: FilterButtonType) => {
         dispatch(ChangeTodoListFilterAT(filter, props.todoListId))
     }, [dispatch, props.todoListId])
@@ -48,6 +50,10 @@ export const TodoListWithRedux = memo((props: TodoListPropsType) => {
         tasksForTodolist = allTodolistTasks.filter(t => t.isDone);
     }
 
+    const removeTask = useCallback((taskId: string) => dispatch(removeTaskAC(taskId, props.todoListId)), [dispatch, props.todoListId])
+    const changeTaskStatus = useCallback((taskId: string, isDone: boolean) => dispatch(changeTaskStatusAC(taskId, isDone, props.todoListId)), [dispatch, props.todoListId])
+    const changeTaskTitle = useCallback((taskId: string, nextTitle: string) => dispatch(changeTaskTitleAC(taskId, nextTitle, props.todoListId)), [dispatch, props.todoListId])
+
     return (
         <div>
             <h3>
@@ -60,27 +66,15 @@ export const TodoListWithRedux = memo((props: TodoListPropsType) => {
             {tasks.length
                 ? <List> {
                     tasksForTodolist.map((task: TasksType) => {
-                            const removeTask = () => dispatch(removeTaskAC(task.id, props.todoListId))
-                            const changeTaskStatus = (e: ChangeEvent<HTMLInputElement>) => dispatch(changeTaskStatusAC(task.id, e.currentTarget.checked, props.todoListId))
-                            const changeTaskTitle = (nextTitle: string) => dispatch(changeTaskTitleAC(task.id, nextTitle, props.todoListId))
-                            const isDoneClass = task.isDone ? 'isDone' : ''
                             return (
-                                <ListItem key={task.id} style={{padding: '0'}} className={isDoneClass}>
-                                    <Checkbox
-                                        size='small'
-                                        color='primary'
-                                        checked={task.isDone}
-                                        onChange={changeTaskStatus}
-                                    />
-                                    <EditableSpan title={task.title} changeTitle={changeTaskTitle}/>
-                                    <IconButton onClick={removeTask} size='small'>
-                                        <DeleteForeverOutlined/>
-                                    </IconButton>
-                                </ListItem>
+                                <Task key={task.id} task={task} changeTaskStatus={changeTaskStatus}
+                                      changeTaskTitle={changeTaskTitle}
+                                      removeTask={removeTask}/>
                             )
                         }
                     )}</List>
-                : <span>Your list is empty</span>}
+                : <div>Your list is empty</div>}
+
             <div style={{display: "flex", justifyContent: 'flex-start'}}>
                 <FilterButton name={'All'} color={props.filter === 'All' ? 'secondary' : 'primary'}
                               callback={changeFilterHandlerCreator}/>
