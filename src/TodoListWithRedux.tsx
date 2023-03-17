@@ -6,7 +6,7 @@ import {IconButton, List} from "@material-ui/core";
 import {DeleteForeverOutlined} from "@material-ui/icons";
 import {useDispatch, useSelector} from "react-redux";
 import {AppRootStateType} from "./store/store";
-import {addTaskAC, changeTaskStatusAC, changeTaskTitleAC, removeTaskAC} from "./store/tasks-reducer";
+import {addTaskAC} from "./store/tasks-reducer";
 import {ChangeTodoListFilterAT, ChangeTodoListTitleAT, RemoveTodoListAC} from "./store/todolists-reducer";
 import {FilterButton} from "./FilterButton";
 import {Task} from "./Task";
@@ -23,7 +23,6 @@ export type TasksType = {
 }
 
 export const TodoListWithRedux = memo((props: TodoListPropsType) => {
-    console.log('TodoListWithRedux')
 
     const tasks = useSelector<AppRootStateType, TasksType[]>(state => state.tasks[props.todoListId])
 
@@ -50,10 +49,6 @@ export const TodoListWithRedux = memo((props: TodoListPropsType) => {
         tasksForTodolist = allTodolistTasks.filter(t => t.isDone);
     }
 
-    const removeTask = useCallback((taskId: string) => dispatch(removeTaskAC(taskId, props.todoListId)), [dispatch, props.todoListId])
-    const changeTaskStatus = useCallback((taskId: string, isDone: boolean) => dispatch(changeTaskStatusAC(taskId, isDone, props.todoListId)), [dispatch, props.todoListId])
-    const changeTaskTitle = useCallback((taskId: string, nextTitle: string) => dispatch(changeTaskTitleAC(taskId, nextTitle, props.todoListId)), [dispatch, props.todoListId])
-
     return (
         <div>
             <h3>
@@ -63,13 +58,11 @@ export const TodoListWithRedux = memo((props: TodoListPropsType) => {
                 </IconButton>
             </h3>
             <AddItemForm addItem={addTask} placeholder={'add new task'}/>
-            {tasks.length
+            {tasksForTodolist.length
                 ? <List> {
                     tasksForTodolist.map((task: TasksType) => {
                             return (
-                                <Task key={task.id} task={task} changeTaskStatus={changeTaskStatus}
-                                      changeTaskTitle={changeTaskTitle}
-                                      removeTask={removeTask}/>
+                                <Task key={task.id} task={task} todoListId={props.todoListId}/>
                             )
                         }
                     )}</List>

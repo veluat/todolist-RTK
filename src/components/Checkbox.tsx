@@ -7,7 +7,6 @@ type PropsType = {
 
 export const Checkbox = (props: PropsType) => {
 
-
     const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
         props.callBack(e.currentTarget.checked)
     }

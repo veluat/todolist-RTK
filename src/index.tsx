@@ -8,6 +8,7 @@ import {AppWithReducers} from "./AppWithReducers";
 import {AppWithRedux} from "./AppWithRedux";
 import {Provider} from "react-redux";
 import {store} from "./store/store";
+import { createRoot } from 'react-dom/client';
 
 const theme = createTheme({
     palette: {
@@ -20,15 +21,16 @@ const theme = createTheme({
         type: "dark",
     },
 })
+const container = document.getElementById('root') as HTMLElement
+const root = createRoot(container!)
 
-ReactDOM.render(
+root.render(
     <ThemeProvider theme={theme}>
         <CssBaseline/>
         <Provider store={store}>
             <AppWithRedux/>
         </Provider>
-    </ThemeProvider>,
-    document.getElementById('root'));
+    </ThemeProvider>);
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.
