@@ -8,7 +8,6 @@ type FilterButtonPropsType = {
 }
 
 export const FilterButton: React.FC<FilterButtonPropsType> = React.memo(({color, callback, name}) => {
-
     return (
         <Button
             style={{marginRight: '3px'}}
