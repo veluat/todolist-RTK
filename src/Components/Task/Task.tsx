@@ -2,7 +2,7 @@ import React, {ChangeEvent, memo, useCallback} from 'react';
 import {Checkbox, IconButton, ListItem} from "@material-ui/core";
 import EditableSpan from "../EditableSpan/EditableSpan";
 import {DeleteForeverOutlined} from "@material-ui/icons";
-import {TasksType} from "../../TodoListWithRedux";
+import {TasksType} from "../TodoListWithRedux/TodoListWithRedux";
 import {changeTaskStatusAC, changeTaskTitleAC, removeTaskAC} from "../../store/tasks-reducer";
 import {useDispatch} from "react-redux";
 

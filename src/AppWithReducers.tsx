@@ -1,5 +1,5 @@
 import React, {Reducer, useReducer} from "react";
-import './App.css';
+import './Components/AppWithRedux/App.css';
 import {TasksType, TodoList} from "./TodoList";
 import {v1} from "uuid";
 import {AddItemForm} from "./Components/AddItemForm/AddItemForm";

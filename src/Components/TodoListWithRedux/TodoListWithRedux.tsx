@@ -1,15 +1,15 @@
 import React, {memo, useCallback} from "react";
-import {FilterButtonType} from "./App";
-import {AddItemForm} from "./Components/AddItemForm/AddItemForm";
-import EditableSpan from "./Components/EditableSpan/EditableSpan";
+import {FilterButtonType} from "../../App";
+import {AddItemForm} from "../AddItemForm/AddItemForm";
+import EditableSpan from "../EditableSpan/EditableSpan";
 import {IconButton, List} from "@material-ui/core";
 import {DeleteForeverOutlined} from "@material-ui/icons";
 import {useDispatch, useSelector} from "react-redux";
-import {AppRootStateType} from "./store/store";
-import {addTaskAC} from "./store/tasks-reducer";
-import {ChangeTodoListFilterAT, ChangeTodoListTitleAT, RemoveTodoListAC} from "./store/todolists-reducer";
-import {FilterButton} from "./Components/FilterButton/FilterButton";
-import {Task} from "./Components/Task/Task";
+import {AppRootStateType} from "../../store/store";
+import {addTaskAC} from "../../store/tasks-reducer";
+import {ChangeTodoListFilterAT, ChangeTodoListTitleAT, RemoveTodoListAC} from "../../store/todolists-reducer";
+import {FilterButton} from "../FilterButton/FilterButton";
+import {Task} from "../Task/Task";
 
 export type TodoListPropsType = {
     todoListId: string

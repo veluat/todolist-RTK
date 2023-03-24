@@ -1,5 +1,5 @@
 import React, {useCallback} from "react";
-import '../../App.css';
+import './App.css';
 import {AddItemForm} from "../AddItemForm/AddItemForm";
 import {AppBar, Button, Container, Grid, IconButton, Paper, Toolbar, Typography} from "@material-ui/core";
 import {Menu} from "@material-ui/icons";
@@ -9,7 +9,7 @@ import {
 import {useDispatch, useSelector} from "react-redux";
 import {AppRootStateType} from "../../store/store";
 import {TodoListType} from "../../App";
-import {TodoListWithRedux} from "../../TodoListWithRedux";
+import {TodoListWithRedux} from "../TodoListWithRedux/TodoListWithRedux";
 
 export function AppWithRedux() {
 

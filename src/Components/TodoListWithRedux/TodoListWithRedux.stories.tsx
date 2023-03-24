@@ -2,10 +2,10 @@ import React from 'react';
 import {ComponentStory, ComponentMeta} from '@storybook/react';
 import {TodoListWithRedux} from "./TodoListWithRedux";
 import {useSelector} from "react-redux";
-import {AppRootStateType} from "./store/store";
-import {TodoListType} from "./App";
-import {ReduxStoreProviderDecorator} from "./store/ReduxStoreProviderDecorator";
-import {AppWithRedux} from "./Components/AppWithRedux/AppWithRedux";
+import {AppRootStateType} from "../../store/store";
+import {TodoListType} from "../../App";
+import {ReduxStoreProviderDecorator} from "../../store/ReduxStoreProviderDecorator";
+import {AppWithRedux} from "../AppWithRedux/AppWithRedux";
 
 export default {
     title: 'TODOLISTS/TodoListWithRedux',
