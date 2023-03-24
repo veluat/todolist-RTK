@@ -1,7 +1,7 @@
 import React, {ChangeEvent, useCallback} from "react";
 import {FilterButtonType} from "./App";
-import {AddItemForm} from "./AddItemForm";
-import EditableSpan from "./EditableSpan";
+import {AddItemForm} from "./Components/AddItemForm/AddItemForm";
+import EditableSpan from "./Components/EditableSpan/EditableSpan";
 import {Button, Checkbox, IconButton, List, ListItem} from "@material-ui/core";
 import {DeleteForeverOutlined} from "@material-ui/icons";
 
