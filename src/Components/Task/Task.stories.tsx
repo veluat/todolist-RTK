@@ -15,7 +15,11 @@ export default {
 
 const TaskRedux = () => {
     const task = useSelector<AppRootStateType, TasksType>(state => state.tasks['todolistId1'][0])
-    return <Task task={task} todoListId={'todolistId1'}/>
+    const taskIsDone = useSelector<AppRootStateType, TasksType>(state => state.tasks['todolistId1'][1])
+    return <>
+        <Task task={task} todoListId={'todolistId1'}/>
+        <Task task={taskIsDone} todoListId={'todolistId1'}/>
+    </>
 }
 
 const Template: ComponentStory<typeof Task> = (args) => <TaskRedux/>;
