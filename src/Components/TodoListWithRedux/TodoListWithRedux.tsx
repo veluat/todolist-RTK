@@ -1,5 +1,4 @@
 import React, {memo, useCallback} from "react";
-import {FilterButtonType} from "../../App";
 import {AddItemForm} from "../AddItemForm/AddItemForm";
 import EditableSpan from "../EditableSpan/EditableSpan";
 import {IconButton, List} from "@material-ui/core";
@@ -7,9 +6,15 @@ import {DeleteForeverOutlined} from "@material-ui/icons";
 import {useDispatch, useSelector} from "react-redux";
 import {AppRootStateType} from "../../store/store";
 import {addTaskAC} from "../../store/tasks-reducer";
-import {ChangeTodoListFilterAT, ChangeTodoListTitleAT, RemoveTodoListAC} from "../../store/todolists-reducer";
+import {
+    ChangeTodoListFilterAT,
+    ChangeTodoListTitleAT,
+    FilterButtonType,
+    RemoveTodoListAC
+} from "../../store/todolists-reducer";
 import {FilterButton} from "../FilterButton/FilterButton";
 import {Task} from "../Task/Task";
+import {TaskStatuses, TaskType} from "../../api/todolistAPI";
 
 export type TodoListPropsType = {
     todoListId: string
@@ -20,7 +25,7 @@ export type TodoListPropsType = {
 
 export const TodoListWithRedux = memo((props: TodoListPropsType) => {
 
-    const tasks = useSelector<AppRootStateType, TasksType[]>(state => state.tasks[props.todoListId])
+    const tasks = useSelector<AppRootStateType, TaskType[]>(state => state.tasks[props.todoListId])
 
     const dispatch = useDispatch()
 
@@ -39,10 +44,10 @@ export const TodoListWithRedux = memo((props: TodoListPropsType) => {
     let allTodolistTasks = tasks;
     let tasksForTodolist = allTodolistTasks;
     if (props.filter === 'Active') {
-        tasksForTodolist = allTodolistTasks.filter(t => !t.isDone);
+        tasksForTodolist = allTodolistTasks.filter(t => t.status === TaskStatuses.New);
     }
     if (props.filter === 'Completed') {
-        tasksForTodolist = allTodolistTasks.filter(t => t.isDone);
+        tasksForTodolist = allTodolistTasks.filter(t => t.status === TaskStatuses.Completed);
     }
 
     return (
@@ -56,7 +61,7 @@ export const TodoListWithRedux = memo((props: TodoListPropsType) => {
             <AddItemForm addItem={addTask} placeholder={'add new task'}/>
             {tasksForTodolist.length
                 ? <List> {
-                    tasksForTodolist.map((task: TasksType) => {
+                    tasksForTodolist.map((task: TaskType) => {
                             return (
                                 <Task key={task.id} task={task} todoListId={props.todoListId}/>
                             )

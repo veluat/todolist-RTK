@@ -1,10 +1,10 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {ComponentStory, ComponentMeta} from '@storybook/react';
 import {Task} from "./Task";
 import {ReduxStoreProviderDecorator} from "../../store/ReduxStoreProviderDecorator";
 import {useSelector} from "react-redux";
 import {AppRootStateType} from "../../store/store";
-import {TasksType} from "../TodoListWithRedux/TodoListWithRedux";
+import {TaskType} from "../../api/todolistAPI";
 
 export default {
     title: 'TODOLISTS/Task',
@@ -14,8 +14,8 @@ export default {
 
 
 const TaskRedux = () => {
-    const task = useSelector<AppRootStateType, TasksType>(state => state.tasks['todolistId1'][0])
-    const taskIsDone = useSelector<AppRootStateType, TasksType>(state => state.tasks['todolistId1'][1])
+    const task = useSelector<AppRootStateType, TaskType>(state => state.tasks['todolistId1'][0])
+    const taskIsDone = useSelector<AppRootStateType, TaskType>(state => state.tasks['todolistId1'][1])
     return <>
         <Task task={task} todoListId={'todolistId1'}/>
         <Task task={taskIsDone} todoListId={'todolistId1'}/>
@@ -24,20 +24,3 @@ const TaskRedux = () => {
 
 const Template: ComponentStory<typeof Task> = (args) => <TaskRedux/>;
 export const TaskStory = Template.bind({})
-
-
-/*
-
-export const TaskIsDoneStory = Template.bind({});
-TaskIsDoneStory.args = {
-task: {id: 'fgh45', title: 'JavaScript', isDone: true},
-      todoListId: '12345'
-      };
-
-const Template2: ComponentStory<typeof Task> = (args) => <Task {...args} />;
-export const TaskIsNotDoneStory = Template.bind({});
-TaskIsNotDoneStory.args = {
-    task: {id: 'rgb4', title: 'React-Redux', isDone: false},
-    todoListId: '12345'
-};
-*/
