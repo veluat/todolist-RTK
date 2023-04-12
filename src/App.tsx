@@ -1,29 +1,26 @@
 import React, {useState} from "react";
 import './Components/AppWithRedux/App.css';
-import {TasksType, TodoList} from "./TodoList";
+import { TodoList} from "./TodoList";
 import {v1} from "uuid";
 import {AddItemForm} from "./Components/AddItemForm/AddItemForm";
 import {AppBar, Button, Container, Grid, IconButton, Paper, Toolbar, Typography} from "@material-ui/core";
 import {Menu} from "@material-ui/icons";
+import {TaskType} from "./api/todolistAPI";
+import {TodolistDomainType} from "./store/todolists-reducer";
 
 
-export type FilterButtonType = 'All' | 'Active' | 'Completed'
-export type TodoListType = {
-    id: string
-    title: string
-    filter: FilterButtonType
-}
+
 export type TasksStateType = {
-    [todoListId: string]: Array<TasksType>
+    [todoListId: string]: Array<TaskType>
 }
 
 export function App() {
     const todoListId_1 = v1()
     const todoListId_2 = v1()
 
-    const [todoLists, setTodoLists] = useState<TodoListType[]>([
-        {id: todoListId_1, title: 'What to learn', filter: 'All'},
-        {id: todoListId_2, title: 'What to buy', filter: 'All'},
+    const [todoLists, setTodoLists] = useState<TodolistDomainType[]>([
+        {id: todoListId_1, title: 'What to learn', filter: 'All', addedDate: '', order: 0},
+        {id: todoListId_2, title: 'What to buy', filter: 'All', addedDate: '', order: 0},
     ])
     const [tasks, setTasks] = useState<TasksStateType>({
         [todoListId_1]: [

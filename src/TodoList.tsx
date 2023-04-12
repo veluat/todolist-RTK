@@ -18,11 +18,7 @@ export type TodoListPropsType = {
     changeTaskTitle: (taskId: string, title: string, todoListId: string) => void
     changeTodoListTitle: (title: string, todoListId: string) => void
 }
-export type TasksType = {
-    id: string
-    title: string
-    isDone: boolean
-}
+
 
 export const TodoList = (props: TodoListPropsType) => {
 

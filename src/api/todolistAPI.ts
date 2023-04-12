@@ -8,7 +8,7 @@ const instance = axios.create({
     }
 })
 
-type TodolistType = {
+export type TodolistType = {
     addedDate: string
     id: string
     order: number
@@ -22,7 +22,7 @@ type ResponseType<T = {}> = {
     data: T
 }
 
-type TaskType = {
+export type TaskType = {
     description: string
     title: string
     status: number

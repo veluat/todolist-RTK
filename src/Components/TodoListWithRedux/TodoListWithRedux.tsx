@@ -16,11 +16,7 @@ export type TodoListPropsType = {
     title: string
     filter: FilterButtonType
 }
-export type TasksType = {
-    id: string
-    title: string
-    isDone: boolean
-}
+
 
 export const TodoListWithRedux = memo((props: TodoListPropsType) => {
 
