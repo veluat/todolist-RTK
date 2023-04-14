@@ -1,1 +1,0 @@
-export const REMOVE_TODOLIST = 'REMOVE-TODOLIST' as const

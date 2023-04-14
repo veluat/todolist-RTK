@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react'
-import {tasksAPI, todolistAPI, UpdateTaskModelType} from "../api/todolistAPI";
+import {todolistAPI, UpdateTaskModelType} from "../api/todolistAPI";
 
 export default {
     title: 'API'
@@ -52,7 +52,7 @@ export const GetTasks = () => {
     const [todolistId, setTodolistId] = useState<string>('')
 
     const getTasks = () => {
-        tasksAPI.getTasks(todolistId)
+        todolistAPI.getTasks(todolistId)
             .then(res => setState(res.data))
     }
     return <div>{JSON.stringify(state)}
@@ -71,7 +71,7 @@ export const CreateTask = () => {
     const [taskTitle, setTaskTitle] = useState<string>('')
 
     const createTask = () => {
-        tasksAPI.createTask(todolistId, taskTitle)
+        todolistAPI.createTask(todolistId, taskTitle)
             .then(res => setState(res.data)
             )
     }
@@ -94,7 +94,7 @@ export const DeleteTask = () => {
     const [taskId, setTaskId] = useState<string>('')
 
     const deleteTask = () => {
-        tasksAPI.deleteTask(todolistId, taskId)
+        todolistAPI.deleteTask(todolistId, taskId)
             .then(res => setState(res.data)
             )
     }
@@ -124,7 +124,7 @@ export const UpdateTask = () => {
     const [todolistId, setTodolistId] = useState<string>('')
 
     const updateTask = () => {
-        tasksAPI.updateTask(todolistId, taskId, {
+        todolistAPI.updateTask(todolistId, taskId, {
             description: description,
             deadline: '',
             priority: priority,

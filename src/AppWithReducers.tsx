@@ -6,11 +6,11 @@ import {AddItemForm} from "./Components/AddItemForm/AddItemForm";
 import {AppBar, Button, Container, Grid, IconButton, Paper, Toolbar, Typography} from "@material-ui/core";
 import {Menu} from "@material-ui/icons";
 import {
-    AddTodolistAC,
-    ChangeTodoListFilterAT,
-    ChangeTodoListTitleAT,
+    addTodolistAC,
+    changeTodoListFilterAT,
+    changeTodoListTitleAT,
     FilterButtonType,
-    RemoveTodoListAC,
+    removeTodoListAC,
     todoListsReducer
 } from "./store/todolists-reducer";
 import {
@@ -65,21 +65,21 @@ export function AppWithReducers() {
     }
 
     const changeTodoListFilter = (filter: FilterButtonType, todoListId: string) => {
-        dispatchTodoLists(ChangeTodoListFilterAT(filter, todoListId))
+        dispatchTodoLists(changeTodoListFilterAT(filter, todoListId))
     }
 
     const changeTodoListTitle = (title: string, todoListId: string) => {
-        dispatchTodoLists(ChangeTodoListTitleAT(title, todoListId))
+        dispatchTodoLists(changeTodoListTitleAT(title, todoListId))
     }
 
     const removeTodoList = (todoListId: string) => {
-        let action = RemoveTodoListAC(todoListId)
+        let action = removeTodoListAC(todoListId)
         dispatchTodoLists(action)
         dispatchTasks(action)
     }
 
     const addTodoList = (title: string) => {
-        let action = AddTodolistAC(title)
+        let action = addTodolistAC(title)
         dispatchTodoLists(action)
         dispatchTasks(action)
     }

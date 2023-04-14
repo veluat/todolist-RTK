@@ -1,8 +1,8 @@
 import {v1} from "uuid";
 import {
     AddTodoListAT,
-    ChangeTodoListFilterAT,
-    ChangeTodoListTitleAT, FilterButtonType, RemoveTodoListAC, setTodolistsAC, TodolistDomainType,
+    changeTodoListFilterAT,
+    changeTodoListTitleAT, FilterButtonType, removeTodoListAC, setTodolistsAC, TodolistDomainType,
     todoListsReducer
 } from "./todolists-reducer";
 
@@ -22,7 +22,7 @@ beforeEach(() => {
 
 test('correct todolist should be removed', () => {
 
-    const endState = todoListsReducer(startState, RemoveTodoListAC(todoListId_1))
+    const endState = todoListsReducer(startState, removeTodoListAC(todoListId_1))
 
     expect(endState.length).toBe(1);
     expect(endState[0].id).toBe(todoListId_2);
@@ -49,7 +49,7 @@ test('correct todolist should change its name', () => {
 
     let newTodolistTitle = 'New TodoList';
 
-    const action: ChangeTodoListTitleAT = {
+    const action: changeTodoListTitleAT = {
         type: 'CHANGE-TODOLIST-TITLE',
         title: newTodolistTitle,
         id: todoListId_1
@@ -65,7 +65,7 @@ test('correct filter of todolist should be changed', () => {
 
     let newFilter: FilterButtonType = "Completed";
 
-    const action: ChangeTodoListFilterAT = {
+    const action: changeTodoListFilterAT = {
         type: 'CHANGE-TODOLIST-FILTER',
         filter: newFilter,
         id: todoListId_2
