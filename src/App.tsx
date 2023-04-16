@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import './Components/AppWithRedux/App.css';
+import './app/App.css';
 import {TodoList} from "./TodoList";
 import {v1} from "uuid";
 import {AddItemForm} from "./Components/AddItemForm/AddItemForm";

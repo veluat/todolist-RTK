@@ -1,14 +1,14 @@
 import React, {useCallback, useEffect} from "react";
 import './App.css';
-import {AddItemForm} from "../AddItemForm/AddItemForm";
+import {AddItemForm} from "../Components/AddItemForm/AddItemForm";
 import {AppBar, Button, Container, Grid, IconButton, Paper, Toolbar, Typography} from "@material-ui/core";
 import {Menu} from "@material-ui/icons";
 import {
     addTodolistAC, fetchTodolistsTC, TodolistDomainType,
-} from "../../store/todolists-reducer";
+} from "../store/todolists-reducer";
 import {useDispatch, useSelector} from "react-redux";
-import {AppRootStateType} from "../../store/store";
-import {TodoListWithRedux} from "../TodoListWithRedux/TodoListWithRedux";
+import {AppRootStateType} from "../store/store";
+import {TodoListWithRedux} from "../Components/TodoListWithRedux/TodoListWithRedux";
 
 export function AppWithRedux() {
 
@@ -69,3 +69,4 @@ export function AppWithRedux() {
         </div>
     );
 }
+

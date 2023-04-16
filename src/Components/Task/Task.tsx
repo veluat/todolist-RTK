@@ -2,7 +2,7 @@ import React, {ChangeEvent, memo, useCallback} from 'react';
 import {Checkbox, IconButton, ListItem} from "@material-ui/core";
 import EditableSpan from "../EditableSpan/EditableSpan";
 import {DeleteForeverOutlined} from "@material-ui/icons";
-import {changeTaskStatusAC, changeTaskTitleAC, removeTaskAC} from "../../store/tasks-reducer";
+import {updateTaskAC, changeTaskTitleAC, removeTaskAC} from "../../store/tasks-reducer";
 import {useDispatch} from "react-redux";
 import {TaskStatuses, TaskType} from "../../api/todolistAPI";
 
@@ -19,7 +19,7 @@ export const Task = memo(({
     const dispatch = useDispatch();
 
     const removeTask = useCallback(() => dispatch(removeTaskAC(task.id, todoListId)), [dispatch, task.id, todoListId])
-    const changeTaskStatus = useCallback((e: ChangeEvent<HTMLInputElement>) => dispatch(changeTaskStatusAC(task.id, e.currentTarget.checked ? TaskStatuses.Completed : TaskStatuses.New, todoListId)), [dispatch, todoListId, task.id])
+    const changeTaskStatus = useCallback((e: ChangeEvent<HTMLInputElement>) => dispatch(updateTaskAC(task.id, e.currentTarget.checked ? TaskStatuses.Completed : TaskStatuses.New, todoListId)), [dispatch, todoListId, task.id])
     const changeTaskTitle = useCallback((newTitle: string) => dispatch(changeTaskTitleAC(task.id, newTitle, todoListId)), [dispatch, todoListId, task.id])
 
     console.log('Task')

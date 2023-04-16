@@ -1,8 +1,7 @@
 import {
     ActionsType,
     addTaskAC,
-    changeTaskStatusAC,
-    changeTaskTitleAC,
+    updateTaskAC,
     removeTaskAC, setTasksAC,
     tasksReducer
 } from './tasks-reducer'
@@ -47,14 +46,14 @@ test('correct task should be deleted from correct array', () => {
         ],
         'todolistId2': [
             {id: '1', title: 'bread', status: TaskStatuses.New},
-            {id: '3', title: 'tea', status: TaskStatuses.New}
+            {id: '2', title: 'tea', status: TaskStatuses.New}
         ]
     })
 })
 
 test('correct task should be added to correct array', () => {
 
-    const action: ActionsType = addTaskAC("juce", "todolistId2");
+    const action: ActionsType = addTaskAC('juce');
 
     const endState = tasksReducer(startState, action)
 
@@ -67,7 +66,7 @@ test('correct task should be added to correct array', () => {
 
 test('status of specified task should be changed', () => {
 
-    const action = changeTaskStatusAC('2', TaskStatuses.New, 'todolistId2')
+    const action = updateTaskAC('2', TaskStatuses.New, 'todolistId2')
 
     const endState = tasksReducer(startState, action)
 

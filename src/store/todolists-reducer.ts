@@ -2,12 +2,13 @@ import {v1} from "uuid";
 import {todolistAPI, TodolistType} from "../api/todolistAPI";
 import {Dispatch} from "redux";
 
+const initialState: TodolistDomainType[] = []
 export const todoListsReducer = (state = initialState, action: ActionType): TodolistDomainType[] => {
     switch (action.type) {
         case 'REMOVE-TODOLIST':
             return (state.filter(tl => tl.id !== action.id))
         case 'ADD-TODOLIST':
-            return [...state, {id: action.todolistId, title: action.title, filter: 'All', addedDate: '', order: 0}]
+            return [{...action.todolist, filter: 'All'}, ...state]
         case 'CHANGE-TODOLIST-TITLE':
             return state.map(tl => tl.id === action.id ? {...tl, title: action.title} : tl)
         case 'CHANGE-TODOLIST-FILTER':
@@ -21,7 +22,7 @@ export const todoListsReducer = (state = initialState, action: ActionType): Todo
 
 //actions
 export const removeTodoListAC = (id: string) => ({type: 'REMOVE-TODOLIST', id} as const)
-export const addTodolistAC = (title: string) => ({type: 'ADD-TODOLIST', title, todolistId: v1()} as const)
+export const addTodolistAC = (todolist: TodolistType) => ({type: 'ADD-TODOLIST', todolist} as const)
 export const changeTodoListFilterAT = (filter: FilterButtonType, id: string) => ({
     type: 'CHANGE-TODOLIST-FILTER', filter, id} as const)
 export const changeTodoListTitleAT = (title: string, id: string) => ({
@@ -37,7 +38,6 @@ export const fetchTodolistsTC = () => (dispatch: Dispatch<ActionType>) => {
 }
 
 // types
-const initialState: TodolistDomainType[] = []
 export type FilterButtonType = 'All' | 'Active' | 'Completed'
 export type TodolistDomainType = TodolistType & { filter: FilterButtonType }
 export type AddTodoListAT = ReturnType<typeof addTodolistAC>

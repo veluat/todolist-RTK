@@ -4,7 +4,7 @@ import './index.css';
 import * as serviceWorker from './serviceWorker';
 import {App} from "./App";
 import {createTheme, CssBaseline, ThemeProvider} from "@material-ui/core";
-import {AppWithRedux} from "./Components/AppWithRedux/AppWithRedux";
+import {AppWithRedux} from "./app/AppWithRedux";
 import {Provider} from "react-redux";
 import {store} from "./store/store";
 import { createRoot } from 'react-dom/client';

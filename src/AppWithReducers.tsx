@@ -1,5 +1,5 @@
 import React, {Reducer, useReducer} from "react";
-import './Components/AppWithRedux/App.css';
+import './app/App.css';
 import {TodoList} from "./TodoList";
 import {v1} from "uuid";
 import {AddItemForm} from "./Components/AddItemForm/AddItemForm";
@@ -16,7 +16,7 @@ import {
 import {
     ActionType,
     addTaskAC,
-    changeTaskStatusAC,
+    updateTaskAC,
     changeTaskTitleAC,
     removeTaskAC,
     tasksReducer
@@ -58,7 +58,7 @@ export function AppWithReducers() {
     }
 
     const changeTaskStatus = (taskId: string, status: TaskStatuses, todoListId: string) => {
-        dispatchTasks(changeTaskStatusAC(taskId, status, todoListId))
+        dispatchTasks(updateTaskAC(taskId, status, todoListId))
     }
     const changeTaskTitle = (taskId: string, title: string, todoListId: string) => {
         dispatchTasks(changeTaskTitleAC(taskId, title, todoListId))

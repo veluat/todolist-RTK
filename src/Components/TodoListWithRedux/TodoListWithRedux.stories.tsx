@@ -4,7 +4,7 @@ import {TodoListWithRedux} from "./TodoListWithRedux";
 import {useSelector} from "react-redux";
 import {AppRootStateType} from "../../store/store";
 import {ReduxStoreProviderDecorator} from "../../store/ReduxStoreProviderDecorator";
-import {AppWithRedux} from "../AppWithRedux/AppWithRedux";
+import {AppWithRedux} from "../../app/AppWithRedux";
 import {TodolistDomainType} from "../../store/todolists-reducer";
 
 export default {
