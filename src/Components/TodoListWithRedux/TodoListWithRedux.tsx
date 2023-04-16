@@ -3,18 +3,18 @@ import {AddItemForm} from "../AddItemForm/AddItemForm";
 import EditableSpan from "../EditableSpan/EditableSpan";
 import {IconButton, List} from "@material-ui/core";
 import {DeleteForeverOutlined} from "@material-ui/icons";
-import {useDispatch, useSelector} from "react-redux";
-import {AppRootStateType} from "../../store/store";
-import {addTaskAC, fetchTasksTC} from "../../store/tasks-reducer";
+import {useAppDispatch, useAppSelector} from "../../store/store";
+import {addTaskTC, fetchTasksTC} from "../../store/tasks-reducer";
 import {
-    changeTodoListFilterAT,
-    changeTodoListTitleAT,
+    changeTodoListFilterAC,
+    changeTodolistTitleTC,
     FilterButtonType,
-    removeTodoListAC
+    removeTodolistTC
 } from "../../store/todolists-reducer";
 import {FilterButton} from "../FilterButton/FilterButton";
 import {Task} from "../Task/Task";
 import {TaskStatuses, TaskType} from "../../api/todolistAPI";
+import {TasksStateType} from "../../AppWithReducers";
 
 export type TodoListPropsType = {
     todoListId: string
@@ -25,25 +25,26 @@ export type TodoListPropsType = {
 
 export const TodoListWithRedux = memo((props: TodoListPropsType) => {
 
-    const tasks = useSelector<AppRootStateType, TaskType[]>(state => state.tasks[props.todoListId])
+    const tasks = useAppSelector<TasksStateType>(state => state.tasks)
 
-    const dispatch = useDispatch()
+    const dispatch = useAppDispatch()
 
     useEffect(() => {
         dispatch(fetchTasksTC(props.todoListId))
     }, [])
 
-    const changeTodoListTitle = useCallback((title: string) => {
-        dispatch(changeTodoListTitleAT(title, props.todoListId))
-    }, [dispatch, props.todoListId])
+    const changeTodoListTitle = useCallback(function(id: string, title: string) {
+        dispatch(changeTodolistTitleTC(props.todoListId, title))
+    }, [])
 
     const changeFilterHandlerCreator = useCallback((filter: FilterButtonType) => {
-        dispatch(changeTodoListFilterAT(filter, props.todoListId))
+        dispatch(changeTodoListFilterAC(filter, props.todoListId))
     }, [dispatch, props.todoListId])
 
-    const removeTodoList = () => dispatch(removeTodoListAC(props.todoListId))
+    const removeTodoList = useCallback(() => dispatch(removeTodolistTC(props.todoListId)), [])
 
-    const addTask = useCallback((title: string) => dispatch(addTaskAC(title, props.todoListId)), [dispatch, props.todoListId])
+    const addTask = useCallback(function(title: string, todolistId: string)
+    {dispatch(addTaskTC(title, todolistId))}, [])
 
     let allTodolistTasks = tasks;
     let tasksForTodolist = allTodolistTasks;

@@ -2,6 +2,7 @@ import {TasksStateType} from "../App";
 import {TaskType, todolistAPI, UpdateTaskModelType} from "../api/todolistAPI";
 import {Dispatch} from "redux";
 import {AddTodoListAT, RemoveTodoListAT, SetTodoListsAT} from "./todolists-reducer";
+import {AppRootStateType} from "./store";
 
 export const tasksReducer = (state = initialState, action: ActionsType) => {
     switch (action.type) {
@@ -47,6 +48,48 @@ export const fetchTasksTC = (todolistId: string) => (dispatch: Dispatch<ActionsT
             dispatch(setTasksAC(res.data.items, todolistId))
         })
 }
+
+export const removeTaskTC = (taskId: string, todolistId: string) => (dispatch: Dispatch<ActionsType>) => {
+    todolistAPI.deleteTask(todolistId, taskId)
+        .then(res => {
+            const action = removeTaskAC(taskId, todolistId)
+            dispatch(action)
+        })
+}
+
+export const addTaskTC = (title: string, todolistId: string) => (dispatch: Dispatch<ActionsType>) => {
+    todolistAPI.createTask(todolistId, title)
+        .then(res => {
+            const task = res.data.data.item
+            const action = addTaskAC(task)
+            dispatch(action)
+        })
+}
+
+export const updateTaskTC = (taskId: string, domainModel: UpdateDomainTaskModelType, todolistId: string) =>
+    (dispatch: Dispatch<ActionsType>, getState: () => AppRootStateType) => {
+        const state = getState()
+        const task = state.tasks[todolistId].find(t => t.id === taskId)
+        if (!task) {
+            //throw new Error("task not found in the state");
+            console.warn('task not found in the state')
+            return
+        }
+        const apiModel: UpdateTaskModelType = {
+            deadline: task.deadline,
+            description: task.description,
+            priority: task.priority,
+            startDate: task.startDate,
+            title: task.title,
+            status: task.status,
+            ...domainModel
+        }
+        todolistAPI.updateTask(todolistId, taskId, apiModel)
+            .then(res => {
+                const action = updateTaskAC(taskId, domainModel, todolistId)
+                dispatch(action)
+            })
+    }
 
 // types
 const initialState: TasksStateType = {}

@@ -7,21 +7,19 @@ import {AppBar, Button, Container, Grid, IconButton, Paper, Toolbar, Typography}
 import {Menu} from "@material-ui/icons";
 import {
     addTodolistAC,
-    changeTodoListFilterAT,
-    changeTodoListTitleAT,
+    changeTodoListFilterAC,
+    changeTodoListTitleAC,
     FilterButtonType,
     removeTodoListAC,
     todoListsReducer
 } from "./store/todolists-reducer";
 import {
-    ActionType,
     addTaskAC,
     updateTaskAC,
-    changeTaskTitleAC,
     removeTaskAC,
-    tasksReducer
+    tasksReducer, UpdateDomainTaskModelType, ActionsType
 } from "./store/tasks-reducer";
-import {TaskPriorities, TaskStatuses, TaskType} from "./api/todolistAPI";
+import {TaskPriorities, TaskStatuses, TaskType, TodolistType} from "./api/todolistAPI";
 
 
 export type TasksStateType = {
@@ -37,7 +35,7 @@ export function AppWithReducers() {
         {id: todoListId_2, title: 'What to buy', filter: 'All', addedDate: '', order: 0},
     ])
 
-    const [tasks, dispatchTasks] = useReducer<Reducer<TasksStateType, ActionType>>(tasksReducer, {
+    const [tasks, dispatchTasks] = useReducer<Reducer<TasksStateType, ActionsType>>(tasksReducer, {
         [todoListId_1]: [
             {id: v1(), title: "HTML&CSS", status: TaskStatuses.Completed, todoListId: todoListId_1, startDate: '', addedDate: '', order: 0, deadline: '', priority: TaskPriorities.Low, description: ''},
             {id: v1(), title: "JS", status: TaskStatuses.New, todoListId: todoListId_1, startDate: '', addedDate: '', order: 0, deadline: '', priority: TaskPriorities.Low, description: ''}
@@ -54,22 +52,33 @@ export function AppWithReducers() {
     }
 
     const addTask = (title: string, todoListId: string) => {
-        dispatchTasks(addTaskAC(title, todoListId))
+        dispatchTasks(addTaskAC({
+            todoListId: todoListId,
+            title: title,
+            status: TaskStatuses.New,
+            addedDate: '',
+            order: 0,
+            deadline: '',
+            priority: 0,
+            description: '',
+            startDate: '',
+            id: 'id exists'
+        }))
     }
 
-    const changeTaskStatus = (taskId: string, status: TaskStatuses, todoListId: string) => {
-        dispatchTasks(updateTaskAC(taskId, status, todoListId))
+    const changeTaskStatus = (taskId: string, model: UpdateDomainTaskModelType, todoListId: string) => {
+        dispatchTasks(updateTaskAC(taskId, model, todoListId))
     }
-    const changeTaskTitle = (taskId: string, title: string, todoListId: string) => {
-        dispatchTasks(changeTaskTitleAC(taskId, title, todoListId))
+    const changeTaskTitle = (taskId: string, model: UpdateDomainTaskModelType, todoListId: string) => {
+        dispatchTasks(updateTaskAC(taskId, model, todoListId))
     }
 
     const changeTodoListFilter = (filter: FilterButtonType, todoListId: string) => {
-        dispatchTodoLists(changeTodoListFilterAT(filter, todoListId))
+        dispatchTodoLists(changeTodoListFilterAC(filter, todoListId))
     }
 
     const changeTodoListTitle = (title: string, todoListId: string) => {
-        dispatchTodoLists(changeTodoListTitleAT(title, todoListId))
+        dispatchTodoLists(changeTodoListTitleAC(title, todoListId))
     }
 
     const removeTodoList = (todoListId: string) => {
@@ -79,7 +88,12 @@ export function AppWithReducers() {
     }
 
     const addTodoList = (title: string) => {
-        let action = addTodolistAC(title)
+        let action = addTodolistAC({
+            id: v1(),
+            title,
+            addedDate: '',
+            order: 0
+        })
         dispatchTodoLists(action)
         dispatchTasks(action)
     }

@@ -5,6 +5,7 @@ import {Button, Checkbox, IconButton, List, ListItem} from "@material-ui/core";
 import {DeleteForeverOutlined} from "@material-ui/icons";
 import {TaskStatuses, TaskType} from "./api/todolistAPI";
 import {FilterButtonType} from "./store/todolists-reducer";
+import {UpdateDomainTaskModelType} from "./store/tasks-reducer";
 
 export type TodoListPropsType = {
     todoListId: string
@@ -14,9 +15,9 @@ export type TodoListPropsType = {
     removeTask: (taskId: string, todoListId: string) => void
     changeTodoListFilter: (filter: FilterButtonType, todoListId: string) => void
     addTask: (title: string, todoListId: string) => void
-    changeTaskStatus: (taskId: string, status: TaskStatuses, todoListId: string) => void
+    changeTaskStatus: (taskId: string, model: UpdateDomainTaskModelType, todoListId: string) => void
     removeTodoList: (todoListId: string) => void
-    changeTaskTitle: (taskId: string, title: string, todoListId: string) => void
+    changeTaskTitle: (taskId: string, model: UpdateDomainTaskModelType, todoListId: string) => void
     changeTodoListTitle: (title: string, todoListId: string) => void
 }
 

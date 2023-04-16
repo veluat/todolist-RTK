@@ -1,8 +1,8 @@
 import {v1} from "uuid";
 import {
     AddTodoListAT,
-    changeTodoListFilterAT,
-    changeTodoListTitleAT, FilterButtonType, removeTodoListAC, setTodolistsAC, TodolistDomainType,
+    changeTodoListFilterAC,
+    changeTodoListTitleAC, FilterButtonType, removeTodoListAC, setTodolistsAC, TodolistDomainType,
     todoListsReducer
 } from "./todolists-reducer";
 
@@ -49,7 +49,7 @@ test('correct todolist should change its name', () => {
 
     let newTodolistTitle = 'New TodoList';
 
-    const action: changeTodoListTitleAT = {
+    const action: changeTodoListTitleAC = {
         type: 'CHANGE-TODOLIST-TITLE',
         title: newTodolistTitle,
         id: todoListId_1
@@ -65,7 +65,7 @@ test('correct filter of todolist should be changed', () => {
 
     let newFilter: FilterButtonType = "Completed";
 
-    const action: changeTodoListFilterAT = {
+    const action: changeTodoListFilterAC = {
         type: 'CHANGE-TODOLIST-FILTER',
         filter: newFilter,
         id: todoListId_2

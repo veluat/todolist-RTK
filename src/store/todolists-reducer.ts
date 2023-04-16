@@ -23,9 +23,9 @@ export const todoListsReducer = (state = initialState, action: ActionType): Todo
 //actions
 export const removeTodoListAC = (id: string) => ({type: 'REMOVE-TODOLIST', id} as const)
 export const addTodolistAC = (todolist: TodolistType) => ({type: 'ADD-TODOLIST', todolist} as const)
-export const changeTodoListFilterAT = (filter: FilterButtonType, id: string) => ({
+export const changeTodoListFilterAC = (filter: FilterButtonType, id: string) => ({
     type: 'CHANGE-TODOLIST-FILTER', filter, id} as const)
-export const changeTodoListTitleAT = (title: string, id: string) => ({
+export const changeTodoListTitleAC = (title: string, id: string) => ({
     type: 'CHANGE-TODOLIST-TITLE', title, id} as const)
 export const setTodolistsAC = (todolists: TodolistType[]) => ({type: 'SET-TODOLISTS', todolists} as const)
 
@@ -37,6 +37,33 @@ export const fetchTodolistsTC = () => (dispatch: Dispatch<ActionType>) => {
         })
 }
 
+export const removeTodolistTC = (todolistId: string) => {
+    return (dispatch: Dispatch<ActionType>) => {
+        todolistAPI.deleteTodolist(todolistId)
+            .then((res) => {
+                dispatch(removeTodoListAC(todolistId))
+            })
+    }
+}
+
+export const addTodolistTC = (title: string) => {
+    return (dispatch: Dispatch<ActionType>) => {
+        todolistAPI.createTodolist(title)
+            .then((res) => {
+                dispatch(addTodolistAC(res.data.data.item))
+            })
+    }
+}
+
+export const changeTodolistTitleTC = (id: string, title: string) => {
+    return (dispatch: Dispatch<ActionType>) => {
+        todolistAPI.updateTodolist(id, title)
+            .then((res) => {
+                dispatch(changeTodoListTitleAC(id, title))
+            })
+    }
+}
+
 // types
 export type FilterButtonType = 'All' | 'Active' | 'Completed'
 export type TodolistDomainType = TodolistType & { filter: FilterButtonType }
@@ -46,8 +73,8 @@ export type SetTodoListsAT = ReturnType<typeof setTodolistsAC>
 export type ActionType =
     | RemoveTodoListAT
     | AddTodoListAT
-    | ReturnType<typeof changeTodoListFilterAT>
-    | ReturnType<typeof changeTodoListTitleAT>
+    | ReturnType<typeof changeTodoListFilterAC>
+    | ReturnType<typeof changeTodoListTitleAC>
     | SetTodoListsAT
 
 
