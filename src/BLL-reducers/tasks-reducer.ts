@@ -1,8 +1,8 @@
-import {TasksStateType} from "../App";
-import {TaskType, todolistAPI, UpdateTaskModelType} from "../api/todolistAPI";
+import {TasksStateType} from "../training/App_training";
+import {TaskPriorities, TaskStatuses, TaskType, todolistsAPI, UpdateTaskModelType} from "../api/todolistsAPI";
 import {Dispatch} from "redux";
 import {AddTodoListAT, RemoveTodoListAT, SetTodoListsAT} from "./todolists-reducer";
-import {AppRootStateType} from "./store";
+import {AppRootStateType} from "../app/store";
 
 export const tasksReducer = (state = initialState, action: ActionsType) => {
     switch (action.type) {
@@ -43,14 +43,14 @@ export const setTasksAC = (tasks: TaskType[], todoListId: string) =>
 
 // thunks
 export const fetchTasksTC = (todolistId: string) => (dispatch: Dispatch<ActionsType>) => {
-    todolistAPI.getTasks(todolistId)
+    todolistsAPI.getTasks(todolistId)
         .then((res) => {
             dispatch(setTasksAC(res.data.items, todolistId))
         })
 }
 
 export const removeTaskTC = (taskId: string, todolistId: string) => (dispatch: Dispatch<ActionsType>) => {
-    todolistAPI.deleteTask(todolistId, taskId)
+    todolistsAPI.deleteTask(todolistId, taskId)
         .then(res => {
             const action = removeTaskAC(taskId, todolistId)
             dispatch(action)
@@ -58,7 +58,7 @@ export const removeTaskTC = (taskId: string, todolistId: string) => (dispatch: D
 }
 
 export const addTaskTC = (title: string, todolistId: string) => (dispatch: Dispatch<ActionsType>) => {
-    todolistAPI.createTask(todolistId, title)
+    todolistsAPI.createTask(todolistId, title)
         .then(res => {
             const task = res.data.data.item
             const action = addTaskAC(task)
@@ -84,7 +84,7 @@ export const updateTaskTC = (taskId: string, domainModel: UpdateDomainTaskModelT
             status: task.status,
             ...domainModel
         }
-        todolistAPI.updateTask(todolistId, taskId, apiModel)
+        todolistsAPI.updateTask(todolistId, taskId, apiModel)
             .then(res => {
                 const action = updateTaskAC(taskId, domainModel, todolistId)
                 dispatch(action)
@@ -96,8 +96,8 @@ const initialState: TasksStateType = {}
 export type UpdateDomainTaskModelType = {
     description?: string
     title?: string
-    status?: number
-    priority?: number
+    status?: TaskStatuses
+    priority?: TaskPriorities
     startDate?: string
     deadline?: string
 }

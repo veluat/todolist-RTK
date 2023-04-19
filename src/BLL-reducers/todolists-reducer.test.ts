@@ -35,7 +35,7 @@ test('correct todolist should be removed', () => {
 
 test('correct todolist should be added', () => {
 
-    let todolist: TodolistDomainType = {id: 'todoListId_3', title: 'New TodoList', filter: 'All', order: 0, addedDate: ''}
+    let todolist: TodolistDomainType = {id: 'todoListId_3', title: 'New TodoList_training', filter: 'All', order: 0, addedDate: ''}
 
     const action = addTodolistAC(todolist)
 
@@ -49,7 +49,7 @@ test('correct todolist should be added', () => {
 
 test('correct todolist should change its name', () => {
 
-    let newTodolistTitle = 'New TodoList';
+    let newTodolistTitle = 'New TodoList_training';
 
     const action = changeTodoListTitleAC(newTodolistTitle, todoListId_1)
     const endState = todoListsReducer(startState, action);

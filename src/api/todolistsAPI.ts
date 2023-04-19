@@ -9,7 +9,7 @@ const instance = axios.create({
 })
 
 // api
-export const todolistAPI = {
+export const todolistsAPI = {
     getTodolists() {
         return instance.get<TodolistType[]>('todo-lists')
     },
@@ -77,8 +77,8 @@ export type TaskType = {
 export type UpdateTaskModelType = {
     description: string
     title: string
-    status: number
-    priority: number
+    status: TaskStatuses
+    priority: TaskPriorities
     startDate: string
     deadline: string
 }

@@ -3,7 +3,7 @@ import {TextField} from "@material-ui/core";
 
 type EditableSpanPropsType = {
     title: string
-    changeTitle: (nextTitle: string) => void
+    changeTitle: (newTitle: string) => void
 }
 
 const EditableSpan = memo((props: EditableSpanPropsType) => {

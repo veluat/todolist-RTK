@@ -16,9 +16,8 @@ export const AddItemForm = memo((props: AddItemFormPropsType) => {
         setTitle(e.currentTarget.value)
     }
     const onClickAddItem = () => {
-        const trimmedTitle = title.trim()
-        if (trimmedTitle) {
-            props.addItem(trimmedTitle)
+        if (title.trim() !== '') {
+            props.addItem(title)
         } else {
             setError(true)
         }

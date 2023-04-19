@@ -1,11 +1,11 @@
 import React, {ChangeEvent, useCallback} from "react";
-import {AddItemForm} from "./Components/AddItemForm/AddItemForm";
-import EditableSpan from "./Components/EditableSpan/EditableSpan";
+import {AddItemForm} from "../Components/AddItemForm/AddItemForm";
+import EditableSpan from "../Components/EditableSpan/EditableSpan";
 import {Button, Checkbox, IconButton, List, ListItem} from "@material-ui/core";
 import {DeleteForeverOutlined} from "@material-ui/icons";
-import {TaskStatuses, TaskType} from "./api/todolistAPI";
-import {FilterButtonType} from "./store/todolists-reducer";
-import {UpdateDomainTaskModelType} from "./store/tasks-reducer";
+import {TaskStatuses, TaskType} from "../api/todolistsAPI";
+import {FilterButtonType} from "../BLL-reducers/todolists-reducer";
+import {UpdateDomainTaskModelType} from "../BLL-reducers/tasks-reducer";
 
 export type TodoListPropsType = {
     todoListId: string
@@ -22,7 +22,7 @@ export type TodoListPropsType = {
 }
 
 
-export const TodoList = (props: TodoListPropsType) => {
+export const TodoList_training = (props: TodoListPropsType) => {
 
     const tasksJSXItemsList = props.tasks.length
         ? <List>
@@ -30,7 +30,7 @@ export const TodoList = (props: TodoListPropsType) => {
                 props.tasks.map((task: TaskType) => {
                         const removeTask = () => props.removeTask(task.id, props.todoListId)
                         const changeTaskStatus = (e: ChangeEvent<HTMLInputElement>) => props.changeTaskStatus(task.id, e.currentTarget.checked ? TaskStatuses.Completed : TaskStatuses.New, props.todoListId)
-                        const changeTaskTitle = (nextTitle: string) => props.changeTaskTitle(task.id, nextTitle, props.todoListId)
+                        const changeTaskTitle = (model: UpdateDomainTaskModelType) => props.changeTaskTitle(task.id, model, props.todoListId)
                         const isDoneClass = task.status === TaskStatuses.Completed ? 'isDone' : ''
                         return (
                             <ListItem key={task.id} style={{padding: '0'}} className={isDoneClass}>

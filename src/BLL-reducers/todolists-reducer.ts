@@ -1,4 +1,4 @@
-import {todolistAPI, TodolistType} from "../api/todolistAPI";
+import {todolistsAPI, TodolistType} from "../api/todolistsAPI";
 import {Dispatch} from "redux";
 
 const initialState: TodolistDomainType[] = []
@@ -30,7 +30,7 @@ export const setTodolistsAC = (todolists: TodolistType[]) => ({type: 'SET-TODOLI
 
 //thunks
 export const fetchTodolistsTC = () => (dispatch: Dispatch<ActionType>) => {
-    todolistAPI.getTodolists()
+    todolistsAPI.getTodolists()
         .then((res) => {
             dispatch(setTodolistsAC(res.data))
         })
@@ -38,7 +38,7 @@ export const fetchTodolistsTC = () => (dispatch: Dispatch<ActionType>) => {
 
 export const removeTodolistTC = (todolistId: string) => {
     return (dispatch: Dispatch<ActionType>) => {
-        todolistAPI.deleteTodolist(todolistId)
+        todolistsAPI.deleteTodolist(todolistId)
             .then((res) => {
                 dispatch(removeTodoListAC(todolistId))
             })
@@ -47,7 +47,7 @@ export const removeTodolistTC = (todolistId: string) => {
 
 export const addTodolistTC = (title: string) => {
     return (dispatch: Dispatch<ActionType>) => {
-        todolistAPI.createTodolist(title)
+        todolistsAPI.createTodolist(title)
             .then((res) => {
                 dispatch(addTodolistAC(res.data.data.item))
             })
@@ -56,7 +56,7 @@ export const addTodolistTC = (title: string) => {
 
 export const changeTodolistTitleTC = (id: string, title: string) => {
     return (dispatch: Dispatch<ActionType>) => {
-        todolistAPI.updateTodolist(id, title)
+        todolistsAPI.updateTodolist(id, title)
             .then((res) => {
                 dispatch(changeTodoListTitleAC(id, title))
             })
