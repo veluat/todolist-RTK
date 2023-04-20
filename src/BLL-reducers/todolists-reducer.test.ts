@@ -63,7 +63,7 @@ test('correct filter of todolist should be changed', () => {
 
     let newFilter: FilterButtonType = "Completed";
 
-    const action = changeTodoListFilterAC(newFilter, todoListId_2)
+    const action = changeTodoListFilterAC(todoListId_2, newFilter)
 
     const endState = todoListsReducer(startState, action);
 

@@ -1,4 +1,3 @@
-import {TasksStateType} from "../training/App_training";
 import {TaskPriorities, TaskStatuses, TaskType, todolistsAPI, UpdateTaskModelType} from "../api/todolistsAPI";
 import {Dispatch} from "redux";
 import {AddTodoListAT, RemoveTodoListAT, SetTodoListsAT} from "./todolists-reducer";
@@ -52,17 +51,14 @@ export const fetchTasksTC = (todolistId: string) => (dispatch: Dispatch<ActionsT
 export const removeTaskTC = (taskId: string, todolistId: string) => (dispatch: Dispatch<ActionsType>) => {
     todolistsAPI.deleteTask(todolistId, taskId)
         .then(res => {
-            const action = removeTaskAC(taskId, todolistId)
-            dispatch(action)
+            dispatch(removeTaskAC(taskId, todolistId))
         })
 }
 
 export const addTaskTC = (title: string, todolistId: string) => (dispatch: Dispatch<ActionsType>) => {
     todolistsAPI.createTask(todolistId, title)
         .then(res => {
-            const task = res.data.data.item
-            const action = addTaskAC(task)
-            dispatch(action)
+            dispatch(addTaskAC(res.data.data.item))
         })
 }
 
@@ -86,13 +82,15 @@ export const updateTaskTC = (taskId: string, domainModel: UpdateDomainTaskModelT
         }
         todolistsAPI.updateTask(todolistId, taskId, apiModel)
             .then(res => {
-                const action = updateTaskAC(taskId, domainModel, todolistId)
-                dispatch(action)
+                dispatch(updateTaskAC(taskId, domainModel, todolistId))
             })
     }
 
 // types
 const initialState: TasksStateType = {}
+export type TasksStateType = {
+    [key: string]: Array<TaskType>
+}
 export type UpdateDomainTaskModelType = {
     description?: string
     title?: string

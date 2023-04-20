@@ -13,14 +13,13 @@ export type TodoListPropsType = {
     tasks: Array<TaskType>
     filter: FilterButtonType
     removeTask: (taskId: string, todoListId: string) => void
-    changeTodoListFilter: (filter: FilterButtonType, todoListId: string) => void
+    changeTodoListFilter: (todoListId: string, filter: FilterButtonType) => void
     addTask: (title: string, todoListId: string) => void
-    changeTaskStatus: (taskId: string, model: UpdateDomainTaskModelType, todoListId: string) => void
+    changeTaskStatus: (taskId: string, status: TaskStatuses, todoListId: string) => void
     removeTodoList: (todoListId: string) => void
     changeTaskTitle: (taskId: string, model: UpdateDomainTaskModelType, todoListId: string) => void
     changeTodoListTitle: (title: string, todoListId: string) => void
 }
-
 
 export const TodoList_training = (props: TodoListPropsType) => {
 
@@ -30,7 +29,7 @@ export const TodoList_training = (props: TodoListPropsType) => {
                 props.tasks.map((task: TaskType) => {
                         const removeTask = () => props.removeTask(task.id, props.todoListId)
                         const changeTaskStatus = (e: ChangeEvent<HTMLInputElement>) => props.changeTaskStatus(task.id, e.currentTarget.checked ? TaskStatuses.Completed : TaskStatuses.New, props.todoListId)
-                        const changeTaskTitle = (model: UpdateDomainTaskModelType) => props.changeTaskTitle(task.id, model, props.todoListId)
+                        const changeTaskTitle = (newTitle: string) => props.changeTaskTitle(task.id, {title: newTitle}, props.todoListId)
                         const isDoneClass = task.status === TaskStatuses.Completed ? 'isDone' : ''
                         return (
                             <ListItem key={task.id} style={{padding: '0'}} className={isDoneClass}>
@@ -54,7 +53,7 @@ export const TodoList_training = (props: TodoListPropsType) => {
         props.changeTodoListTitle(title, props.todoListId)
     }
     const changeFilterHandlerCreator = (filter: FilterButtonType) => {
-        return () => props.changeTodoListFilter(filter, props.todoListId)
+        return () => props.changeTodoListFilter(props.todoListId, filter)
     }
     const removeTodoList = () => props.removeTodoList(props.todoListId)
     const addTask = useCallback((title: string) => props.addTask(title, props.todoListId), [props.addTask, props.todoListId])

@@ -7,11 +7,7 @@ import {AppBar, Button, Container, Grid, IconButton, Paper, Toolbar, Typography}
 import {Menu} from "@material-ui/icons";
 import {TaskPriorities, TaskStatuses, TaskType} from "../api/todolistsAPI";
 import {FilterButtonType, TodolistDomainType} from "../BLL-reducers/todolists-reducer";
-
-
-export type TasksStateType = {
-    [key: string]: Array<TaskType>
-}
+import {TasksStateType, UpdateDomainTaskModelType} from "../BLL-reducers/tasks-reducer";
 
 export function App_training() {
     const todoListId_1 = v1()
@@ -23,16 +19,24 @@ export function App_training() {
     ])
     const [tasks, setTasks] = useState<TasksStateType>({
         [todoListId_1]: [
-            {id: v1(), title: "HTML&CSS", status: TaskStatuses.Completed, todoListId: todoListId_1,
-                startDate: '', addedDate: '', order: 0, deadline: '', priority: TaskPriorities.Low, description: ''},
-            {id: v1(), title: "JS", status: TaskStatuses.New, todoListId: todoListId_1,
-                startDate: '', addedDate: '', order: 0, deadline: '', priority: TaskPriorities.Low, description: ''}
+            {
+                id: v1(), title: "HTML&CSS", status: TaskStatuses.Completed, todoListId: todoListId_1,
+                startDate: '', addedDate: '', order: 0, deadline: '', priority: TaskPriorities.Low, description: ''
+            },
+            {
+                id: v1(), title: "JS", status: TaskStatuses.New, todoListId: todoListId_1,
+                startDate: '', addedDate: '', order: 0, deadline: '', priority: TaskPriorities.Low, description: ''
+            }
         ],
         [todoListId_2]: [
-            {id: v1(), title: "Water", status: TaskStatuses.Completed, todoListId: todoListId_2,
-                startDate: '', addedDate: '', order: 0, deadline: '', priority: TaskPriorities.Low, description: ''},
-            {id: v1(), title: "RootBeer", status: TaskStatuses.Completed, todoListId: todoListId_2,
-                startDate: '', addedDate: '', order: 0, deadline: '', priority: TaskPriorities.Low, description: ''}
+            {
+                id: v1(), title: "Water", status: TaskStatuses.Completed, todoListId: todoListId_2,
+                startDate: '', addedDate: '', order: 0, deadline: '', priority: TaskPriorities.Low, description: ''
+            },
+            {
+                id: v1(), title: "RootBeer", status: TaskStatuses.Completed, todoListId: todoListId_2,
+                startDate: '', addedDate: '', order: 0, deadline: '', priority: TaskPriorities.Low, description: ''
+            }
         ]
     })
 
@@ -41,19 +45,21 @@ export function App_training() {
     }
 
     const addTask = (title: string, todoListId: string) => {
-        const newTask: TaskType = {id: v1(), title, status: TaskStatuses.New, todoListId,
-            startDate: '', addedDate: '', order: 0, deadline: '', priority: TaskPriorities.Low, description: ''};
+        const newTask: TaskType = {
+            id: v1(), title, status: TaskStatuses.New, todoListId,
+            startDate: '', addedDate: '', order: 0, deadline: '', priority: TaskPriorities.Low, description: ''
+        };
         setTasks({...tasks, [todoListId]: [newTask, ...tasks[todoListId]]})
     }
 
     const changeTaskStatus = (taskId: string, status: TaskStatuses, todoListId: string) => {
         setTasks({...tasks, [todoListId]: tasks[todoListId].map(el => el.id === taskId ? {...el, status} : el)})
     }
-    const changeTaskTitle = (taskId: string, title: string, todoListId: string) => {
-        setTasks({...tasks, [todoListId]: tasks[todoListId].map(el => el.id === taskId ? {...el, title} : el)})
+    const changeTaskTitle = (taskId: string, model: UpdateDomainTaskModelType, todoListId: string) => {
+        setTasks({...tasks, [todoListId]: tasks[todoListId].map(el => el.id === taskId ? {...el, model} : el)})
     }
 
-    const changeTodoListFilter = (filter: FilterButtonType, todoListId: string) => {
+    const changeTodoListFilter = (todoListId: string, filter: FilterButtonType) => {
         setTodoLists(todoLists.map(tl => tl.id === todoListId ? {...tl, filter: filter} : tl))
     }
 
@@ -93,7 +99,6 @@ export function App_training() {
     const todoListComponents = todoLists.length
         ? todoLists.map(tl => {
                 const filteredTasks = getFilteredTasks(tasks[tl.id], tl.filter)
-
                 return (
                     <Grid item key={tl.id}>
                         <Paper elevation={8} style={{padding: '20px'}}>
@@ -102,7 +107,6 @@ export function App_training() {
                                 title={tl.title}
                                 filter={tl.filter}
                                 tasks={filteredTasks}
-
                                 addTask={addTask}
                                 removeTask={removeTask}
                                 removeTodoList={removeTodoList}
@@ -113,8 +117,6 @@ export function App_training() {
                             />
                         </Paper>
                     </Grid>
-
-
                 )
             }
         )

@@ -2,7 +2,7 @@ import React, {useCallback, useEffect} from "react";
 import {AddItemForm} from "../../Components/AddItemForm/AddItemForm";
 import {Container, Grid, Paper} from "@material-ui/core";
 import {useAppDispatch, useAppSelector} from "../../app/store";
-import {addTaskTC, removeTaskTC, updateTaskTC} from "../../BLL-reducers/tasks-reducer";
+import {addTaskTC, removeTaskTC, TasksStateType, updateTaskTC} from "../../BLL-reducers/tasks-reducer";
 import {
     addTodolistTC,
     changeTodoListFilterAC,
@@ -12,17 +12,13 @@ import {
     removeTodolistTC,
     TodolistDomainType
 } from "../../BLL-reducers/todolists-reducer";
-
 import {TaskStatuses} from "../../api/todolistsAPI";
-import {TasksStateType} from "../../training/App_trainingWithReducers";
-import {Todolist} from "../Todolists/Todolist";
+import {Todolist} from "./Todolists/Todolist";
 
 
-export const TodolistsList: React.FC<TodolistDomainType> = () => {
+export const TodolistsList: React.FC = () => {
     const todolists = useAppSelector<TodolistDomainType[]>(state => state.todolists)
-
     const tasks = useAppSelector<TasksStateType>(state => state.tasks)
-
     const dispatch = useAppDispatch()
 
     useEffect(() => {
@@ -45,8 +41,8 @@ export const TodolistsList: React.FC<TodolistDomainType> = () => {
         dispatch(updateTaskTC(taskId, {title: newTitle}, todolistId))
     }, [])
 
-    const changeFilter = useCallback((filter: FilterButtonType, todoListId: string) => {
-        dispatch(changeTodoListFilterAC(filter, todoListId))
+    const changeFilter = useCallback((todoListId: string, filter: FilterButtonType) => {
+        dispatch(changeTodoListFilterAC(todoListId, filter))
     }, [])
 
     const removeTodolist = useCallback(function (todoListId: string) {
@@ -62,40 +58,39 @@ export const TodolistsList: React.FC<TodolistDomainType> = () => {
     }, [])
 
 
-    return <Container fixed style={{paddingTop: '20px'}}>
-        <Grid container style={{padding: '0 0 20px 0'}}>
-            <AddItemForm
-                addItem={addTodoList}
-                placeholder={'add new todoList'}
-            />
-        </Grid>
-
-        <Grid container spacing={3}>
-            {todolists.length
-                ? todolists.map(tl => {
-                    let allTodolistTasks = tasks[tl.id]
-
-                    return <Grid item key={tl.id}>
-                        <Paper elevation={8} style={{padding: '20px'}}>
-                            <Todolist
-                                id={tl.id}
-                                title={tl.title}
-                                tasks={allTodolistTasks}
-                                removeTask={removeTask}
-                                changeFilter={changeFilter}
-                                addTask={addTask}
-                                changeTaskStatus={changeStatus}
-                                filter={tl.filter}
-                                removeTodolist={removeTodolist}
-                                changeTaskTitle={changeTaskTitle}
-                                changeTodolistTitle={changeTodolistTitle}
-                            />
-                        </Paper>
-                    </Grid>
-                })
-                : <span style={{padding: '20px'}}>Create your first todoList!</span>
-
-            }
-        </Grid>
-    </Container>
+    return <>
+        <Container fixed style={{paddingTop: '20px'}}>
+            <Grid container style={{padding: '0 0 20px 0'}}>
+                <AddItemForm
+                    addItem={addTodoList}
+                    placeholder={'add new todoList'}
+                />
+            </Grid>
+            <Grid container spacing={3}>
+                {todolists.length
+                    ? todolists.map(tl => {
+                        let allTodolistTasks = tasks[tl.id]
+                        return <Grid item key={tl.id}>
+                            <Paper elevation={8} style={{padding: '20px'}}>
+                                <Todolist
+                                    id={tl.id}
+                                    title={tl.title}
+                                    tasks={allTodolistTasks}
+                                    removeTask={removeTask}
+                                    changeFilter={changeFilter}
+                                    addTask={addTask}
+                                    changeTaskStatus={changeStatus}
+                                    filter={tl.filter}
+                                    removeTodolist={removeTodolist}
+                                    changeTaskTitle={changeTaskTitle}
+                                    changeTodolistTitle={changeTodolistTitle}
+                                />
+                            </Paper>
+                        </Grid>
+                    })
+                    : <span style={{padding: '20px'}}>Create your first todoList!</span>
+                }
+            </Grid>
+        </Container>
+    </>
 }

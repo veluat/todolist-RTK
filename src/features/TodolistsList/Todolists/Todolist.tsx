@@ -1,20 +1,20 @@
 import React, {useCallback, useEffect} from 'react'
-import {TaskStatuses, TaskType} from "../../api/todolistsAPI";
-import {changeTodoListFilterAC, FilterButtonType} from "../../BLL-reducers/todolists-reducer";
-import {useAppDispatch} from "../../app/store";
-import {fetchTasksTC} from "../../BLL-reducers/tasks-reducer";
-import EditableSpan from "../../Components/EditableSpan/EditableSpan";
+import {TaskStatuses, TaskType} from "../../../api/todolistsAPI";
+import {changeTodoListFilterAC, FilterButtonType} from "../../../BLL-reducers/todolists-reducer";
+import {useAppDispatch} from "../../../app/store";
+import {fetchTasksTC} from "../../../BLL-reducers/tasks-reducer";
+import EditableSpan from "../../../Components/EditableSpan/EditableSpan";
 import {IconButton, List} from "@material-ui/core";
 import {DeleteForeverOutlined} from "@material-ui/icons";
-import {AddItemForm} from "../../Components/AddItemForm/AddItemForm";
+import {AddItemForm} from "../../../Components/AddItemForm/AddItemForm";
 import {Task} from "./Task/Task";
-import {FilterButton} from "../../Components/FilterButton/FilterButton";
+import {FilterButton} from "../../../Components/FilterButton/FilterButton";
 
 type PropsType = {
     id: string
     title: string
     tasks: Array<TaskType>
-    changeFilter: (value: FilterButtonType, todolistId: string) => void
+    changeFilter: (todolistId: string, filter: FilterButtonType) => void
     addTask: (title: string, todolistId: string) => void
     changeTaskStatus: (id: string, status: TaskStatuses, todolistId: string) => void
     changeTaskTitle: (taskId: string, newTitle: string, todolistId: string) => void
@@ -22,9 +22,7 @@ type PropsType = {
     removeTodolist: (id: string) => void
     changeTodolistTitle: (id: string, newTitle: string) => void
     filter: FilterButtonType
-
 }
-
 
 export const Todolist = React.memo(function (props: PropsType) {
 
@@ -42,12 +40,12 @@ export const Todolist = React.memo(function (props: PropsType) {
         props.removeTodolist(props.id)
     }
 
-    const changeTodolistTitle = useCallback((title: string) => {
-        props.changeTodolistTitle(props.id, title)
-    }, [props.id, props.changeTodolistTitle])
+    const changeTodolistTitle = useCallback((newTitle: string) => {
+        props.changeTodolistTitle(props.id, newTitle)
+    }, [])
 
     const changeFilterHandlerCreator = useCallback((filter: FilterButtonType) => {
-        dispatch(changeTodoListFilterAC(filter, props.id))
+        dispatch(changeTodoListFilterAC( props.id, filter))
     }, [dispatch, props.id])
 
     let tasksForTodolist = props.tasks

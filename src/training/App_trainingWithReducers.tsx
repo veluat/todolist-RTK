@@ -17,16 +17,11 @@ import {
     ActionsType,
     addTaskAC,
     removeTaskAC,
-    tasksReducer,
+    tasksReducer, TasksStateType,
     UpdateDomainTaskModelType,
     updateTaskAC
 } from "../BLL-reducers/tasks-reducer";
 import {TaskPriorities, TaskStatuses, TaskType} from "../api/todolistsAPI";
-
-
-export type TasksStateType = {
-    [todoListId: string]: Array<TaskType>
-}
 
 export function App_trainingWithReducers() {
     const todoListId_1 = v1()
@@ -39,13 +34,56 @@ export function App_trainingWithReducers() {
 
     const [tasks, dispatchTasks] = useReducer<Reducer<TasksStateType, ActionsType>>(tasksReducer, {
         [todoListId_1]: [
-            {id: v1(), title: "HTML&CSS", status: TaskStatuses.Completed, todoListId: todoListId_1, startDate: '', addedDate: '', order: 0, deadline: '', priority: TaskPriorities.Low, description: ''},
-            {id: v1(), title: "JS", status: TaskStatuses.New, todoListId: todoListId_1, startDate: '', addedDate: '', order: 0, deadline: '', priority: TaskPriorities.Low, description: ''}
+            {
+                id: v1(),
+                title: "HTML&CSS",
+                status: TaskStatuses.Completed,
+                todoListId: todoListId_1,
+                startDate: '',
+                addedDate: '',
+                order: 0,
+                deadline: '',
+                priority: TaskPriorities.Low,
+                description: ''
+            },
+            {
+                id: v1(),
+                title: "JS",
+                status: TaskStatuses.New,
+                todoListId: todoListId_1,
+                startDate: '',
+                addedDate: '',
+                order: 0,
+                deadline: '',
+                priority: TaskPriorities.Low,
+                description: ''
+            }
         ],
         [todoListId_2]: [
-            {id: v1(), title: "Water", status: TaskStatuses.Completed, todoListId: todoListId_2, startDate: '', addedDate: '', order: 0, deadline: '', priority: TaskPriorities.Low, description: ''},
-            {id: v1(), title: "RootBeer", status: TaskStatuses.Completed, todoListId: todoListId_2, startDate: '', addedDate: '', order: 0, deadline: '', priority: TaskPriorities.Low, description: ''},
-
+            {
+                id: v1(),
+                title: "Water",
+                status: TaskStatuses.Completed,
+                todoListId: todoListId_2,
+                startDate: '',
+                addedDate: '',
+                order: 0,
+                deadline: '',
+                priority: TaskPriorities.Low,
+                description: ''
+            },
+            {
+                id: v1(),
+                title: "RootBeer",
+                status: TaskStatuses.Completed,
+                todoListId: todoListId_2,
+                startDate: '',
+                addedDate: '',
+                order: 0,
+                deadline: '',
+                priority: TaskPriorities.Low,
+                description: ''
+            },
         ]
     })
 
@@ -68,15 +106,15 @@ export function App_trainingWithReducers() {
         }))
     }
 
-    const changeTaskStatus = (taskId: string, model: UpdateDomainTaskModelType, todoListId: string) => {
-        dispatchTasks(updateTaskAC(taskId, model, todoListId))
+    const changeTaskStatus = (taskId: string, status: TaskStatuses, todoListId: string) => {
+        dispatchTasks(updateTaskAC(taskId, {status}, todoListId))
     }
     const changeTaskTitle = (taskId: string, model: UpdateDomainTaskModelType, todoListId: string) => {
         dispatchTasks(updateTaskAC(taskId, model, todoListId))
     }
 
-    const changeTodoListFilter = (filter: FilterButtonType, todoListId: string) => {
-        dispatchTodoLists(changeTodoListFilterAC(filter, todoListId))
+    const changeTodoListFilter = (todoListId: string, filter: FilterButtonType) => {
+        dispatchTodoLists(changeTodoListFilterAC(todoListId, filter))
     }
 
     const changeTodoListTitle = (title: string, todoListId: string) => {
@@ -114,7 +152,6 @@ export function App_trainingWithReducers() {
     const todoListComponents = todoLists.length
         ? todoLists.map(tl => {
                 const filteredTasks = getFilteredTasks(tasks[tl.id], tl.filter)
-
                 return (
                     <Grid item key={tl.id}>
                         <Paper elevation={8} style={{padding: '20px'}}>
@@ -123,7 +160,6 @@ export function App_trainingWithReducers() {
                                 title={tl.title}
                                 filter={tl.filter}
                                 tasks={filteredTasks}
-
                                 addTask={addTask}
                                 removeTask={removeTask}
                                 removeTodoList={removeTodoList}
@@ -134,8 +170,6 @@ export function App_trainingWithReducers() {
                             />
                         </Paper>
                     </Grid>
-
-
                 )
             }
         )
