@@ -1,11 +1,11 @@
 import React from "react";
-import {AppRootStateType} from "../app/store";
-import {Provider} from "react-redux";
-import {combineReducers, legacy_createStore} from "redux";
-import {tasksReducer} from "./tasks-reducer";
-import {todoListsReducer} from "./todolists-reducer";
+import {Provider, TypedUseSelectorHook, useDispatch, useSelector} from "react-redux";
+import {AnyAction, applyMiddleware, combineReducers, legacy_createStore} from "redux";
+import {tasksReducer} from "../BLL-reducers/tasks-reducer";
+import {todoListsReducer} from "../BLL-reducers/todolists-reducer";
 import {v1} from "uuid";
 import {TaskPriorities, TaskStatuses} from "../api/todolistsAPI";
+import thunkMiddleware, {ThunkDispatch} from "redux-thunk";
 
 const rootReducer = combineReducers({
    tasks: tasksReducer,
@@ -32,9 +32,15 @@ const initialGlobalState: AppRootStateType = {
       ]
    }
 }
+export const storyBookStore = legacy_createStore(rootReducer, applyMiddleware(thunkMiddleware))
+// определить автоматически тип всего объекта состояния
+export type AppRootStateType = ReturnType<typeof rootReducer>
+export type AppThunkDispatch = ThunkDispatch<AppRootStateType, any, AnyAction>
 
-export const storyBookStore = legacy_createStore(rootReducer, initialGlobalState)
+export const useAppDispatch = () => useDispatch<AppThunkDispatch>();
+export const useAppSelector: TypedUseSelectorHook<AppRootStateType> = useSelector
+//export const storyBookStore = legacy_createStore(rootReducer, initialGlobalState)
 
-export const ReduxStoreProviderDecorator = (storyFC: ()=>React.ReactNode) => {
-   return <Provider store={storyBookStore}>{storyFC()}</Provider>
+export const ReduxStoreProviderDecorator = (storyFn: ()=>React.ReactNode) => {
+   return <Provider store={storyBookStore}>{storyFn()}</Provider>
 }

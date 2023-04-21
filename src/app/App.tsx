@@ -14,7 +14,7 @@ export function App() {
                         <Menu/>
                     </IconButton>
                     <Typography variant='h6'>
-                        News
+                        To-do lists
                     </Typography>
                     <Button color='inherit' variant='outlined'>Login</Button>
                 </Toolbar>
