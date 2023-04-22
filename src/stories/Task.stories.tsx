@@ -38,12 +38,6 @@ export const TaskBaseExemple = (props: any) => {
     )
 }
 
-//
-// const Template: ComponentStory<typeof Task> = (args) => <Task {...args}/>;
-//
-// export const TaskStory = Template.bind({});
-
-
 // const changeTaskTitleCallback = action('Title changed')
 // const changeTaskStatusCallback = action('Status changed')
 // const removeTaskCallback = action('Task removed')
