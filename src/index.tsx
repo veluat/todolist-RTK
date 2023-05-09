@@ -1,21 +1,23 @@
 import React from 'react';
 import './index.css';
 import * as serviceWorker from './serviceWorker';
-import {createTheme, CssBaseline, ThemeProvider} from "@material-ui/core";
+import {createTheme, CssBaseline, ThemeProvider} from "@mui/material";
 import {App} from "./app/App";
 import {Provider} from "react-redux";
 import {store} from "./app/store";
 import {createRoot} from 'react-dom/client';
+import {lightGreen} from "@mui/material/colors";
 
 const theme = createTheme({
     palette: {
         primary: {
-            main: '#9ccc65',
+            main: lightGreen[400],
         },
         secondary: {
             main: '#ff7043',
         },
-        type: "dark",
+
+        mode: 'dark',
     },
 })
 const container = document.getElementById('root') as HTMLElement

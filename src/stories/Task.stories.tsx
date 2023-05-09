@@ -1,5 +1,5 @@
 import React from 'react';
-import {ComponentMeta, ComponentStory} from '@storybook/react';
+import {ComponentMeta} from '@storybook/react';
 import {Task} from "../features/TodolistsList/Todolists/Task/Task";
 import {ReduxStoreProviderDecorator} from "./ReduxStoreProviderDecorator";
 import {TaskStatuses} from "../api/todolistsAPI";

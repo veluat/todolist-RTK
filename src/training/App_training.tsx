@@ -3,11 +3,11 @@ import '../app/App.css';
 import {TodoList_training} from "./TodoList_training";
 import {v1} from "uuid";
 import {AddItemForm} from "../Components/AddItemForm/AddItemForm";
-import {AppBar, Button, Container, Grid, IconButton, Paper, Toolbar, Typography} from "@material-ui/core";
-import {Menu} from "@material-ui/icons";
 import {TaskPriorities, TaskStatuses, TaskType} from "../api/todolistsAPI";
 import {FilterButtonType, TodolistDomainType} from "../BLL-reducers/todolists-reducer";
 import {TasksStateType, UpdateDomainTaskModelType} from "../BLL-reducers/tasks-reducer";
+import {Toolbar, AppBar, Button, Container, Grid, IconButton, Paper, Typography} from "@mui/material";
+import {Menu} from "@mui/icons-material";
 
 export function App_training() {
     const todoListId_1 = v1()

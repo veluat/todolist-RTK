@@ -1,8 +1,8 @@
 import React, {ChangeEvent, useCallback} from "react";
 import {AddItemForm} from "../Components/AddItemForm/AddItemForm";
 import EditableSpan from "../Components/EditableSpan/EditableSpan";
-import {Button, Checkbox, IconButton, List, ListItem} from "@material-ui/core";
-import {DeleteForeverOutlined} from "@material-ui/icons";
+import {Button, Checkbox, IconButton, List, ListItem} from "@mui/material";
+import {DeleteForeverOutlined} from "@mui/icons-material";
 import {TaskStatuses, TaskType} from "../api/todolistsAPI";
 import {FilterButtonType} from "../BLL-reducers/todolists-reducer";
 import {UpdateDomainTaskModelType} from "../BLL-reducers/tasks-reducer";

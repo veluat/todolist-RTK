@@ -1,6 +1,6 @@
 import React, {useCallback, useEffect} from "react";
 import {AddItemForm} from "../../Components/AddItemForm/AddItemForm";
-import {Container, Grid, Paper} from "@material-ui/core";
+import {Container, Grid, Paper} from "@mui/material";
 import {useAppDispatch, useAppSelector} from "../../app/store";
 import {addTaskTC, removeTaskTC, TasksStateType, updateTaskTC} from "../../BLL-reducers/tasks-reducer";
 import {

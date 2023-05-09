@@ -1,7 +1,7 @@
 import React, {ChangeEvent, memo, useCallback} from 'react';
-import {Checkbox, IconButton, ListItem} from "@material-ui/core";
+import {Checkbox, IconButton, ListItem} from "@mui/material";
 import EditableSpan from "../../../../Components/EditableSpan/EditableSpan";
-import {DeleteForeverOutlined} from "@material-ui/icons";
+import {DeleteForeverOutlined} from "@mui/icons-material";
 import {TaskStatuses, TaskType} from "../../../../api/todolistsAPI";
 
 type TaskPropsType = {

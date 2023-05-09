@@ -1,6 +1,6 @@
 import React, {ChangeEvent, KeyboardEvent, memo, useState} from 'react';
-import {AddBoxOutlined} from "@material-ui/icons";
-import {Button, TextField} from "@material-ui/core";
+import {AddBoxOutlined} from "@mui/icons-material";
+import {Button, TextField} from "@mui/material";
 
 type AddItemFormPropsType = {
     addItem: (title: string) => void

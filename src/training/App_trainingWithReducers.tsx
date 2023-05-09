@@ -3,8 +3,9 @@ import '../app/App.css';
 import {TodoList_training} from "./TodoList_training";
 import {v1} from "uuid";
 import {AddItemForm} from "../Components/AddItemForm/AddItemForm";
-import {AppBar, Button, Container, Grid, IconButton, Paper, Toolbar, Typography} from "@material-ui/core";
-import {Menu} from "@material-ui/icons";
+import {AppBar, Button, Container, Grid, IconButton, Paper, Toolbar, Typography} from "@mui/material";
+import {Menu} from "@mui/icons-material";
+
 import {
     addTodolistAC,
     changeTodoListFilterAC,
