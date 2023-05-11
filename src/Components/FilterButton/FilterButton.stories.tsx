@@ -1,54 +1,59 @@
 import React from 'react';
-import {ComponentStory, ComponentMeta} from '@storybook/react';
+import {Meta, StoryFn, StoryObj} from '@storybook/react';
 import {FilterButton} from "./FilterButton";
 import {action} from "@storybook/addon-actions";
 
-export default {
-    title: 'TODOLISTS/FilterButton',
+const meta: Meta<typeof FilterButton> = {
     component: FilterButton,
-    args: {
-        name: "All",
+    title: 'TODOLISTS/FilterButton',
+    argTypes: {
         callback: action('All Button is active'),
-        color: 'secondary'
     }
-} as ComponentMeta<typeof FilterButton>;
+};
+export default meta;
 
-const Template: ComponentStory<typeof FilterButton> = (args) => <div
-    style={{display: "flex", justifyContent: 'flex-start'}}>
-    <FilterButton name={'All'} color={'secondary'}
-                  callback={args.callback}/>
-    <FilterButton name={'Active'} color={'primary'}
-                  callback={args.callback}/>
-    <FilterButton name={'Completed'} color={'primary'}
-                  callback={args.callback}/>
-</div>;
-export const AllFilterButtonStory = Template.bind({})
-AllFilterButtonStory.args = {}
+type Story = StoryObj<typeof FilterButton>;
 
+export const FilterButtonStory: StoryFn = (args) => {
+    return (
+        <div
+            style={{display: "flex", justifyContent: 'flex-start'}}>
+            <FilterButton name={'All'} color={'secondary'}
+                          callback={args.callback}/>
+            <FilterButton name={'Active'} color={'primary'}
+                          callback={args.callback}/>
+            <FilterButton name={'Completed'} color={'primary'}
+                          callback={args.callback}/>
+        </div>
+    )
+};
 
-const Template2: ComponentStory<typeof FilterButton> = (args) => <div
-    style={{display: "flex", justifyContent: 'flex-start'}}>
-    <FilterButton name={'All'} color={'primary'}
-                  callback={args.callback}/>
-    <FilterButton name={'Active'} color={'secondary'}
-                  callback={args.callback}/>
-    <FilterButton name={'Completed'} color={'primary'}
-                  callback={args.callback}/>
-</div>;
-export const ActiveFilterButtonStory = Template2.bind({})
-ActiveFilterButtonStory.args = {}
+export const ActiveFilterButtonStory: StoryFn = (args) => {
+    return (
+        <div
+            style={{display: "flex", justifyContent: 'flex-start'}}>
+            <FilterButton name={'All'} color={'primary'}
+                          callback={args.callback}/>
+            <FilterButton name={'Active'} color={'secondary'}
+                          callback={args.callback}/>
+            <FilterButton name={'Completed'} color={'primary'}
+                          callback={args.callback}/>
+        </div>
+    )
+};
 
-
-const Template3: ComponentStory<typeof FilterButton> = (args) => <div
-    style={{display: "flex", justifyContent: 'flex-start'}}>
-    <FilterButton name={'All'} color={'primary'}
-                  callback={args.callback}/>
-    <FilterButton name={'Active'} color={'primary'}
-                  callback={args.callback}/>
-    <FilterButton name={'Completed'} color={'secondary'}
-                  callback={args.callback}/>
-</div>;
-export const CompletedFilterButtonStory = Template3.bind({})
-CompletedFilterButtonStory.args = {}
+export const CompletedFilterButtonStory: StoryFn = (args) => {
+    return (
+        <div
+            style={{display: "flex", justifyContent: 'flex-start'}}>
+            <FilterButton name={'All'} color={'primary'}
+                          callback={args.callback}/>
+            <FilterButton name={'Active'} color={'primary'}
+                          callback={args.callback}/>
+            <FilterButton name={'Completed'} color={'secondary'}
+                          callback={args.callback}/>
+        </div>
+    )
+};
 
 

@@ -19,9 +19,10 @@ export type TodoListPropsType = {
     removeTodoList: (todoListId: string) => void
     changeTaskTitle: (taskId: string, model: UpdateDomainTaskModelType, todoListId: string) => void
     changeTodoListTitle: (title: string, todoListId: string) => void
+    demo?: boolean
 }
 
-export const TodoList_training = (props: TodoListPropsType) => {
+export const TodoList_training = ({demo = false, ...props}: TodoListPropsType) => {
 
     const tasksJSXItemsList = props.tasks.length
         ? <List>

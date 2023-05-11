@@ -9,7 +9,11 @@ import {useSelector} from "react-redux";
 import {AppRootStateType} from "./store";
 import {RequestStatusType} from "./app-reducer";
 
-export function App() {
+type PropsType = {
+    demo?: boolean
+}
+
+export function App({demo = false}: PropsType) {
     const status = useSelector<AppRootStateType, RequestStatusType>(state => state.app.status)
     return (
         <div className="App">
@@ -29,7 +33,7 @@ export function App() {
                                     style={{position: "absolute", right: "0", left: "0", top: "64px", bottom: "0"}}/>}
             </AppBar>
             <Container fixed>
-                <TodolistsList/>
+                <TodolistsList demo={demo}/>
             </Container>
         </div>
     );

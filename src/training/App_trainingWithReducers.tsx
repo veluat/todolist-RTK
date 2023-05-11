@@ -7,11 +7,12 @@ import {AppBar, Button, Container, Grid, IconButton, Paper, Toolbar, Typography}
 import {Menu} from "@mui/icons-material";
 
 import {
+    ActionType,
     addTodolistAC,
     changeTodoListFilterAC,
     changeTodoListTitleAC,
     FilterButtonType,
-    removeTodoListAC,
+    removeTodoListAC, TodolistDomainType,
     todoListsReducer
 } from "../BLL-reducers/todolists-reducer";
 import {
@@ -24,13 +25,17 @@ import {
 } from "../BLL-reducers/tasks-reducer";
 import {TaskPriorities, TaskStatuses, TaskType} from "../api/todolistsAPI";
 
-export function App_trainingWithReducers() {
+type PropsType = {
+    demo?: boolean
+}
+
+export function App_trainingWithReducers({demo = false}: PropsType) {
     const todoListId_1 = v1()
     const todoListId_2 = v1()
 
-    const [todoLists, dispatchTodoLists] = useReducer(todoListsReducer, [
-        {id: todoListId_1, title: 'What to learn', filter: 'All', addedDate: '', order: 0},
-        {id: todoListId_2, title: 'What to buy', filter: 'All', addedDate: '', order: 0},
+    const [todoLists, dispatchTodoLists] = useReducer<Reducer<TodolistDomainType[], ActionType>>(todoListsReducer, [
+        {id: todoListId_1, title: 'What to learn', filter: 'All', entityStatus: 'idle', addedDate: '', order: 0},
+        {id: todoListId_2, title: 'What to buy', filter: 'All', entityStatus: 'idle', addedDate: '', order: 0},
     ])
 
     const [tasks, dispatchTasks] = useReducer<Reducer<TasksStateType, ActionsType>>(tasksReducer, {
@@ -168,6 +173,7 @@ export function App_trainingWithReducers() {
                                 changeTodoListFilter={changeTodoListFilter}
                                 changeTaskTitle={changeTaskTitle}
                                 changeTodoListTitle={changeTodoListTitle}
+                                demo={demo}
                             />
                         </Paper>
                     </Grid>

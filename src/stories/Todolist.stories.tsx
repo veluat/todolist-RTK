@@ -1,16 +1,19 @@
 import React from 'react';
-import {ComponentMeta, ComponentStory} from '@storybook/react';
-import {ReduxStoreProviderDecorator} from "./ReduxStoreProviderDecorator";
+import {Meta, StoryFn, StoryObj} from '@storybook/react';
 import {Todolist} from "../features/TodolistsList/Todolists/Todolist";
 import {action} from "@storybook/addon-actions";
 import {TaskStatuses} from "../api/todolistsAPI";
 import {TodolistsList} from "../features/TodolistsList/TodolistsList";
+import {ReduxStoreProviderDecorator} from "./ReduxStoreProviderDecorator";
 
-export default {
-    title: 'TODOLISTS/Todolist',
+const meta: Meta<typeof Todolist> = {
     component: TodolistsList,
+    title: 'TODOLISTS/Todolist',
     decorators: [ReduxStoreProviderDecorator]
-} as ComponentMeta<typeof TodolistsList>
+};
+export default meta;
+
+type Story = StoryObj<typeof TodolistsList>;
 
 const changeTodolistTitleCallback = action('Title changed')
 const changeTaskStatusCallback = action('Status changed')
@@ -20,7 +23,7 @@ const removeTaskCallback = action('Task removed')
 const addTaskCallback = action('Task was added')
 const removeTodolistCallback = action('Todolist removed')
 
-export const TodolistExemple = (props: any) => {
+export const TodolistExample: StoryFn = (args) => {
     return (
         <div>
             <Todolist id={'todolistId1'} title={'What to learn'} tasks={[{
@@ -33,36 +36,7 @@ export const TodolistExemple = (props: any) => {
                 }]} changeFilter={changeFilterCallback} addTask={addTaskCallback}
                       changeTaskStatus={changeTaskStatusCallback} changeTaskTitle={changeTaskTitleCallback}
                       removeTask={removeTaskCallback} removeTodolist={removeTodolistCallback}
-                      changeTodolistTitle={changeTodolistTitleCallback} filter={'All'}/>
+                      changeTodolistTitle={changeTodolistTitleCallback} filter={'All'} demo={true}/>
         </div>
     )
 }
-
- const Template: ComponentStory<typeof Todolist> = (args) => <Todolist {...args}/>;
- export const TodolistStory = Template.bind({});
-
-/*
-const TodolistRedux = () => {
-    const changeTodolistTitleCallback = useAppDispatch(changeTodolistTitleTC(todoLists))
-    const changeTaskStatusCallback = action('Status changed')
-    const changeTaskTitleCallback = action('Tasks title changed')
-    const changeFilterCallback = action('Filter changed')
-    const removeTaskCallback = action('Task removed')
-    const addTaskCallback = action('Task was added')
-    const removeTodolistCallback = action('Todolist removed')
-
-    const todoLists = useAppSelector<TodolistDomainType[]>(state => state.todolists)
-    const tasks = useAppSelector<TaskType[]>(state => state.tasks.todoLists)
-
-    return <Todolist filter={todoLists[0].filter} tasks={tasks} title={todoLists[0].title}
-                     changeFilter={changeFilterCallback} addTask={addTaskCallback}
-                     changeTaskStatus={changeTaskStatusCallback} changeTaskTitle={changeTaskTitleCallback}
-                     removeTask={removeTaskCallback} removeTodolist={removeTodolistCallback}
-                     changeTodolistTitle={changeTodolistTitleCallback} id={todoLists[0].id}
-    />;
-}
-const Template: ComponentStory<typeof Todolist> = (args) => <TodolistRedux/>;
-
-export const TodoListWithReduxStory = Template.bind({});
-TodoListWithReduxStory.args = {}
-*/

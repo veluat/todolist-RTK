@@ -19,8 +19,8 @@ beforeEach(() => {
     todoListId_2 = v1()
 
     startState = ([
-        {id: todoListId_1, title: 'What to learn', filter: 'All', order: 0, addedDate: ''},
-        {id: todoListId_2, title: 'What to buy', filter: 'All', order: 0, addedDate: ''},
+        {id: todoListId_1, title: 'What to learn', filter: 'All', entityStatus: 'idle', order: 0, addedDate: ''},
+        {id: todoListId_2, title: 'What to buy', filter: 'All', entityStatus: 'idle', order: 0, addedDate: ''},
     ])
 })
 
@@ -35,7 +35,7 @@ test('correct todolist should be removed', () => {
 
 test('correct todolist should be added', () => {
 
-    let todolist: TodolistDomainType = {id: 'todoListId_3', title: 'New TodoList_training', filter: 'All', order: 0, addedDate: ''}
+    let todolist: TodolistDomainType = {id: 'todoListId_3', title: 'New TodoList_training', filter: 'All', entityStatus: 'idle', order: 0, addedDate: ''}
 
     const action = addTodolistAC(todolist)
 

@@ -46,7 +46,7 @@ const initialGlobalState: AppRootStateType = {
         status: 'idle'
     }
 }
-export const storyBookStore = legacy_createStore(rootReducer, applyMiddleware(thunkMiddleware))
+export const storyBookStore = legacy_createStore(rootReducer, initialGlobalState, applyMiddleware(thunkMiddleware))
 // определить автоматически тип всего объекта состояния
 export type AppRootStateType = ReturnType<typeof rootReducer>
 export type AppThunkDispatch = ThunkDispatch<AppRootStateType, any, AnyAction>

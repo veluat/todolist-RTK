@@ -4,7 +4,7 @@ import {addTodolistAC, TodolistDomainType, todoListsReducer} from "./todolists-r
 test('ids should be equals', () => {
     const startTasksState: TasksStateType = {};
     const startTodolistsState: TodolistDomainType[] = [];
-    let todolist: TodolistDomainType = {id: 'todoListId_3', title: 'new todolist', filter: 'All', order: 0, addedDate: ''}
+    let todolist: TodolistDomainType = {id: 'todoListId_3', title: 'new todolist', filter: 'All', entityStatus: 'idle', order: 0, addedDate: ''}
     const action = addTodolistAC(todolist);
 
     const endTasksState = tasksReducer(startTasksState, action)

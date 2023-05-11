@@ -1,29 +1,33 @@
 import React, {ChangeEvent, KeyboardEvent, useState} from 'react';
-import {ComponentStory, ComponentMeta} from '@storybook/react';
+import {Meta, StoryFn, StoryObj} from '@storybook/react';
 import {AddItemForm} from "./AddItemForm";
 import {action} from "@storybook/addon-actions";
+import EditableSpan from "../EditableSpan/EditableSpan";
 import {Button, TextField} from "@mui/material";
 import {AddBoxOutlined} from "@mui/icons-material";
 
-export default {
-    title: 'TODOLISTS/AddItemForm',
+const meta: Meta<typeof AddItemForm> = {
     component: AddItemForm,
-
+    title: 'TODOLISTS/AddItemForm',
     argTypes: {
         addItem: {
             description: 'Button clicked inside form'
         }
     },
-} as ComponentMeta<typeof AddItemForm>;
+};
+export default meta;
 
-const Template: ComponentStory<typeof AddItemForm> = (args) => <AddItemForm {...args}/>;
+type Story = StoryObj<typeof EditableSpan>;
 
-export const AddItemFormStory = Template.bind({});
-AddItemFormStory.args = {
-    addItem: action('Button clicked inside form')
+export const AddItemFormStory: StoryFn = (args) => {
+    return (
+        <div>
+            <AddItemForm addItem={action('Button clicked inside form')} placeholder={''}/>
+        </div>
+    )
 };
 
-const Template1: ComponentStory<typeof AddItemForm> = (args) => {
+export const AddItemFormErrorInputStory: StoryFn = (args) => {
     const [title, setTitle] = useState<string>('')
     const [error, setError] = useState<boolean>(true)
 
@@ -51,7 +55,7 @@ const Template1: ComponentStory<typeof AddItemForm> = (args) => {
                 onKeyDown={onKeyDownEnterAddItem}
                 label={args.placeholder}
                 error={error}
-                helperText={error &&'Title is required'}
+                helperText={error && 'Title is required'}
             />
             <Button onClick={onClickAddItem}
                     size='small'
@@ -62,6 +66,4 @@ const Template1: ComponentStory<typeof AddItemForm> = (args) => {
             </Button>
         </div>
     );
-}
-
-export const AddItemFormErrorStory = Template1.bind({});
+};

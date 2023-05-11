@@ -9,13 +9,18 @@ import {TasksStateType, UpdateDomainTaskModelType} from "../BLL-reducers/tasks-r
 import {Toolbar, AppBar, Button, Container, Grid, IconButton, Paper, Typography} from "@mui/material";
 import {Menu} from "@mui/icons-material";
 
-export function App_training() {
+
+type PropsType = {
+    demo?: boolean
+}
+
+export function App_training({demo = false}: PropsType) {
     const todoListId_1 = v1()
     const todoListId_2 = v1()
 
     const [todoLists, setTodoLists] = useState<TodolistDomainType[]>([
-        {id: todoListId_1, title: 'What to learn', filter: 'All', addedDate: '', order: 0},
-        {id: todoListId_2, title: 'What to buy', filter: 'All', addedDate: '', order: 0},
+        {id: todoListId_1, title: 'What to learn', filter: 'All', entityStatus: 'idle', addedDate: '', order: 0},
+        {id: todoListId_2, title: 'What to buy', filter: 'All', entityStatus: 'idle', addedDate: '', order: 0},
     ])
     const [tasks, setTasks] = useState<TasksStateType>({
         [todoListId_1]: [
@@ -78,6 +83,7 @@ export function App_training() {
             id: newTodoListId,
             title,
             filter: 'All',
+            entityStatus: 'idle',
             addedDate: '',
             order: 0
         }
@@ -114,6 +120,7 @@ export function App_training() {
                                 changeTodoListFilter={changeTodoListFilter}
                                 changeTaskTitle={changeTaskTitle}
                                 changeTodoListTitle={changeTodoListTitle}
+                                demo={demo}
                             />
                         </Paper>
                     </Grid>

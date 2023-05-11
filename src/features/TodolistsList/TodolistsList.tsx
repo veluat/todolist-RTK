@@ -15,13 +15,19 @@ import {
 import {TaskStatuses} from "../../api/todolistsAPI";
 import {Todolist} from "./Todolists/Todolist";
 
+type PropsType = {
+    demo?: boolean
+}
 
-export const TodolistsList: React.FC = () => {
+export const TodolistsList: React.FC<PropsType> = ({demo = false}) => {
     const todolists = useAppSelector<TodolistDomainType[]>(state => state.todolists)
     const tasks = useAppSelector<TasksStateType>(state => state.tasks)
     const dispatch = useAppDispatch()
 
     useEffect(() => {
+        if (demo) {
+            return
+        }
         dispatch(fetchTodolistsTC())
     }, [])
 
@@ -68,7 +74,7 @@ export const TodolistsList: React.FC = () => {
             </Grid>
             <Grid container spacing={3}>
                 {todolists.length
-                    ? todolists.map(tl => {
+                    ? todolists.map((tl: TodolistDomainType) => {
                         let allTodolistTasks = tasks[tl.id]
                         return <Grid item key={tl.id}>
                             <Paper elevation={8} style={{padding: '20px'}}>
@@ -84,6 +90,7 @@ export const TodolistsList: React.FC = () => {
                                     removeTodolist={removeTodolist}
                                     changeTaskTitle={changeTaskTitle}
                                     changeTodolistTitle={changeTodolistTitle}
+                                    demo={demo}
                                 />
                             </Paper>
                         </Grid>

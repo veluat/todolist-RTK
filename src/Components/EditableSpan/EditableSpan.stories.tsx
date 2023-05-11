@@ -1,12 +1,11 @@
 import React from 'react';
-import {ComponentStory, ComponentMeta} from '@storybook/react';
+import {Meta, StoryFn, StoryObj} from '@storybook/react';
 import {action} from "@storybook/addon-actions";
 import EditableSpan from "./EditableSpan";
 
-export default {
-    title: 'TODOLISTS/EditableSpan',
+const meta: Meta<typeof EditableSpan> = {
     component: EditableSpan,
-
+    title: 'TODOLISTS/EditableSpan',
     argTypes: {
         changeTitle: {
             description: 'Value EditableSpan changed'
@@ -16,11 +15,16 @@ export default {
             description: 'Start value of EditableSpan'
         }
     },
-} as ComponentMeta<typeof EditableSpan>;
-
-const Template3: ComponentStory<typeof EditableSpan> = (args) => <EditableSpan {...args}/>;
-
-export const EditableSpanStory = Template3.bind({});
-EditableSpanStory.args = {
-    changeTitle: action('Value EditableSpan changed'),
 };
+export default meta;
+
+type Story = StoryObj<typeof EditableSpan>;
+
+export const EditableSpanStory: StoryFn = (args) => {
+    return (
+        <div>
+            <EditableSpan changeTitle={action('Value EditableSpan changed')} title={'HTML'}/>
+        </div>
+    )
+};
+
