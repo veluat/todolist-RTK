@@ -12,7 +12,7 @@ export default meta;
 type Story = StoryObj<typeof ErrorSnackBar>;
 
 export const ErrorSnackBarStory: StoryFn = (args) => {
-    const error = 'Some going wrong. Try later.';
+    const error = 'Something is going wrong. Please try later.';
     return (
         <Snackbar open={true}>
             <Alert severity="error" sx={{width: '100%'}}>

@@ -27,6 +27,15 @@ export const AddItemFormStory: StoryFn = (args) => {
     )
 };
 
+export const AddItemFormDisabledExample: StoryFn = (args) => {
+    return (
+        <div>
+            <AddItemForm addItem={action('Button clicked inside form')} disabled={true}
+                          placeholder={''}/>
+        </div>
+    )
+};
+
 export const AddItemFormErrorInputStory: StoryFn = (args) => {
     const [title, setTitle] = useState<string>('')
     const [error, setError] = useState<boolean>(true)

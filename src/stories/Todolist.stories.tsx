@@ -3,17 +3,16 @@ import {Meta, StoryFn, StoryObj} from '@storybook/react';
 import {Todolist} from "../features/TodolistsList/Todolists/Todolist";
 import {action} from "@storybook/addon-actions";
 import {TaskStatuses} from "../api/todolistsAPI";
-import {TodolistsList} from "../features/TodolistsList/TodolistsList";
 import {ReduxStoreProviderDecorator} from "./ReduxStoreProviderDecorator";
 
 const meta: Meta<typeof Todolist> = {
-    component: TodolistsList,
+    component: Todolist,
     title: 'TODOLISTS/Todolist',
     decorators: [ReduxStoreProviderDecorator]
 };
 export default meta;
 
-type Story = StoryObj<typeof TodolistsList>;
+type Story = StoryObj<typeof Todolist>;
 
 const changeTodolistTitleCallback = action('Title changed')
 const changeTaskStatusCallback = action('Status changed')
@@ -26,7 +25,14 @@ const removeTodolistCallback = action('Todolist removed')
 export const TodolistExample: StoryFn = (args) => {
     return (
         <div>
-            <Todolist id={'todolistId1'} title={'What to learn'} tasks={[{
+            <Todolist todolist={{
+                id: 'todolistId1',
+                title: 'What to learn',
+                addedDate: '',
+                order: 0,
+                filter: "All",
+                entityStatus: 'idle'
+            }} tasks={[{
                 id: '1', status: TaskStatuses.Completed, title: 'JavaScript', addedDate: '',
                 order: 0, deadline: '', priority: 0, startDate: '', description: '', todoListId: 'todolistId1'
             },
@@ -36,7 +42,7 @@ export const TodolistExample: StoryFn = (args) => {
                 }]} changeFilter={changeFilterCallback} addTask={addTaskCallback}
                       changeTaskStatus={changeTaskStatusCallback} changeTaskTitle={changeTaskTitleCallback}
                       removeTask={removeTaskCallback} removeTodolist={removeTodolistCallback}
-                      changeTodolistTitle={changeTodolistTitleCallback} filter={'All'} demo={true}/>
+                      changeTodolistTitle={changeTodolistTitleCallback} demo={true}/>
         </div>
     )
 }

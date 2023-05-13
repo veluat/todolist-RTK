@@ -5,9 +5,10 @@ import {Button, TextField} from "@mui/material";
 type AddItemFormPropsType = {
     addItem: (title: string) => void
     placeholder: string
+    disabled?: boolean
 }
 
-export const AddItemForm = memo((props: AddItemFormPropsType) => {
+export const AddItemForm = memo(({addItem, disabled = false, placeholder}: AddItemFormPropsType) => {
     const [title, setTitle] = useState<string>("")
     const [error, setError] = useState<boolean>(false)
 
@@ -17,7 +18,7 @@ export const AddItemForm = memo((props: AddItemFormPropsType) => {
     }
     const onClickAddItem = () => {
         if (title.trim() !== '') {
-            props.addItem(title)
+            addItem(title)
         } else {
             setError(true)
         }
@@ -27,16 +28,18 @@ export const AddItemForm = memo((props: AddItemFormPropsType) => {
     return (
         <div>
             <TextField
+                disabled={disabled}
                 size='small'
                 variant='outlined'
                 value={title}
                 onChange={onChangeSetLocalTitle}
                 onKeyDown={onKeyDownEnterAddItem}
-                label={props.placeholder}
+                label={placeholder}
                 error={error}
                 helperText={error && 'Title is required'}
             />
             <Button onClick={onClickAddItem}
+                    disabled={disabled}
                     size='small'
                     variant='contained'
                     color='primary'

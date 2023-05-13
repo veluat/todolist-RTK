@@ -11,13 +11,13 @@ import {lightGreen} from "@mui/material/colors";
 const theme = createTheme({
     palette: {
         primary: {
-            main: lightGreen[400],
+            main: '#1976d2',
         },
         secondary: {
-            main: '#ff7043',
+            main: '#9c27b0',
         },
 
-        mode: 'dark',
+        mode: 'light',
     },
 })
 const container = document.getElementById('root') as HTMLElement
