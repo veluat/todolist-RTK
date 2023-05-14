@@ -2,7 +2,7 @@ import {TaskPriorities, TaskStatuses, TaskType, todolistsAPI, UpdateTaskModelTyp
 import {Dispatch} from "redux";
 import {AddTodoListAT, RemoveTodoListAT, SetTodoListsAT} from "./todolists-reducer";
 import {AppRootStateType} from "../app/store";
-import {setAppErrorAC, SetAppErrorActionType, setAppStatusAC, SetAppStatusActionType} from "../app/app-reducer";
+import {SetAppErrorActionType, setRequestStatusAC, SetRequestStatusType} from "../app/app-reducer";
 import {handleServerAppError, handleServerNetworkError} from "../utils/error-utils";
 
 export const tasksReducer = (state = initialState, action: ActionsType) => {
@@ -47,12 +47,12 @@ export const setTasksAC = (tasks: TaskType[], todoListId: string) =>
     ({type: 'SET-TASKS', tasks, todoListId} as const)
 
 // thunks
-export const fetchTasksTC = (todolistId: string) => (dispatch: ThunkDispatch) => {
-    dispatch(setAppStatusAC('loading'))
+export const fetchTasksTC = (todolistId: string) => (dispatch: Dispatch<ActionsType>) => {
+    dispatch(setRequestStatusAC('loading'))
     todolistsAPI.getTasks(todolistId)
         .then((res) => {
             dispatch(setTasksAC(res.data.items, todolistId))
-            dispatch(setAppStatusAC('succeeded'))
+            dispatch(setRequestStatusAC('succeeded'))
         })
         .catch((error) => {
             handleServerNetworkError(error, dispatch)
@@ -60,21 +60,24 @@ export const fetchTasksTC = (todolistId: string) => (dispatch: ThunkDispatch) =>
 }
 
 export const removeTaskTC = (taskId: string, todolistId: string) => (dispatch: Dispatch<ActionsType>) => {
+    dispatch(setRequestStatusAC('loading'))
     todolistsAPI.deleteTask(todolistId, taskId)
         .then(res => {
             dispatch(removeTaskAC(taskId, todolistId))
+            dispatch(setRequestStatusAC('succeeded'))
         })
         .catch((error) => {
             handleServerNetworkError(error, dispatch)
         })
 }
 
-export const addTaskTC = (title: string, todolistId: string) => (dispatch: ThunkDispatch) => {
-    dispatch(setAppStatusAC('loading'))
+export const addTaskTC = (title: string, todolistId: string) => (dispatch: Dispatch<ActionsType>) => {
+    dispatch(setRequestStatusAC('loading'))
     todolistsAPI.createTask(todolistId, title)
         .then(res => {
             if (res.data.resultCode === 0) {
                 dispatch(addTaskAC(res.data.data.item))
+                dispatch(setRequestStatusAC('succeeded'))
             } else {
                 handleServerAppError(res.data, dispatch)
             }
@@ -85,7 +88,8 @@ export const addTaskTC = (title: string, todolistId: string) => (dispatch: Thunk
 }
 
 export const updateTaskTC = (taskId: string, domainModel: UpdateDomainTaskModelType, todolistId: string) =>
-    (dispatch: ThunkDispatch, getState: () => AppRootStateType) => {
+    (dispatch: Dispatch<ActionsType>, getState: () => AppRootStateType) => {
+        dispatch(setRequestStatusAC('loading'))
         const state = getState()
         const task = state.tasks[todolistId].find(t => t.id === taskId)
         if (!task) {
@@ -106,6 +110,7 @@ export const updateTaskTC = (taskId: string, domainModel: UpdateDomainTaskModelT
             .then(res => {
                 if (res.data.resultCode === 0) {
                     dispatch(updateTaskAC(taskId, domainModel, todolistId))
+                    dispatch(setRequestStatusAC('succeeded'))
                 } else {
                     handleServerAppError(res.data, dispatch)
                 }
@@ -136,10 +141,8 @@ export type ActionsType =
     | AddTodoListAT
     | RemoveTodoListAT
     | SetTodoListsAT
-
-type ThunkDispatch = Dispatch<ActionsType
-    | SetAppStatusActionType
-    | SetAppErrorActionType>
+    | SetRequestStatusType
+    | SetAppErrorActionType
 
 
 

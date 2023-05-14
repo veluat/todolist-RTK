@@ -7,7 +7,7 @@ import Container from '@mui/material/Container';
 import IconButton from '@mui/material/IconButton';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
-import {Menu} from "@mui/icons-material";
+import Menu from "@mui/icons-material/Menu";
 import {TodolistsList} from "../features/TodolistsList/TodolistsList";
 import {ErrorSnackBar} from "../Components/ErrorSnackBar/ErrorSnackBar";
 import {useSelector} from "react-redux";
@@ -33,10 +33,8 @@ export function App({demo = false}: PropsType) {
                     </Typography>
                     <Button color='inherit' variant='outlined'>Login</Button>
                 </Toolbar>
-                {status === 'loading' &&
-                    <LinearProgress color="primary"
-                                    style={{position: "absolute", right: "0", left: "0", top: "64px", bottom: "0"}}/>}
             </AppBar>
+            {status === 'loading' && <LinearProgress color="secondary"/>}
             <Container fixed>
                 <TodolistsList demo={demo}/>
             </Container>

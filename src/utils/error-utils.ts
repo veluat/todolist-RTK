@@ -1,19 +1,19 @@
-import {setAppErrorAC, SetAppErrorActionType, setAppStatusAC, SetAppStatusActionType} from "../app/app-reducer";
+import {setAppErrorAC, SetAppErrorActionType, setRequestStatusAC, SetRequestStatusType} from "../app/app-reducer";
 import {ResponseType} from "../api/todolistsAPI";
 import {Dispatch} from "redux";
 
 export const handleServerAppError = <D>(data: ResponseType<D>, dispatch: Dispatch<SetAppErrorActionType
-    | SetAppStatusActionType>) => {
+    | SetRequestStatusType>) => {
     if (data.messages.length) {
         dispatch(setAppErrorAC(data.messages[0]))
     } else {
         dispatch(setAppErrorAC('Some error occurred'))
     }
-    dispatch(setAppStatusAC('failed'))
+    dispatch(setRequestStatusAC('failed'))
 }
 
 export const handleServerNetworkError = (error: {message: string}, dispatch: Dispatch<SetAppErrorActionType
-    | SetAppStatusActionType>) => {
+    | SetRequestStatusType>) => {
     dispatch(setAppErrorAC(error.message ? error.message : 'Some error occurred'))
-    dispatch(setAppStatusAC('failed'))
+    dispatch(setRequestStatusAC('failed'))
 }

@@ -3,8 +3,9 @@ import {Meta, StoryFn, StoryObj} from '@storybook/react';
 import {AddItemForm} from "./AddItemForm";
 import {action} from "@storybook/addon-actions";
 import EditableSpan from "../EditableSpan/EditableSpan";
-import {Button, TextField} from "@mui/material";
-import {AddBoxOutlined} from "@mui/icons-material";
+import Button from "@mui/material/Button";
+import TextField from "@mui/material/TextField";
+import AddBoxOutlined from "@mui/icons-material/AddBoxOutlined";
 
 const meta: Meta<typeof AddItemForm> = {
     component: AddItemForm,

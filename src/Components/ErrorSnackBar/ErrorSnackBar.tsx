@@ -12,7 +12,7 @@ const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
     return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
 });
 
-export function ErrorSnackBar() {
+export const ErrorSnackBar = () => {
     const error = useSelector<AppRootStateType, string | null>(state => state.app.error)
     const dispatch = useDispatch()
 
