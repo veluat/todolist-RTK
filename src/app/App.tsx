@@ -34,7 +34,8 @@ export function App({demo = false}: PropsType) {
                     <Button color='inherit' variant='outlined'>Login</Button>
                 </Toolbar>
             </AppBar>
-            {status === 'loading' && <LinearProgress color="secondary"/>}
+            {status === 'loading' &&
+                <LinearProgress color="secondary"/>}
             <Container fixed>
                 <TodolistsList demo={demo}/>
             </Container>
