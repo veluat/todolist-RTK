@@ -1,6 +1,6 @@
-import { tasksReducer } from '../BLL-reducers/tasks-reducer'
-import { todoListsReducer } from '../BLL-reducers/todolists-reducer'
-import {AnyAction, applyMiddleware, combineReducers, compose, legacy_createStore} from 'redux'
+import {tasksReducer} from '../BLL-reducers/tasks-reducer'
+import {todoListsReducer} from '../BLL-reducers/todolists-reducer'
+import {AnyAction, applyMiddleware, combineReducers, legacy_createStore} from 'redux'
 import thunkMiddleware, {ThunkDispatch} from "redux-thunk";
 import {TypedUseSelectorHook, useDispatch, useSelector} from "react-redux";
 import {appReducer} from "./app-reducer";

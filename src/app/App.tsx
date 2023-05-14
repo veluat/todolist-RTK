@@ -1,9 +1,14 @@
 import React from "react";
 import './App.css';
-import {AppBar, Button, Container, IconButton, Toolbar, Typography} from "@mui/material";
+import LinearProgress from '@mui/material/LinearProgress';
+import AppBar from '@mui/material/AppBar';
+import Button from '@mui/material/Button';
+import Container from '@mui/material/Container';
+import IconButton from '@mui/material/IconButton';
+import Toolbar from '@mui/material/Toolbar';
+import Typography from '@mui/material/Typography';
 import {Menu} from "@mui/icons-material";
 import {TodolistsList} from "../features/TodolistsList/TodolistsList";
-import LinearProgress from '@mui/material/LinearProgress';
 import {ErrorSnackBar} from "../Components/ErrorSnackBar/ErrorSnackBar";
 import {useSelector} from "react-redux";
 import {AppRootStateType} from "./store";

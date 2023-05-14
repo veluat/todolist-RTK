@@ -1,12 +1,12 @@
 import React from 'react';
 import './index.css';
 import * as serviceWorker from './serviceWorker';
-import {createTheme, CssBaseline, ThemeProvider} from "@mui/material";
+import CssBaseline from '@mui/material/CssBaseline';
 import {App} from "./app/App";
 import {Provider} from "react-redux";
 import {store} from "./app/store";
 import {createRoot} from 'react-dom/client';
-import {lightGreen} from "@mui/material/colors";
+import {createTheme, ThemeProvider} from "@mui/material/styles";
 
 const theme = createTheme({
     palette: {

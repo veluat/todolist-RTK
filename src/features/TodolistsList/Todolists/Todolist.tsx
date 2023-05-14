@@ -4,7 +4,8 @@ import {changeTodoListFilterAC, FilterButtonType, TodolistDomainType} from "../.
 import {useAppDispatch} from "../../../app/store";
 import {fetchTasksTC} from "../../../BLL-reducers/tasks-reducer";
 import EditableSpan from "../../../Components/EditableSpan/EditableSpan";
-import {IconButton, List} from "@mui/material";
+import IconButton from '@mui/material/IconButton';
+import List from '@mui/material/List';
 import {DeleteForeverOutlined} from "@mui/icons-material";
 import {AddItemForm} from "../../../Components/AddItemForm/AddItemForm";
 import {Task} from "./Task/Task";

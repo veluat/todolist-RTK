@@ -6,7 +6,14 @@ import {AddItemForm} from "../Components/AddItemForm/AddItemForm";
 import {TaskPriorities, TaskStatuses, TaskType} from "../api/todolistsAPI";
 import {FilterButtonType, TodolistDomainType} from "../BLL-reducers/todolists-reducer";
 import {TasksStateType, UpdateDomainTaskModelType} from "../BLL-reducers/tasks-reducer";
-import {Toolbar, AppBar, Button, Container, Grid, IconButton, Paper, Typography} from "@mui/material";
+import AppBar from '@mui/material/AppBar';
+import Button from '@mui/material/Button';
+import Container from '@mui/material/Container';
+import IconButton from '@mui/material/IconButton';
+import Toolbar from '@mui/material/Toolbar';
+import Typography from '@mui/material/Typography';
+import Grid from '@mui/material/Grid';
+import Paper from '@mui/material/Paper';
 import {Menu} from "@mui/icons-material";
 
 

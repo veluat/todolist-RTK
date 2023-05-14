@@ -3,7 +3,14 @@ import '../app/App.css';
 import {TodoList_training} from "./TodoList_training";
 import {v1} from "uuid";
 import {AddItemForm} from "../Components/AddItemForm/AddItemForm";
-import {AppBar, Button, Container, Grid, IconButton, Paper, Toolbar, Typography} from "@mui/material";
+import AppBar from '@mui/material/AppBar';
+import Button from '@mui/material/Button';
+import Container from '@mui/material/Container';
+import IconButton from '@mui/material/IconButton';
+import Toolbar from '@mui/material/Toolbar';
+import Typography from '@mui/material/Typography';
+import Grid from '@mui/material/Grid';
+import Paper from '@mui/material/Paper';
 import {Menu} from "@mui/icons-material";
 
 import {

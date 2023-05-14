@@ -25,14 +25,8 @@ const removeTodolistCallback = action('Todolist removed')
 export const TodolistExample: StoryFn = (args) => {
     return (
         <div>
-            <Todolist todolist={{
-                id: 'todolistId1',
-                title: 'What to learn',
-                addedDate: '',
-                order: 0,
-                filter: "All",
-                entityStatus: 'idle'
-            }} tasks={[{
+            <Todolist todolist={{id: 'todolistId1', title: 'What to learn', addedDate: '', order: 0,
+                filter: "All", entityStatus: 'idle'}} tasks={[{
                 id: '1', status: TaskStatuses.Completed, title: 'JavaScript', addedDate: '',
                 order: 0, deadline: '', priority: 0, startDate: '', description: '', todoListId: 'todolistId1'
             },

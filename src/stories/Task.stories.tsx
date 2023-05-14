@@ -1,10 +1,9 @@
 import React from 'react';
-import {ComponentMeta, Meta, StoryObj} from '@storybook/react';
+import {Meta, StoryObj} from '@storybook/react';
 import {Task} from "../features/TodolistsList/Todolists/Task/Task";
 import {ReduxStoreProviderDecorator} from "./ReduxStoreProviderDecorator";
 import {TaskStatuses} from "../api/todolistsAPI";
 import {action} from "@storybook/addon-actions";
-import {App} from "../app/App";
 
 const meta: Meta<typeof Task> = {
     component: Task,

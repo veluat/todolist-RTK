@@ -1,7 +1,11 @@
 import React, {ChangeEvent, useCallback} from "react";
 import {AddItemForm} from "../Components/AddItemForm/AddItemForm";
 import EditableSpan from "../Components/EditableSpan/EditableSpan";
-import {Button, Checkbox, IconButton, List, ListItem} from "@mui/material";
+import Checkbox from '@mui/material/Checkbox';
+import Button from '@mui/material/Button';
+import List from '@mui/material/List';
+import IconButton from '@mui/material/IconButton';
+import ListItem from '@mui/material/ListItem';
 import {DeleteForeverOutlined} from "@mui/icons-material";
 import {TaskStatuses, TaskType} from "../api/todolistsAPI";
 import {FilterButtonType} from "../BLL-reducers/todolists-reducer";
