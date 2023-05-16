@@ -77,10 +77,11 @@ export const addTaskTC = (title: string, todolistId: string) => (dispatch: Dispa
         .then(res => {
             if (res.data.resultCode === 0) {
                 dispatch(addTaskAC(res.data.data.item))
-                dispatch(setRequestStatusAC('succeeded'))
             } else {
                 handleServerAppError(res.data, dispatch)
             }
+            dispatch(setRequestStatusAC('succeeded'))
+
         })
         .catch((error) => {
             handleServerNetworkError(error, dispatch)
