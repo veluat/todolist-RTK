@@ -13,6 +13,8 @@ import {ErrorSnackBar} from "../Components/ErrorSnackBar/ErrorSnackBar";
 import {useSelector} from "react-redux";
 import {AppRootStateType} from "./store";
 import {RequestStatusType} from "./app-reducer";
+import {BrowserRouter, Route, Routes} from "react-router-dom";
+import {Login} from "../features/Login/Login";
 
 type PropsType = {
     demo?: boolean
@@ -21,25 +23,30 @@ type PropsType = {
 export function App({demo = false}: PropsType) {
     const status = useSelector<AppRootStateType, RequestStatusType>(state => state.app.status)
     return (
-        <div className="App">
-            <ErrorSnackBar/>
-            <AppBar position='static' enableColorOnDark>
-                <Toolbar style={{justifyContent: 'space-between'}}>
-                    <IconButton edge='start' color='inherit' aria-label='menu'>
-                        <Menu/>
-                    </IconButton>
-                    <Typography variant='h6' style={{fontWeight: 'bold'}}>
-                        TO-DO LISTS
-                    </Typography>
-                    <Button color='inherit' variant='outlined'>Login</Button>
-                </Toolbar>
-            </AppBar>
-            {status === 'loading' &&
-                <LinearProgress color="secondary"/>}
-            <Container fixed>
-                <TodolistsList demo={demo}/>
-            </Container>
-        </div>
+        <BrowserRouter>
+            <div className="App">
+                <ErrorSnackBar/>
+                <AppBar position='static' enableColorOnDark>
+                    <Toolbar style={{justifyContent: 'space-between'}}>
+                        <IconButton edge='start' color='inherit' aria-label='menu'>
+                            <Menu/>
+                        </IconButton>
+                        <Typography variant='h6' style={{fontWeight: 'bold'}}>
+                            TO-DO LISTS
+                        </Typography>
+                        <Button color='inherit' variant='outlined'>Login</Button>
+                    </Toolbar>
+                </AppBar>
+                {status === 'loading' &&
+                    <LinearProgress color="secondary"/>}
+                <Container fixed>
+                    <Routes>
+                        <Route path='/' element={<TodolistsList demo={demo}/>}/>
+                        <Route path='/login' element={<Login/>}/>
+                    </Routes>
+                </Container>
+            </div>
+        </BrowserRouter>
     );
 }
 

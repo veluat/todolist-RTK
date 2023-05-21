@@ -7,11 +7,13 @@ import {v1} from "uuid";
 import {TaskPriorities, TaskStatuses} from "../api/todolistsAPI";
 import thunkMiddleware, {ThunkDispatch} from "redux-thunk";
 import {appReducer} from "../app/app-reducer";
+import {loginReducer} from "../features/Login/login-reducer";
 
 const rootReducer = combineReducers({
     tasks: tasksReducer,
     todolists: todoListsReducer,
-    app: appReducer
+    app: appReducer,
+    auth: loginReducer
 })
 
 const initialGlobalState: AppRootStateType = {
@@ -44,6 +46,9 @@ const initialGlobalState: AppRootStateType = {
     app: {
         error: null,
         status: 'idle'
+    },
+    auth: {
+        isLoggedIn: false
     }
 }
 export const storyBookStore = legacy_createStore(rootReducer, initialGlobalState, applyMiddleware(thunkMiddleware))
