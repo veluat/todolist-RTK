@@ -1,9 +1,9 @@
-import {TaskPriorities, TaskStatuses, TaskType, todolistsAPI, UpdateTaskModelType} from "../api/todolistsAPI";
+import {TaskPriorities, TaskStatuses, TaskType, todolistsAPI, UpdateTaskModelType} from "../../api/todolistsAPI";
 import {Dispatch} from "redux";
-import {AddTodoListAT, RemoveTodoListAT, SetTodoListsAT} from "./todolists-reducer";
-import {AppRootStateType} from "../app/store";
-import {SetAppErrorActionType, setRequestStatusAC, SetRequestStatusType} from "../app/app-reducer";
-import {handleServerAppError, handleServerNetworkError} from "../utils/error-utils";
+import {AddTodoListAT, ClearTodosDataAT, RemoveTodoListAT, SetTodoListsAT} from "./todolists-reducer";
+import {AppRootStateType} from "../../app/store";
+import {SetAppErrorActionType, setRequestStatusAC, SetRequestStatusType} from "../../app/app-reducer";
+import {handleServerAppError, handleServerNetworkError} from "../../utils/error-utils";
 
 export const tasksReducer = (state = initialState, action: ActionsType) => {
     switch (action.type) {
@@ -31,6 +31,8 @@ export const tasksReducer = (state = initialState, action: ActionsType) => {
         }
         case 'SET-TASKS':
             return {...state, [action.todoListId]: action.tasks}
+        case 'CLEAR-DATA':
+            return {}
         default:
             return state;
     }
@@ -144,6 +146,8 @@ export type ActionsType =
     | SetTodoListsAT
     | SetRequestStatusType
     | SetAppErrorActionType
+    | ClearTodosDataAT
+
 
 
 

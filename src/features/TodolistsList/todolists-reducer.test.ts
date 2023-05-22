@@ -9,7 +9,7 @@ import {
     TodolistDomainType,
     todoListsReducer
 } from "./todolists-reducer";
-import {RequestStatusType} from "../app/app-reducer";
+import {RequestStatusType} from "../../app/app-reducer";
 
 let todoListId_1: string
 let todoListId_2: string

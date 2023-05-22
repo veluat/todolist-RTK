@@ -1,10 +1,10 @@
-import {tasksReducer} from '../BLL-reducers/tasks-reducer'
-import {todoListsReducer} from '../BLL-reducers/todolists-reducer'
+import {ActionsType, tasksReducer} from '../features/TodolistsList/tasks-reducer'
+import {todoListsReducer} from '../features/TodolistsList/todolists-reducer'
 import {AnyAction, applyMiddleware, combineReducers, legacy_createStore} from 'redux'
-import thunkMiddleware, {ThunkDispatch} from "redux-thunk";
+import thunkMiddleware, {ThunkAction, ThunkDispatch} from "redux-thunk";
 import {TypedUseSelectorHook, useDispatch, useSelector} from "react-redux";
 import {appReducer} from "./app-reducer";
-import {loginReducer} from "../features/Login/login-reducer";
+import {authReducer} from "../features/Login/auth-reducer";
 
 /*declare global {
     interface Window {
@@ -17,7 +17,7 @@ const rootReducer = combineReducers({
     tasks: tasksReducer,
     todolists: todoListsReducer,
     app: appReducer,
-    auth: loginReducer
+    auth: authReducer
 })
 
 //const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;

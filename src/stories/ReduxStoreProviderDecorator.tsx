@@ -1,19 +1,19 @@
 import React from "react";
 import {Provider, TypedUseSelectorHook, useDispatch, useSelector} from "react-redux";
 import {AnyAction, applyMiddleware, combineReducers, legacy_createStore} from "redux";
-import {tasksReducer} from "../BLL-reducers/tasks-reducer";
-import {todoListsReducer} from "../BLL-reducers/todolists-reducer";
+import {tasksReducer} from "../features/TodolistsList/tasks-reducer";
+import {todoListsReducer} from "../features/TodolistsList/todolists-reducer";
 import {v1} from "uuid";
 import {TaskPriorities, TaskStatuses} from "../api/todolistsAPI";
 import thunkMiddleware, {ThunkDispatch} from "redux-thunk";
 import {appReducer} from "../app/app-reducer";
-import {loginReducer} from "../features/Login/login-reducer";
+import {authReducer} from "../features/Login/auth-reducer";
 
 const rootReducer = combineReducers({
     tasks: tasksReducer,
     todolists: todoListsReducer,
     app: appReducer,
-    auth: loginReducer
+    auth: authReducer
 })
 
 const initialGlobalState: AppRootStateType = {
@@ -45,7 +45,8 @@ const initialGlobalState: AppRootStateType = {
     },
     app: {
         error: null,
-        status: 'idle'
+        status: 'idle',
+        isInitialized: false
     },
     auth: {
         isLoggedIn: false

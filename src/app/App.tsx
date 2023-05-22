@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useCallback, useEffect} from "react";
 import './App.css';
 import LinearProgress from '@mui/material/LinearProgress';
 import AppBar from '@mui/material/AppBar';
@@ -10,18 +10,37 @@ import Typography from '@mui/material/Typography';
 import Menu from "@mui/icons-material/Menu";
 import {TodolistsList} from "../features/TodolistsList/TodolistsList";
 import {ErrorSnackBar} from "../Components/ErrorSnackBar/ErrorSnackBar";
-import {useSelector} from "react-redux";
-import {AppRootStateType} from "./store";
-import {RequestStatusType} from "./app-reducer";
+import {useAppDispatch, useAppSelector} from "./store";
+import {initializedAppTC, RequestStatusType} from "./app-reducer";
 import {BrowserRouter, Route, Routes} from "react-router-dom";
 import {Login} from "../features/Login/Login";
+import CircularProgress from "@mui/material/CircularProgress";
+import {logoutTC} from "../features/Login/auth-reducer";
 
 type PropsType = {
     demo?: boolean
 }
 
 export function App({demo = false}: PropsType) {
-    const status = useSelector<AppRootStateType, RequestStatusType>(state => state.app.status)
+    const status = useAppSelector<RequestStatusType>(state => state.app.status)
+    const isInitialized = useAppSelector<boolean>(state => state.app.isInitialized)
+    const isLoggedIn = useAppSelector<boolean>(state => state.auth.isLoggedIn)
+    const dispatch = useAppDispatch()
+
+    useEffect(() => {
+        dispatch(initializedAppTC())
+    }, [])
+
+    const logoutHandler = useCallback(() => {
+        dispatch(logoutTC())
+    }, [])
+
+    if (!isInitialized) {
+        return <div style={{position: 'fixed', top: '30%', textAlign: 'center', width: '100%'}}>
+            <CircularProgress/>
+        </div>
+    }
+
     return (
         <BrowserRouter>
             <div className="App">
@@ -34,7 +53,8 @@ export function App({demo = false}: PropsType) {
                         <Typography variant='h6' style={{fontWeight: 'bold'}}>
                             TO-DO LISTS
                         </Typography>
-                        <Button color='inherit' variant='outlined'>Login</Button>
+                        {isLoggedIn && <Button color='inherit' variant='outlined'
+                                               onClick={logoutHandler}>Log out</Button>}
                     </Toolbar>
                 </AppBar>
                 {status === 'loading' &&

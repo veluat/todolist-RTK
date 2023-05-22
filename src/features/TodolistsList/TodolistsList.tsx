@@ -4,7 +4,7 @@ import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
 import {useAppDispatch, useAppSelector} from "../../app/store";
-import {addTaskTC, removeTaskTC, TasksStateType, updateTaskTC} from "../../BLL-reducers/tasks-reducer";
+import {addTaskTC, removeTaskTC, TasksStateType, updateTaskTC} from "./tasks-reducer";
 import {
     addTodolistTC,
     changeTodoListFilterAC,
@@ -13,9 +13,10 @@ import {
     FilterButtonType,
     removeTodolistTC,
     TodolistDomainType
-} from "../../BLL-reducers/todolists-reducer";
+} from "./todolists-reducer";
 import {TaskStatuses} from "../../api/todolistsAPI";
 import {Todolist} from "./Todolists/Todolist";
+import {Navigate} from "react-router-dom";
 
 type PropsType = {
     demo?: boolean
@@ -24,10 +25,11 @@ type PropsType = {
 export const TodolistsList: React.FC<PropsType> = ({demo = false}) => {
     const todolists = useAppSelector<TodolistDomainType[]>(state => state.todolists)
     const tasks = useAppSelector<TasksStateType>(state => state.tasks)
+    const isLoggedIn = useAppSelector<boolean>(state => state.auth.isLoggedIn)
     const dispatch = useAppDispatch()
 
     useEffect(() => {
-        if (demo) {
+        if (demo || !isLoggedIn) {
             return
         }
         dispatch(fetchTodolistsTC())
@@ -65,6 +67,9 @@ export const TodolistsList: React.FC<PropsType> = ({demo = false}) => {
         dispatch(addTodolistTC(title))
     }, [])
 
+    if (!isLoggedIn) {
+        return <Navigate to='/login'/>
+    }
 
     return <>
         <Container fixed style={{paddingTop: '20px'}}>
