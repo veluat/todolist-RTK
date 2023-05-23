@@ -38,19 +38,26 @@ export const todolistsAPI = {
 }
 
 export const authAPI = {
-    login(data: LoginParamsType) {
-        return instance.post<ResponseType<{ userId?: number }>>(`auth/login`, data)
+    login(data: LoginType) {
+        return instance.post<ResponseType<{ id: number }>, AxiosResponse<ResponseType<{ id: number }>>,
+            LoginType>(`auth/login`, data)
     },
     logout() {
-        return instance.delete<ResponseType<{ userId?: number }>>(`auth/login`)
+        return instance.delete<ResponseType>(`auth/login`)
     },
     me() {
-        return instance.get<ResponseType<{id: number, email: string, login: string }>>(`auth/me`)
+        return instance.get<ResponseType<UserType>>(`auth/me`)
     }
 }
 
 // types
-export type LoginParamsType = {
+export type UserType = {
+    id: number
+    email: string
+    login: string
+}
+
+export type LoginType = {
     email: string
     password: string
     rememberMe: boolean

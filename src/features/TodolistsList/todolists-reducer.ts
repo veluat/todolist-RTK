@@ -50,10 +50,10 @@ export const fetchTodolistsTC = () => (dispatch: Dispatch<ActionType>) => {
             dispatch(setRequestStatusAC('succeeded'))
             return res.data
         })
-        .then((todos) => {
-            todos.forEach(tl => dispatch(fetchTasksTC(tl.id)))
-
-        })
+        // .then((todos) => {
+        //     todos.forEach(tl => dispatch(fetchTasksTC(tl.id)))
+        //
+        // })
         .catch((error) => {
             handleServerNetworkError(error, dispatch)
         })

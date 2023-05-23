@@ -1,6 +1,7 @@
 import {Dispatch} from "redux";
 import {authAPI} from "../api/todolistsAPI";
 import {setIsLoggedInAC} from "../features/Login/auth-reducer";
+import {handleServerAppError, handleServerNetworkError} from "../utils/error-utils";
 
 const initialState: InitialStateType = {
     status: 'idle',
@@ -26,13 +27,20 @@ export const setRequestStatusAC = (status: RequestStatusType) => ({type: 'APP/SE
 export const setAppInitializedAC = (value: boolean) => ({type: 'APP/SET-IS-INITIALIZED', value} as const)
 
 export const initializedAppTC = () => (dispatch: Dispatch<ActionType>) => {
+    dispatch(setRequestStatusAC('loading'))
     authAPI.me()
         .then(res => {
             if (res.data.resultCode === 0) {
                 dispatch(setIsLoggedInAC(true))
+                dispatch(setRequestStatusAC('succeeded'))
             } else {
-
+                handleServerAppError(res.data, dispatch)
             }
+        })
+        .catch((error) => {
+            handleServerNetworkError(error, dispatch)
+        })
+        .finally(() => {
             dispatch(setAppInitializedAC(true))
         })
 }
@@ -46,9 +54,11 @@ export type InitialStateType = {
 
 export type SetAppErrorActionType = ReturnType<typeof setAppErrorAC>;
 export type SetRequestStatusType = ReturnType<typeof setRequestStatusAC>;
+export type setAppInitializedType = ReturnType<typeof setAppInitializedAC>;
+export type setIsLoggedInType = ReturnType<typeof setIsLoggedInAC>;
 
 type ActionType =
     | SetAppErrorActionType
     | SetRequestStatusType
-    | ReturnType<typeof setAppInitializedAC>
-    | ReturnType<typeof setIsLoggedInAC>
+    | setAppInitializedType
+    | setIsLoggedInType
