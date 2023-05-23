@@ -1,10 +1,10 @@
-import {ActionsType, tasksReducer} from '../features/TodolistsList/tasks-reducer'
-import {todoListsReducer} from '../features/TodolistsList/todolists-reducer'
-import {AnyAction, applyMiddleware, combineReducers, legacy_createStore} from 'redux'
+import {TasksActionsType, tasksReducer} from '../features/TodolistsList/tasks-reducer'
+import {todoListsReducer, TodosActionsType} from '../features/TodolistsList/todolists-reducer'
+import {applyMiddleware, combineReducers, legacy_createStore} from 'redux'
 import thunkMiddleware, {ThunkAction, ThunkDispatch} from "redux-thunk";
 import {TypedUseSelectorHook, useDispatch, useSelector} from "react-redux";
-import {appReducer} from "./app-reducer";
-import {authReducer} from "../features/Login/auth-reducer";
+import {AppActionType, appReducer} from "./app-reducer";
+import {AuthActionsType, authReducer} from "../features/Login/auth-reducer";
 
 /*declare global {
     interface Window {
@@ -24,9 +24,11 @@ const rootReducer = combineReducers({
 // непосредственно создаём BLL-reducers
 export const store = legacy_createStore(rootReducer, applyMiddleware(thunkMiddleware))
 // определить автоматически тип всего объекта состояния
-export type AppRootStateType = ReturnType<typeof rootReducer>
+export type AppRootStateType = ReturnType<typeof store.getState>
 // создаем тип диспатча который принимает как AC так и TC
-export type AppThunkDispatch = ThunkDispatch<AppRootStateType, any, AnyAction>
+type RootReducerActionsType = TasksActionsType | TodosActionsType | AuthActionsType | AppActionType
+export type AppThunkDispatch = ThunkDispatch<AppRootStateType, unknown, RootReducerActionsType>
+export type AppThunk<ReturnType = void> = ThunkAction<ReturnType, AppRootStateType, unknown, RootReducerActionsType>
 
 export const useAppDispatch = () => useDispatch<AppThunkDispatch>();
 export const useAppSelector: TypedUseSelectorHook<AppRootStateType> = useSelector

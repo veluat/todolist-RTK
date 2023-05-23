@@ -48,7 +48,7 @@ export const Todolist = React.memo(function ({demo = false, ...props}: PropsType
     }, [])
 
     const changeFilterHandlerCreator = useCallback((filter: FilterButtonType) => {
-        dispatch(changeTodoListFilterAC( props.todolist.id, filter))
+        dispatch(changeTodoListFilterAC(props.todolist.id, filter))
     }, [dispatch, props.todolist.id])
 
     let tasksForTodolist = props.tasks
@@ -68,7 +68,8 @@ export const Todolist = React.memo(function ({demo = false, ...props}: PropsType
                     <DeleteForeverOutlined/>
                 </IconButton>
             </h3>
-            <AddItemForm addItem={addTask} placeholder={'add new task'} disabled={props.todolist.entityStatus === 'loading'}/>
+            <AddItemForm addItem={addTask} placeholder={'add new task'}
+                         disabled={props.todolist.entityStatus === 'loading'}/>
             {tasksForTodolist.length
                 ? <List> {
                     tasksForTodolist.map((task: TaskType) => {
@@ -93,10 +94,6 @@ export const Todolist = React.memo(function ({demo = false, ...props}: PropsType
             </div>
         </div>
     );
-
-
-
-
 
 
 })

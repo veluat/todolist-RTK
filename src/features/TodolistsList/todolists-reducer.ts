@@ -3,9 +3,10 @@ import {Dispatch} from "redux";
 import {RequestStatusType, setRequestStatusAC, SetRequestStatusType} from "../../app/app-reducer";
 import {handleServerNetworkError} from "../../utils/error-utils";
 import {fetchTasksTC} from "./tasks-reducer";
+import {AppThunk} from "../../app/store";
 
 const initialState: TodolistDomainType[] = []
-export const todoListsReducer = (state = initialState, action: ActionType): TodolistDomainType[] => {
+export const todoListsReducer = (state = initialState, action: TodosActionsType): TodolistDomainType[] => {
     switch (action.type) {
         case 'REMOVE-TODOLIST':
             return (state.filter(tl => tl.id !== action.id))
@@ -42,7 +43,7 @@ export const changeTodoListEntityStatusAC = (id: string, status: RequestStatusTy
 export const clearTodosDataAC = () => ({type: 'CLEAR-DATA'} as const)
 
 //thunks
-export const fetchTodolistsTC = () => (dispatch: Dispatch<ActionType>) => {
+export const fetchTodolistsTC = (): AppThunk => (dispatch) => {
     dispatch(setRequestStatusAC('loading'))
     todolistsAPI.getTodolists()
         .then((res) => {
@@ -50,17 +51,17 @@ export const fetchTodolistsTC = () => (dispatch: Dispatch<ActionType>) => {
             dispatch(setRequestStatusAC('succeeded'))
             return res.data
         })
-        // .then((todos) => {
-        //     todos.forEach(tl => dispatch(fetchTasksTC(tl.id)))
-        //
-        // })
+        .then((todos) => {
+            todos.forEach(tl => dispatch(fetchTasksTC(tl.id)))
+
+        })
         .catch((error) => {
             handleServerNetworkError(error, dispatch)
         })
 }
 
 export const removeTodolistTC = (todolistId: string) => {
-    return (dispatch: Dispatch<ActionType>) => {
+    return (dispatch: Dispatch<TodosActionsType>) => {
         dispatch(setRequestStatusAC('loading'))
         dispatch(changeTodoListEntityStatusAC(todolistId, 'loading'))
         todolistsAPI.deleteTodolist(todolistId)
@@ -75,7 +76,7 @@ export const removeTodolistTC = (todolistId: string) => {
 }
 
 export const addTodolistTC = (title: string) => {
-    return (dispatch: Dispatch<ActionType>) => {
+    return (dispatch: Dispatch<TodosActionsType>) => {
         dispatch(setRequestStatusAC('loading'))
         todolistsAPI.createTodolist(title)
             .then((res) => {
@@ -89,7 +90,7 @@ export const addTodolistTC = (title: string) => {
 }
 
 export const changeTodolistTitleTC = (id: string, title: string) => {
-    return (dispatch: Dispatch<ActionType>) => {
+    return (dispatch: Dispatch<TodosActionsType>) => {
         dispatch(setRequestStatusAC('loading'))
         todolistsAPI.updateTodolist(id, title)
             .then((res) => {
@@ -109,7 +110,7 @@ export type AddTodoListAT = ReturnType<typeof addTodolistAC>
 export type RemoveTodoListAT = ReturnType<typeof removeTodoListAC>
 export type SetTodoListsAT = ReturnType<typeof setTodolistsAC>
 export type ClearTodosDataAT = ReturnType<typeof clearTodosDataAC>
-export type ActionType =
+export type TodosActionsType =
     | RemoveTodoListAT
     | AddTodoListAT
     | ReturnType<typeof changeTodoListFilterAC>

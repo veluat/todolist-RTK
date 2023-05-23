@@ -65,10 +65,12 @@ export const Login = () => {
                     </FormLabel>
                     <FormGroup>
                         <TextField type="email" label="Email" margin="normal"
+                                   color="primary" focused
                                    {...formik.getFieldProps("email")}/>
                         {formik.touched.email && formik.errors.email &&
                             <div style={{color: 'red'}}>{formik.errors.email}</div>}
                         <TextField type="password" label="Password" margin="normal"
+                                   color="primary" focused autoComplete="on"
                                    {...formik.getFieldProps("password")}/>
                         {formik.touched.password && formik.errors.password &&
                             <div style={{color: 'red'}}>{formik.errors.password}</div>}
