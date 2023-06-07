@@ -1,5 +1,5 @@
 import React, {useCallback, useEffect} from "react";
-import {AddItemForm} from "../../Components/AddItemForm/AddItemForm";
+import {AddItemForm} from "../../components/AddItemForm/AddItemForm";
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';

@@ -2,7 +2,7 @@ import React, {ChangeEvent, memo, useCallback} from 'react';
 import IconButton from '@mui/material/IconButton';
 import Checkbox from '@mui/material/Checkbox';
 import ListItem from '@mui/material/ListItem';
-import EditableSpan from "../../../../Components/EditableSpan/EditableSpan";
+import EditableSpan from "../../../../components/EditableSpan/EditableSpan";
 import {DeleteForeverOutlined} from "@mui/icons-material";
 import {TaskStatuses, TaskType} from "../../../../api/todolistsAPI";
 

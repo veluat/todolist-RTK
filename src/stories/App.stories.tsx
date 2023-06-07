@@ -3,7 +3,7 @@ import type {Meta, StoryFn, StoryObj} from '@storybook/react';
 import {App} from '../app/App';
 import {ReduxStoreProviderDecorator} from "./ReduxStoreProviderDecorator";
 import {TodolistsList} from "../features/TodolistsList/TodolistsList";
-import {ErrorSnackBar} from "../Components/ErrorSnackBar/ErrorSnackBar";
+import {ErrorSnackBar} from "../components/ErrorSnackBar/ErrorSnackBar";
 import AppBar from '@mui/material/AppBar';
 import Button from '@mui/material/Button';
 import Container from '@mui/material/Container';

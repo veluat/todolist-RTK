@@ -3,13 +3,13 @@ import {TaskStatuses, TaskType} from "../../../api/todolistsAPI";
 import {changeTodoListFilterAC, FilterButtonType, TodolistDomainType} from "../todolists-reducer";
 import {useAppDispatch} from "../../../app/store";
 import {fetchTasksTC} from "../tasks-reducer";
-import EditableSpan from "../../../Components/EditableSpan/EditableSpan";
+import EditableSpan from "../../../components/EditableSpan/EditableSpan";
 import IconButton from '@mui/material/IconButton';
 import List from '@mui/material/List';
 import {DeleteForeverOutlined} from "@mui/icons-material";
-import {AddItemForm} from "../../../Components/AddItemForm/AddItemForm";
+import {AddItemForm} from "../../../components/AddItemForm/AddItemForm";
 import {Task} from "./Task/Task";
-import {FilterButton} from "../../../Components/FilterButton/FilterButton";
+import {FilterButton} from "../../../components/FilterButton/FilterButton";
 
 type PropsType = {
     todolist: TodolistDomainType

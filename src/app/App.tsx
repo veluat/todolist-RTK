@@ -9,7 +9,7 @@ import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import Menu from "@mui/icons-material/Menu";
 import {TodolistsList} from "../features/TodolistsList/TodolistsList";
-import {ErrorSnackBar} from "../Components/ErrorSnackBar/ErrorSnackBar";
+import {ErrorSnackBar} from "../components/ErrorSnackBar/ErrorSnackBar";
 import {useAppDispatch, useAppSelector} from "./store";
 import {initializedAppTC, RequestStatusType} from "./app-reducer";
 import {Navigate, Route, Routes} from "react-router-dom";
