@@ -48,7 +48,7 @@ export const Todolist = React.memo(function ({demo = false, ...props}: PropsType
     }, [])
 
     const changeFilterHandlerCreator = useCallback((filter: FilterButtonType) => {
-        dispatch(changeTodoListFilterAC(props.todolist.id, filter))
+        dispatch(changeTodoListFilterAC({id: props.todolist.id, filter: filter}))
     }, [dispatch, props.todolist.id])
 
     let tasksForTodolist = props.tasks
