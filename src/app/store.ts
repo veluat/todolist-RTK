@@ -3,7 +3,7 @@ import {
   tasksReducer,
 } from "features/TodolistsList/tasks-reducer";
 import { todoListsReducer } from "features/TodolistsList/todolists-reducer";
-import { combineReducers } from "redux";
+import { AnyAction, combineReducers } from "redux";
 import thunkMiddleware, { ThunkAction, ThunkDispatch } from "redux-thunk";
 import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
 import { appReducer } from "./app-reducer";
@@ -22,18 +22,18 @@ export const store = configureStore({
     getDefaultMiddleware().prepend(thunkMiddleware),
 });
 
-export type AppRootStateType = ReturnType<typeof store.getState>;
+export type AppRootStateType = ReturnType<typeof rootReducer>;
 type RootReducerActionsType = TasksActionsType;
 export type AppThunkDispatch = ThunkDispatch<
   AppRootStateType,
   unknown,
-  RootReducerActionsType
+  AnyAction
 >;
 export type AppThunk<ReturnType = void> = ThunkAction<
   ReturnType,
   AppRootStateType,
   unknown,
-  RootReducerActionsType
+  AnyAction
 >;
 
 export const useAppDispatch = () => useDispatch<AppThunkDispatch>();

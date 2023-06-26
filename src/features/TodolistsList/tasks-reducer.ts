@@ -16,17 +16,13 @@ import {
   setTodolistsAC,
   SetTodoListsAT,
 } from "./todolists-reducer";
-import { AppRootStateType } from "app/store";
-import {
-  SetAppErrorActionType,
-  setRequestStatusAC,
-  SetRequestStatusType,
-} from "app/app-reducer";
+import { AppRootStateType, AppThunk } from "app/store";
 import {
   handleServerAppError,
   handleServerNetworkError,
 } from "utils/error-utils";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { appActions } from "app/app-reducer";
 
 const initialState: TasksStateType = {};
 export type TasksStateType = {
@@ -96,13 +92,14 @@ export const { removeTaskAC, addTaskAC, updateTaskAC, setTasksAC } =
 
 // thunks
 export const fetchTasksTC =
-  (todolistId: string) => (dispatch: Dispatch<TasksActionsType>) => {
-    dispatch(setRequestStatusAC({ status: "loading" }));
+  (todolistId: string): AppThunk =>
+  (dispatch) => {
+    dispatch(appActions.setRequestStatus({ status: "loading" }));
     todolistsAPI
       .getTasks(todolistId)
       .then((res) => {
         dispatch(setTasksAC({ tasks: res.data.items, todoListId: todolistId }));
-        dispatch(setRequestStatusAC({ status: "succeeded" }));
+        dispatch(appActions.setRequestStatus({ status: "succeeded" }));
       })
       .catch((error) => {
         handleServerNetworkError(error, dispatch);
@@ -110,14 +107,14 @@ export const fetchTasksTC =
   };
 
 export const removeTaskTC =
-  (taskId: string, todolistId: string) =>
-  (dispatch: Dispatch<TasksActionsType>) => {
-    dispatch(setRequestStatusAC({ status: "loading" }));
+  (taskId: string, todolistId: string): AppThunk =>
+  (dispatch) => {
+    dispatch(appActions.setRequestStatus({ status: "loading" }));
     todolistsAPI
       .deleteTask(todolistId, taskId)
       .then((res) => {
         dispatch(removeTaskAC({ taskId: taskId, todolistId: todolistId }));
-        dispatch(setRequestStatusAC({ status: "succeeded" }));
+        dispatch(appActions.setRequestStatus({ status: "succeeded" }));
       })
       .catch((error) => {
         handleServerNetworkError(error, dispatch);
@@ -125,9 +122,9 @@ export const removeTaskTC =
   };
 
 export const addTaskTC =
-  (title: string, todolistId: string) =>
-  (dispatch: Dispatch<TasksActionsType>) => {
-    dispatch(setRequestStatusAC({ status: "loading" }));
+  (title: string, todolistId: string): AppThunk =>
+  (dispatch) => {
+    dispatch(appActions.setRequestStatus({ status: "loading" }));
     todolistsAPI
       .createTask(todolistId, title)
       .then((res) => {
@@ -136,7 +133,7 @@ export const addTaskTC =
         } else {
           handleServerAppError(res.data, dispatch);
         }
-        dispatch(setRequestStatusAC({ status: "succeeded" }));
+        dispatch(appActions.setRequestStatus({ status: "succeeded" }));
       })
       .catch((error) => {
         handleServerNetworkError(error, dispatch);
@@ -144,9 +141,13 @@ export const addTaskTC =
   };
 
 export const updateTaskTC =
-  (taskId: string, model: UpdateDomainTaskModelType, todolistId: string) =>
-  (dispatch: Dispatch<TasksActionsType>, getState: () => AppRootStateType) => {
-    dispatch(setRequestStatusAC({ status: "loading" }));
+  (
+    taskId: string,
+    model: UpdateDomainTaskModelType,
+    todolistId: string
+  ): AppThunk =>
+  (dispatch, getState: () => AppRootStateType) => {
+    dispatch(appActions.setRequestStatus({ status: "loading" }));
     const state = getState();
     const task = state.tasks[todolistId].find((t) => t.id === taskId);
     if (!task) {
@@ -170,7 +171,7 @@ export const updateTaskTC =
           dispatch(
             updateTaskAC({ taskId: taskId, todoListId: todolistId, model })
           );
-          dispatch(setRequestStatusAC({ status: "succeeded" }));
+          dispatch(appActions.setRequestStatus({ status: "succeeded" }));
         } else {
           handleServerAppError(res.data, dispatch);
         }
@@ -198,6 +199,4 @@ export type TasksActionsType =
   | AddTodoListAT
   | RemoveTodoListAT
   | SetTodoListsAT
-  | SetRequestStatusType
-  | SetAppErrorActionType
   | ClearTodosDataAT;

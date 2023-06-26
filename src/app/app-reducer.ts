@@ -1,32 +1,34 @@
 import { Dispatch } from "redux";
 import { authAPI } from "api/todolistsAPI";
-import { setIsLoggedInAC } from "features/Login/auth-reducer";
+import { authActions } from "features/Login/auth-reducer";
 import {
   handleServerAppError,
   handleServerNetworkError,
 } from "utils/error-utils";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-const initialState: InitialStateType = {
-  status: "idle",
-  error: null,
-  isInitialized: false,
+const initialState = {
+  status: "idle" as RequestStatusType,
+  error: null as string | null,
+  isInitialized: false as boolean,
 };
+
+export type AppInitialStateType = typeof initialState;
 
 const slice = createSlice({
   name: "app",
-  initialState: initialState,
+  initialState,
   reducers: {
-    setAppErrorAC(state, action: PayloadAction<{ error: string | null }>) {
+    setAppError(state, action: PayloadAction<{ error: string | null }>) {
       state.error = action.payload.error;
     },
-    setRequestStatusAC(
+    setRequestStatus(
       state,
       action: PayloadAction<{ status: RequestStatusType }>
     ) {
       state.status = action.payload.status;
     },
-    setAppInitializedAC(
+    setAppInitialized(
       state,
       action: PayloadAction<{ isInitialized: boolean }>
     ) {
@@ -36,17 +38,16 @@ const slice = createSlice({
 });
 
 export const appReducer = slice.reducer;
-export const { setAppErrorAC, setRequestStatusAC, setAppInitializedAC } =
-  slice.actions;
+export const appActions = slice.actions;
 
 export const initializedAppTC = () => (dispatch: Dispatch) => {
-  dispatch(setRequestStatusAC({ status: "loading" }));
+  dispatch(appActions.setRequestStatus({ status: "loading" }));
   authAPI
     .me()
     .then((res) => {
       if (res.data.resultCode === 0) {
-        dispatch(setIsLoggedInAC({ value: true }));
-        dispatch(setRequestStatusAC({ status: "succeeded" }));
+        dispatch(authActions.setIsLoggedIn({ isLoggedIn: true }));
+        dispatch(appActions.setRequestStatus({ status: "succeeded" }));
       } else {
         handleServerAppError(res.data, dispatch);
       }
@@ -55,16 +56,7 @@ export const initializedAppTC = () => (dispatch: Dispatch) => {
       handleServerNetworkError(error, dispatch);
     })
     .finally(() => {
-      dispatch(setAppInitializedAC({ isInitialized: true }));
+      dispatch(appActions.setAppInitialized({ isInitialized: true }));
     });
 };
 export type RequestStatusType = "idle" | "loading" | "succeeded" | "failed";
-
-export type InitialStateType = {
-  status: RequestStatusType;
-  error: string | null;
-  isInitialized: boolean;
-};
-
-export type SetAppErrorActionType = ReturnType<typeof setAppErrorAC>;
-export type SetRequestStatusType = ReturnType<typeof setRequestStatusAC>;
