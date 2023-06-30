@@ -1,10 +1,6 @@
 import React, { useCallback, useEffect } from "react";
 import { TaskStatuses, TaskType } from "api/todolistsAPI";
-import {
-  changeTodoListFilterAC,
-  FilterButtonType,
-  TodolistDomainType,
-} from "../todolists-reducer";
+import { FilterButtonType, TodolistDomainType } from "../todolists-reducer";
 import { useAppDispatch } from "app/store";
 import { fetchTasksTC } from "../tasks-reducer";
 import EditableSpan from "../../../components/EditableSpan/EditableSpan";

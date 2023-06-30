@@ -12,12 +12,12 @@ import {
 } from "./tasks-reducer";
 import {
   addTodolistTC,
-  changeTodoListFilterAC,
   changeTodolistTitleTC,
   fetchTodolistsTC,
   FilterButtonType,
   removeTodolistTC,
   TodolistDomainType,
+  todoListsActions,
 } from "./todolists-reducer";
 import { TaskStatuses } from "api/todolistsAPI";
 import { Todolist } from "./Todolists/Todolist";
@@ -70,8 +70,11 @@ export const TodolistsList: React.FC<PropsType> = ({ demo = false }) => {
 
   const changeFilter = useCallback(
     (todoListId: string, filter: FilterButtonType) => {
-      dispatch(changeTodoListFilterAC({ id: todoListId, filter: filter }));
-    }, []
+      dispatch(
+        todoListsActions.changeTodoListFilter({ id: todoListId, filter })
+      );
+    },
+    []
   );
 
   const removeTodolist = useCallback(function (todoListId: string) {
