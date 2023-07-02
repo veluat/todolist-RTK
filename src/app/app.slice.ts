@@ -1,10 +1,10 @@
 import { Dispatch } from "redux";
 import { authAPI } from "api/todolistsAPI";
-import { authActions } from "features/Login/auth-reducer";
+import { authActions } from "features/auth/auth.slice";
 import {
   handleServerAppError,
   handleServerNetworkError,
-} from "utils/error-utils";
+} from "utils/error.utils";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 const initialState = {
@@ -37,7 +37,7 @@ const slice = createSlice({
   },
 });
 
-export const appReducer = slice.reducer;
+export const appSlice = slice.reducer;
 export const appActions = slice.actions;
 
 export const initializedAppTC = () => (dispatch: Dispatch) => {

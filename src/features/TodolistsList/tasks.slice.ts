@@ -9,10 +9,11 @@ import { AppRootStateType, AppThunk } from "app/store";
 import {
   handleServerAppError,
   handleServerNetworkError,
-} from "utils/error-utils";
+} from "utils/error.utils";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { appActions } from "app/app-reducer";
-import { todoListsActions } from "features/TodolistsList/todolists-reducer";
+import { appActions } from "app/app.slice";
+import { todoListsActions } from "features/TodolistsList/todolists.slice";
+import { clearTasksAndTodos } from "common/actions/common.actions";
 
 export type TasksStateType = {
   [key: string]: Array<TaskType>;
@@ -69,13 +70,13 @@ const slice = createSlice({
           state[tl.id] = [];
         });
       })
-      .addCase(todoListsActions.clearTodosData, (state, action) => {
+      .addCase(clearTasksAndTodos, () => {
         return {};
       });
   },
 });
 
-export const tasksReducer = slice.reducer;
+export const tasksSlice = slice.reducer;
 export const tasksActions = slice.actions;
 
 // thunks
@@ -105,10 +106,8 @@ export const removeTaskTC =
     dispatch(appActions.setRequestStatus({ status: "loading" }));
     todolistsAPI
       .deleteTask(todolistId, taskId)
-      .then((res) => {
-        dispatch(
-          tasksActions.removeTask({ taskId: taskId, todolistId: todolistId })
-        );
+      .then(() => {
+        dispatch(tasksActions.removeTask({ taskId, todolistId }));
         dispatch(appActions.setRequestStatus({ status: "succeeded" }));
       })
       .catch((error) => {

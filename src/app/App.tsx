@@ -10,23 +10,24 @@ import Typography from "@mui/material/Typography";
 import Menu from "@mui/icons-material/Menu";
 import { TodolistsList } from "features/TodolistsList/TodolistsList";
 import { ErrorSnackBar } from "components/ErrorSnackBar/ErrorSnackBar";
-import { useAppDispatch, useAppSelector } from "./store";
-import { initializedAppTC, RequestStatusType } from "./app-reducer";
+import { initializedAppTC } from "app/app.slice";
 import { Navigate, Route, Routes } from "react-router-dom";
-import { Login } from "features/Login/Login";
+import { Login } from "features/auth/Login";
 import CircularProgress from "@mui/material/CircularProgress";
-import { logOutTC } from "features/Login/auth-reducer";
+import { logOutTC } from "features/auth/auth.slice";
+import { useSelector } from "react-redux";
+import { selectAppStatus, selectIsInitialized } from "app/app.selectors";
+import { selectIsLoggedIn } from "features/auth/auth.selectors";
+import { useAppDispatch } from "hooks/useAppDispatch";
 
 type PropsType = {
   demo?: boolean;
 };
 
 export function App({ demo = false }: PropsType) {
-  const status = useAppSelector<RequestStatusType>((state) => state.app.status);
-  const isInitialized = useAppSelector<boolean>(
-    (state) => state.app.isInitialized
-  );
-  const isLoggedIn = useAppSelector<boolean>((state) => state.auth.isLoggedIn);
+  const status = useSelector(selectAppStatus);
+  const isInitialized = useSelector(selectIsInitialized);
+  const isLoggedIn = useSelector(selectIsLoggedIn);
   const dispatch = useAppDispatch();
 
   const logoutHandler = useCallback(() => {

@@ -1,12 +1,12 @@
 import {
   handleServerAppError,
   handleServerNetworkError,
-} from "utils/error-utils";
-import { appActions } from "app/app-reducer";
+} from "utils/error.utils";
+import { appActions } from "app/app.slice";
 import { authAPI, LoginType } from "api/todolistsAPI";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { AppThunk } from "app/store";
-import { todoListsActions } from "features/TodolistsList/todolists-reducer";
+import { clearTasksAndTodos } from "common/actions/common.actions";
 
 const initialState = {
   isLoggedIn: false,
@@ -22,7 +22,7 @@ const slice = createSlice({
   },
 });
 
-export const authReducer = slice.reducer;
+export const authSlice = slice.reducer;
 //export const { setIsLoggedIn } = slice.actions;
 export const authActions = slice.actions;
 
@@ -53,7 +53,7 @@ export const logOutTC = (): AppThunk => (dispatch) => {
     .then((res) => {
       if (res.data.resultCode === 0) {
         dispatch(authActions.setIsLoggedIn({ isLoggedIn: false }));
-        dispatch(todoListsActions.clearTodosData());
+        dispatch(clearTasksAndTodos());
         dispatch(appActions.setRequestStatus({ status: "succeeded" }));
       } else {
         handleServerAppError(res.data, dispatch);

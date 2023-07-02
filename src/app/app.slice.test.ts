@@ -1,4 +1,4 @@
-import { appActions, AppInitialStateType, appReducer } from "./app-reducer";
+import { appActions, AppInitialStateType, appSlice } from "app/app.slice";
 
 let startState: AppInitialStateType;
 
@@ -7,7 +7,7 @@ beforeEach(() => {
 });
 
 test("correct error message should be set", () => {
-  const endState = appReducer(
+  const endState = appSlice(
     startState,
     appActions.setAppError({ error: "some error" })
   );
@@ -15,7 +15,7 @@ test("correct error message should be set", () => {
 });
 
 test("correct status  should be set", () => {
-  const endState = appReducer(
+  const endState = appSlice(
     startState,
     appActions.setRequestStatus({ status: "loading" })
   );

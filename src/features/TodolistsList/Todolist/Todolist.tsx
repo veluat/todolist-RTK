@@ -1,8 +1,10 @@
 import React, { useCallback, useEffect } from "react";
 import { TaskStatuses, TaskType } from "api/todolistsAPI";
-import { FilterButtonType, TodolistDomainType } from "../todolists-reducer";
-import { useAppDispatch } from "app/store";
-import { fetchTasksTC } from "../tasks-reducer";
+import {
+  FilterButtonType,
+  TodolistDomainType,
+} from "features/TodolistsList/todolists.slice";
+import { fetchTasksTC } from "features/TodolistsList/tasks.slice";
 import EditableSpan from "../../../components/EditableSpan/EditableSpan";
 import IconButton from "@mui/material/IconButton";
 import List from "@mui/material/List";
@@ -10,6 +12,7 @@ import { DeleteForeverOutlined } from "@mui/icons-material";
 import { AddItemForm } from "components/AddItemForm/AddItemForm";
 import { Task } from "./Task/Task";
 import { FilterButton } from "components/FilterButton/FilterButton";
+import { useAppDispatch } from "hooks/useAppDispatch";
 
 type PropsType = {
   todolist: TodolistDomainType;

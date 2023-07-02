@@ -1,10 +1,10 @@
 import { todolistsAPI, TodolistType } from "api/todolistsAPI";
-
-import { handleServerNetworkError } from "utils/error-utils";
-import { fetchTasksTC } from "./tasks-reducer";
+import { handleServerNetworkError } from "utils/error.utils";
+import { fetchTasksTC } from "features/TodolistsList/tasks.slice";
 import { AppThunk } from "app/store";
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { appActions, RequestStatusType } from "app/app-reducer";
+import { createSlice, current, PayloadAction } from "@reduxjs/toolkit";
+import { appActions, RequestStatusType } from "app/app.slice";
+import { clearTasksAndTodos } from "common/actions/common.actions";
 
 const slice = createSlice({
   name: "todoLists",
@@ -49,12 +49,14 @@ const slice = createSlice({
       const index = state.findIndex((tl) => tl.id === action.payload.id);
       if (index !== -1) state[index].entityStatus = action.payload.entityStatus;
     },
-    clearTodosData(state) {
+  },
+  extraReducers: (builder) => {
+    builder.addCase(clearTasksAndTodos, () => {
       return [];
-    },
+    });
   },
 });
-export const todoListsReducer = slice.reducer;
+export const todolistsSlice = slice.reducer;
 export const todoListsActions = slice.actions;
 
 //thunks
