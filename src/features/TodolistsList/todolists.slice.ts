@@ -1,10 +1,10 @@
 import { todolistsAPI, TodolistType } from "api/todolistsAPI";
 import { handleServerNetworkError } from "utils/error.utils";
-import { fetchTasksTC } from "features/TodolistsList/tasks.slice";
 import { AppThunk } from "app/store";
 import { createSlice, current, PayloadAction } from "@reduxjs/toolkit";
 import { appActions, RequestStatusType } from "app/app.slice";
 import { clearTasksAndTodos } from "common/actions/common.actions";
+import { fetchTasks } from "features/TodolistsList/tasks.slice";
 
 const slice = createSlice({
   name: "todoLists",
@@ -70,7 +70,7 @@ export const fetchTodolistsTC = (): AppThunk => (dispatch) => {
       return res.data;
     })
     .then((todos) => {
-      todos.forEach((tl) => dispatch(fetchTasksTC(tl.id)));
+      todos.forEach((tl) => dispatch(fetchTasks(tl.id)));
     })
     .catch((error) => {
       handleServerNetworkError(error, dispatch);

@@ -204,7 +204,7 @@ test("empty arrays should be added when we set todolists", () => {
 
 test("tasks should be added for todolist", () => {
   const action = tasksActions.setTasks({
-    todoListId: "todolistId1",
+    todolistId: "todolistId1",
     tasks: startState["todolistId1"],
   });
   const endState = tasksSlice(

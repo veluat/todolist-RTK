@@ -4,7 +4,6 @@ import {
   FilterButtonType,
   TodolistDomainType,
 } from "features/TodolistsList/todolists.slice";
-import { fetchTasksTC } from "features/TodolistsList/tasks.slice";
 import EditableSpan from "../../../components/EditableSpan/EditableSpan";
 import IconButton from "@mui/material/IconButton";
 import List from "@mui/material/List";
@@ -13,6 +12,7 @@ import { AddItemForm } from "components/AddItemForm/AddItemForm";
 import { Task } from "./Task/Task";
 import { FilterButton } from "components/FilterButton/FilterButton";
 import { useAppDispatch } from "hooks/useAppDispatch";
+import { tasksThunks } from "features/TodolistsList/tasks.slice";
 
 type PropsType = {
   todolist: TodolistDomainType;
@@ -45,7 +45,7 @@ export const Todolist = React.memo(function ({
     if (demo) {
       return;
     }
-    dispatch(fetchTasksTC(props.todolist.id));
+    dispatch(tasksThunks.fetchTasks(props.todolist.id));
   }, []);
 
   const addTask = useCallback(
