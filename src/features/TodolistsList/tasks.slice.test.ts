@@ -2,6 +2,7 @@ import {
   tasksActions,
   tasksSlice,
   TasksStateType,
+  tasksThunks,
 } from "features/TodolistsList/tasks.slice";
 
 import { TaskPriorities, TaskStatuses } from "api/todolistsAPI";
@@ -203,10 +204,14 @@ test("empty arrays should be added when we set todolists", () => {
 });
 
 test("tasks should be added for todolist", () => {
-  const action = tasksActions.setTasks({
-    todolistId: "todolistId1",
-    tasks: startState["todolistId1"],
-  });
+  const action = tasksThunks.fetchTasks.fulfilled(
+    {
+      todolistId: "todolistId1",
+      tasks: startState["todolistId1"],
+    },
+    "requestId",
+    "todolistId1"
+  );
   const endState = tasksSlice(
     {
       todolistId2: [],
