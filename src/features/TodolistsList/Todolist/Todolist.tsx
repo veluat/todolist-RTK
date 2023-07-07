@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect } from "react";
-import { TaskStatuses, TaskType } from "api/todolistsAPI";
+import { TaskStatuses, TaskType } from "common/api/common.api";
 import {
   FilterButtonType,
   TodolistDomainType,
@@ -11,7 +11,7 @@ import { DeleteForeverOutlined } from "@mui/icons-material";
 import { AddItemForm } from "components/AddItemForm/AddItemForm";
 import { Task } from "./Task/Task";
 import { FilterButton } from "components/FilterButton/FilterButton";
-import { useAppDispatch } from "hooks/useAppDispatch";
+import { useAppDispatch } from "common/hooks/useAppDispatch";
 import { tasksThunks } from "features/TodolistsList/tasks.slice";
 
 type PropsType = {

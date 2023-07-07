@@ -5,7 +5,7 @@ import {
   tasksThunks,
 } from "features/TodolistsList/tasks.slice";
 
-import { TaskPriorities, TaskStatuses } from "api/todolistsAPI";
+import { TaskPriorities, TaskStatuses } from "common/api/common.api";
 import { todoListsActions } from "features/TodolistsList/todolists.slice";
 
 let startState: TasksStateType;
@@ -105,19 +105,21 @@ test("correct task should be deleted from correct array", () => {
 });
 
 test("correct task should be added to correct array", () => {
-  const action = tasksActions.addTask({
-    task: {
-      todoListId: "todolistId2",
-      title: "juce",
-      status: TaskStatuses.New,
-      addedDate: "",
-      order: 0,
-      deadline: "",
-      priority: 0,
-      description: "",
-      startDate: "",
-      id: "id exists",
-    },
+  const task = {
+    todoListId: "todolistId2",
+    title: "juce",
+    status: TaskStatuses.New,
+    addedDate: "",
+    order: 0,
+    deadline: "",
+    priority: 0,
+    description: "",
+    startDate: "",
+    id: "id exists",
+  };
+  const action = tasksThunks.addTask.fulfilled({ task }, "reguestId", {
+    title: task.title,
+    todolistId: task.todoListId,
   });
 
   const endState = tasksSlice(startState, action);
@@ -130,11 +132,12 @@ test("correct task should be added to correct array", () => {
 });
 
 test("status of specified task should be changed", () => {
-  const action = tasksActions.updateTask({
+  const args = {
     taskId: "2",
-    todoListId: "todolistId2",
-    model: { status: TaskStatuses.New },
-  });
+    domainModel: { status: TaskStatuses.New },
+    todolistId: "todolistId2",
+  };
+  const action = tasksThunks.updateTask.fulfilled(args, "reqestId", args);
 
   const endState = tasksSlice(startState, action);
 
@@ -143,11 +146,12 @@ test("status of specified task should be changed", () => {
 });
 
 test("title of specified task should be changed", () => {
-  const action = tasksActions.updateTask({
+  const args = {
     taskId: "2",
-    model: { title: "water" },
-    todoListId: "todolistId2",
-  });
+    domainModel: { title: "water" },
+    todolistId: "todolistId2",
+  };
+  const action = tasksThunks.updateTask.fulfilled(args, "reqestId", args);
 
   const endState = tasksSlice(startState, action);
 

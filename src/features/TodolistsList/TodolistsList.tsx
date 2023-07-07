@@ -3,11 +3,7 @@ import { AddItemForm } from "components/AddItemForm/AddItemForm";
 import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
 import Paper from "@mui/material/Paper";
-import {
-  addTaskTC,
-  removeTaskTC,
-  updateTaskTC,
-} from "features/TodolistsList/tasks.slice";
+import { removeTaskTC, tasksThunks } from "features/TodolistsList/tasks.slice";
 import {
   addTodolistTC,
   changeTodolistTitleTC,
@@ -17,14 +13,14 @@ import {
   TodolistDomainType,
   todoListsActions,
 } from "features/TodolistsList/todolists.slice";
-import { TaskStatuses } from "api/todolistsAPI";
+import { TaskStatuses } from "common/api/common.api";
 import { Todolist } from "./Todolist/Todolist";
 import { Navigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { selectTodolists } from "features/TodolistsList/todolists.selectors";
 import { selectTasks } from "features/TodolistsList/tasks.selectors";
 import { selectIsLoggedIn } from "features/auth/auth.selectors";
-import { useAppDispatch } from "hooks/useAppDispatch";
+import { useAppDispatch } from "common/hooks/useAppDispatch";
 
 type PropsType = {
   demo?: boolean;
@@ -48,7 +44,7 @@ export const TodolistsList: React.FC<PropsType> = ({ demo = false }) => {
   }, []);
 
   const addTask = useCallback(function (title: string, todolistId: string) {
-    dispatch(addTaskTC(title, todolistId));
+    dispatch(tasksThunks.addTask({ todolistId, title }));
   }, []);
 
   const changeStatus = useCallback(function (
@@ -56,16 +52,20 @@ export const TodolistsList: React.FC<PropsType> = ({ demo = false }) => {
     status: TaskStatuses,
     todolistId: string
   ) {
-    dispatch(updateTaskTC(taskId, { status }, todolistId));
+    dispatch(
+      tasksThunks.updateTask({ taskId, domainModel: { status }, todolistId })
+    );
   },
   []);
 
   const changeTaskTitle = useCallback(function (
     taskId: string,
-    newTitle: string,
+    title: string,
     todolistId: string
   ) {
-    dispatch(updateTaskTC(taskId, { title: newTitle }, todolistId));
+    dispatch(
+      tasksThunks.updateTask({ taskId, domainModel: { title }, todolistId })
+    );
   },
   []);
 

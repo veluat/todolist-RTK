@@ -4,7 +4,7 @@ import Checkbox from "@mui/material/Checkbox";
 import ListItem from "@mui/material/ListItem";
 import EditableSpan from "../../../../components/EditableSpan/EditableSpan";
 import { DeleteForeverOutlined } from "@mui/icons-material";
-import { TaskStatuses, TaskType } from "api/todolistsAPI";
+import { TaskStatuses, TaskType } from "common/api/common.api";
 
 type TaskPropsType = {
   task: TaskType;

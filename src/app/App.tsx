@@ -18,7 +18,7 @@ import { logOutTC } from "features/auth/auth.slice";
 import { useSelector } from "react-redux";
 import { selectAppStatus, selectIsInitialized } from "app/app.selectors";
 import { selectIsLoggedIn } from "features/auth/auth.selectors";
-import { useAppDispatch } from "hooks/useAppDispatch";
+import { useAppDispatch } from "common/hooks/useAppDispatch";
 
 type PropsType = {
   demo?: boolean;

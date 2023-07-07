@@ -1,12 +1,10 @@
-import {
-  handleServerAppError,
-  handleServerNetworkError,
-} from "utils/error.utils";
+import { handleServerNetworkError } from "common/utils/handle-server-network-error";
 import { appActions } from "app/app.slice";
-import { authAPI, LoginType } from "api/todolistsAPI";
+import { authAPI, LoginType } from "common/api/common.api";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { AppThunk } from "app/store";
 import { clearTasksAndTodos } from "common/actions/common.actions";
+import { handleServerAppError } from "common/utils/handle-server-app-error";
 
 const initialState = {
   isLoggedIn: false,
