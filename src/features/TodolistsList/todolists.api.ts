@@ -1,11 +1,14 @@
 import { AxiosResponse } from "axios/index";
-import {
-  instance,
-  ResponseType,
-  TaskPriorities,
-  TaskStatuses,
-} from "common/api/common.api";
+import { instance, ResponseType } from "common/api/common.api";
 import { UpdateDomainTaskModelType } from "features/TodolistsList/tasks.slice";
+import { TaskPriorities, TaskStatuses } from "common/enums";
+import {
+  AddTaskArgType,
+  GetTasksResponse,
+  TaskType,
+  TodolistType,
+  UpdateTaskModelType,
+} from "features/TodolistsList/todolists.api.types";
 
 export const todolistsAPI = {
   getTodolists() {
@@ -47,53 +50,4 @@ export const todolistsAPI = {
       model
     );
   },
-};
-
-export type UserType = {
-  id: number;
-  email: string;
-  login: string;
-};
-
-export type TodolistType = {
-  addedDate: string;
-  id: string;
-  order: number;
-  title: string;
-};
-
-export type TaskType = {
-  description: string;
-  title: string;
-  status: TaskStatuses;
-  priority: TaskPriorities;
-  startDate: string;
-  deadline: string;
-  id: string;
-  todoListId: string;
-  order: number;
-  addedDate: string;
-};
-export type UpdateTaskModelType = {
-  description: string;
-  title: string;
-  status: TaskStatuses;
-  priority: TaskPriorities;
-  startDate: string;
-  deadline: string;
-};
-type GetTasksResponse = {
-  items: TaskType[];
-  totalCount: number;
-  error: string | null;
-};
-
-export type AddTaskArgType = {
-  todolistId: string;
-  title: string;
-};
-export type UpdateTaskArgType = {
-  taskId: string;
-  domainModel: UpdateDomainTaskModelType;
-  todolistId: string;
 };

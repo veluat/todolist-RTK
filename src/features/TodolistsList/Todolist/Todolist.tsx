@@ -1,18 +1,19 @@
 import React, { useCallback, useEffect } from "react";
-import { TaskStatuses, TaskType } from "common/api/common.api";
 import {
   FilterButtonType,
   TodolistDomainType,
 } from "features/TodolistsList/todolists.slice";
-import EditableSpan from "../../../components/EditableSpan/EditableSpan";
+import EditableSpan from "../../../common/components/EditableSpan/EditableSpan";
 import IconButton from "@mui/material/IconButton";
 import List from "@mui/material/List";
 import { DeleteForeverOutlined } from "@mui/icons-material";
-import { AddItemForm } from "components/AddItemForm/AddItemForm";
+import { AddItemForm } from "common/components/AddItemForm/AddItemForm";
 import { Task } from "./Task/Task";
-import { FilterButton } from "components/FilterButton/FilterButton";
+import { FilterButton } from "common/components/FilterButton/FilterButton";
 import { useAppDispatch } from "common/hooks/useAppDispatch";
 import { tasksThunks } from "features/TodolistsList/tasks.slice";
+import { TaskStatuses } from "common/enums";
+import { TaskType } from "features/TodolistsList/todolists.api";
 
 type PropsType = {
   todolist: TodolistDomainType;

@@ -1,10 +1,13 @@
-import { todolistsAPI, TodolistType } from "common/api/common.api";
 import { handleServerNetworkError } from "common/utils";
 import { AppThunk } from "app/store";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { appActions, RequestStatusType } from "app/app.slice";
 import { clearTasksAndTodos } from "common/actions/common.actions";
 import { tasksThunks } from "features/TodolistsList/tasks.slice";
+import {
+  todolistsAPI,
+  TodolistType,
+} from "features/TodolistsList/todolists.api";
 
 const slice = createSlice({
   name: "todoLists",

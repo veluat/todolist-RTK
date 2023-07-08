@@ -5,8 +5,8 @@ import {
   tasksThunks,
 } from "features/TodolistsList/tasks.slice";
 
-import { TaskPriorities, TaskStatuses } from "common/api/common.api";
 import { todoListsActions } from "features/TodolistsList/todolists.slice";
+import { TaskPriorities, TaskStatuses } from "common/enums";
 
 let startState: TasksStateType;
 

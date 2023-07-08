@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect } from "react";
-import { AddItemForm } from "components/AddItemForm/AddItemForm";
+import { AddItemForm } from "common/components/AddItemForm/AddItemForm";
 import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
 import Paper from "@mui/material/Paper";
@@ -13,7 +13,6 @@ import {
   TodolistDomainType,
   todoListsActions,
 } from "features/TodolistsList/todolists.slice";
-import { TaskStatuses } from "common/api/common.api";
 import { Todolist } from "./Todolist/Todolist";
 import { Navigate } from "react-router-dom";
 import { useSelector } from "react-redux";
@@ -21,6 +20,7 @@ import { selectTodolists } from "features/TodolistsList/todolists.selectors";
 import { selectTasks } from "features/TodolistsList/tasks.selectors";
 import { selectIsLoggedIn } from "features/auth/auth.selectors";
 import { useAppDispatch } from "common/hooks/useAppDispatch";
+import { TaskStatuses } from "common/enums";
 
 type PropsType = {
   demo?: boolean;

@@ -1,9 +1,9 @@
 import { Dispatch } from "redux";
-import { authAPI } from "common/api/common.api";
 import { authActions } from "features/auth/auth.slice";
 import { handleServerNetworkError } from "common/utils/handle-server-network-error";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { handleServerAppError } from "common/utils/handle-server-app-error";
+import { authAPI } from "features/auth/auth.api";
 
 const initialState = {
   status: "idle" as RequestStatusType,

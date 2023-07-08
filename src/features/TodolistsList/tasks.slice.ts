@@ -1,12 +1,4 @@
-import {
-  AddTaskArgType,
-  TaskPriorities,
-  TaskStatuses,
-  TaskType,
-  todolistsAPI,
-  UpdateTaskArgType,
-  UpdateTaskModelType,
-} from "common/api/common.api";
+import {} from "common/api/common.api";
 import { AppThunk } from "app/store";
 import { handleServerNetworkError } from "common/utils";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
@@ -15,6 +7,14 @@ import { todoListsActions } from "features/TodolistsList/todolists.slice";
 import { clearTasksAndTodos } from "common/actions/common.actions";
 import { createAppAsyncThunk } from "common/utils";
 import { handleServerAppError } from "common/utils";
+import {
+  AddTaskArgType,
+  TaskType,
+  todolistsAPI,
+  UpdateTaskArgType,
+  UpdateTaskModelType,
+} from "features/TodolistsList/todolists.api";
+import { TaskPriorities, TaskStatuses } from "common/enums";
 
 export type TasksStateType = {
   [key: string]: Array<TaskType>;

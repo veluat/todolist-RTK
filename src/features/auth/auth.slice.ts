@@ -1,10 +1,10 @@
 import { handleServerNetworkError } from "common/utils/handle-server-network-error";
 import { appActions } from "app/app.slice";
-import { authAPI, LoginType } from "common/api/common.api";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { AppThunk } from "app/store";
 import { clearTasksAndTodos } from "common/actions/common.actions";
 import { handleServerAppError } from "common/utils/handle-server-app-error";
+import { authAPI, LoginType } from "features/auth/auth.api";
 
 const initialState = {
   isLoggedIn: false,
@@ -21,7 +21,6 @@ const slice = createSlice({
 });
 
 export const authSlice = slice.reducer;
-//export const { setIsLoggedIn } = slice.actions;
 export const authActions = slice.actions;
 
 // thunks
