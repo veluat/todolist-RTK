@@ -8,11 +8,11 @@ import FormLabel from "@mui/material/FormLabel";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import { useFormik } from "formik";
-import { logInTC } from "features/auth/auth.slice";
 import { Navigate } from "react-router-dom";
 import { useAppDispatch } from "common/hooks/useAppDispatch";
 import { useSelector } from "react-redux";
 import { selectIsLoggedIn } from "features/auth/auth.selectors";
+import { authThunks } from "features/auth/auth.slice";
 
 const validate = (values: any) => {
   const errors: FormikErrorType = {};
@@ -41,7 +41,7 @@ export const Login = () => {
     },
     validate,
     onSubmit: (values) => {
-      dispatch(logInTC(values));
+      dispatch(authThunks.login(values));
       formik.resetForm();
     },
   });

@@ -1,16 +1,16 @@
 import { AxiosResponse } from "axios/index";
 import { instance, ResponseType } from "common/api/common.api";
-import { UpdateDomainTaskModelType } from "features/TodolistsList/tasks.slice";
-import { TaskPriorities, TaskStatuses } from "common/enums";
 import {
   AddTaskArgType,
   GetTasksResponse,
+  RemoveTaskArgType,
   TaskType,
   TodolistType,
   UpdateTaskModelType,
+  UpdateTodolistTitleArgType,
 } from "features/TodolistsList/todolists.api.types";
 
-export const todolistsAPI = {
+export const todolistsApi = {
   getTodolists() {
     return instance.get<TodolistType[]>(`todo-lists`);
   },
@@ -24,10 +24,10 @@ export const todolistsAPI = {
   deleteTodolist(todolistId: string) {
     return instance.delete<ResponseType>(`todo-lists/${todolistId}`);
   },
-  updateTodolist(todolistId: string, title: string) {
+  updateTodolist(arg: UpdateTodolistTitleArgType) {
     return instance.put<{ title: string }, AxiosResponse<ResponseType>>(
-      `todo-lists/${todolistId}`,
-      { title }
+      `todo-lists/${arg.id}`,
+      { title: arg.title }
     );
   },
   getTasks(todolistId: string) {
@@ -39,9 +39,9 @@ export const todolistsAPI = {
       { title: arg.title }
     );
   },
-  deleteTask(todolistId: string, taskId: string) {
+  deleteTask(arg: RemoveTaskArgType) {
     return instance.delete<ResponseType>(
-      `todo-lists/${todolistId}/tasks/${taskId}`
+      `todo-lists/${arg.todolistId}/tasks/${arg.taskId}`
     );
   },
   updateTask(todolistId: string, taskId: string, model: UpdateTaskModelType) {

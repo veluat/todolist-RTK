@@ -5,7 +5,7 @@ import ListItem from "@mui/material/ListItem";
 import EditableSpan from "../../../../common/components/EditableSpan/EditableSpan";
 import { DeleteForeverOutlined } from "@mui/icons-material";
 import { TaskStatuses } from "common/enums";
-import { TaskType } from "features/TodolistsList/todolists.api";
+import { TaskType } from "features/TodolistsList/todolists.api.types";
 
 type TaskPropsType = {
   task: TaskType;

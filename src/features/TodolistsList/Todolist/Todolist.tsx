@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect } from "react";
 import {
-  FilterButtonType,
+  FilterValuesType,
   TodolistDomainType,
 } from "features/TodolistsList/todolists.slice";
 import EditableSpan from "../../../common/components/EditableSpan/EditableSpan";
@@ -13,12 +13,12 @@ import { FilterButton } from "common/components/FilterButton/FilterButton";
 import { useAppDispatch } from "common/hooks/useAppDispatch";
 import { tasksThunks } from "features/TodolistsList/tasks.slice";
 import { TaskStatuses } from "common/enums";
-import { TaskType } from "features/TodolistsList/todolists.api";
+import { TaskType } from "features/TodolistsList/todolists.api.types";
 
 type PropsType = {
   todolist: TodolistDomainType;
   tasks: Array<TaskType>;
-  changeFilter: (todolistId: string, filter: FilterButtonType) => void;
+  changeFilter: (todolistId: string, filter: FilterValuesType) => void;
   addTask: (title: string, todolistId: string) => void;
   changeTaskStatus: (
     id: string,
@@ -68,7 +68,7 @@ export const Todolist = React.memo(function ({
   );
 
   const changeFilterHandlerCreator = useCallback(
-    (filter: FilterButtonType) => {
+    (filter: FilterValuesType) => {
       props.changeFilter(props.todolist.id, filter);
     },
     [props.todolist.id, props.changeFilter]

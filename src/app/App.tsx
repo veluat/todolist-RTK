@@ -10,32 +10,28 @@ import Typography from "@mui/material/Typography";
 import Menu from "@mui/icons-material/Menu";
 import { TodolistsList } from "features/TodolistsList/TodolistsList";
 import { ErrorSnackBar } from "common/components/ErrorSnackBar/ErrorSnackBar";
-import { initializedAppTC } from "app/app.slice";
 import { Navigate, Route, Routes } from "react-router-dom";
 import { Login } from "features/auth/Login";
 import CircularProgress from "@mui/material/CircularProgress";
-import { logOutTC } from "features/auth/auth.slice";
+import { authThunks } from "features/auth/auth.slice";
 import { useSelector } from "react-redux";
 import { selectAppStatus, selectIsInitialized } from "app/app.selectors";
 import { selectIsLoggedIn } from "features/auth/auth.selectors";
-import { useAppDispatch } from "common/hooks/useAppDispatch";
+import { useActions } from "common/hooks/useActions";
 
-type PropsType = {
-  demo?: boolean;
-};
-
-export function App({ demo = false }: PropsType) {
+export function App() {
   const status = useSelector(selectAppStatus);
   const isInitialized = useSelector(selectIsInitialized);
   const isLoggedIn = useSelector(selectIsLoggedIn);
-  const dispatch = useAppDispatch();
 
-  const logoutHandler = useCallback(() => {
-    dispatch(logOutTC());
-  }, []);
+  const { initializeApp, logout } = useActions(authThunks);
 
   useEffect(() => {
-    dispatch(initializedAppTC());
+    initializeApp();
+  }, []);
+
+  const logoutHandler = useCallback(() => {
+    logout();
   }, []);
 
   if (!isInitialized) {
@@ -74,7 +70,7 @@ export function App({ demo = false }: PropsType) {
       {status === "loading" && <LinearProgress color="secondary" />}
       <Container fixed>
         <Routes>
-          <Route path="/" element={<TodolistsList demo={demo} />} />
+          <Route path="/" element={<TodolistsList />} />
           <Route path="/login" element={<Login />} />
           <Route path="/404" element={<h1>404: PAGE NOT FOUND</h1>} />
           <Route path="*" element={<Navigate to={"/404"} />} />

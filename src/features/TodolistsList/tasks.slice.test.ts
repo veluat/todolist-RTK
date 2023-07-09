@@ -1,11 +1,10 @@
 import {
-  tasksActions,
   tasksSlice,
   TasksStateType,
   tasksThunks,
 } from "features/TodolistsList/tasks.slice";
 
-import { todoListsActions } from "features/TodolistsList/todolists.slice";
+import { todolistsThunks } from "features/TodolistsList/todolists.slice";
 import { TaskPriorities, TaskStatuses } from "common/enums";
 
 let startState: TasksStateType;
@@ -92,10 +91,14 @@ beforeEach(() => {
 });
 
 test("correct task should be deleted from correct array", () => {
-  const action = tasksActions.removeTask({
-    todolistId: "todolistId2",
-    taskId: "2",
-  });
+  const action = tasksThunks.removeTask.fulfilled(
+    {
+      todolistId: "todolistId2",
+      taskId: "2",
+    },
+    "reguestId",
+    { taskId: "", todolistId: "" }
+  );
 
   const endState = tasksSlice(startState, action);
 
@@ -160,14 +163,17 @@ test("title of specified task should be changed", () => {
 });
 
 test("new array should be added when new todolist is added", () => {
-  const action = todoListsActions.addTodolist({
-    todolist: {
-      id: "12345",
-      title: "new todolistId",
-      order: 0,
-      addedDate: "",
-    },
-  });
+  const todolist = {
+    id: "blabla",
+    title: "new todolist",
+    order: 0,
+    addedDate: "",
+  };
+  const action = todolistsThunks.addTodolist.fulfilled(
+    { todolist },
+    "requestId",
+    todolist.title
+  );
 
   const endState = tasksSlice(startState, action);
 
@@ -182,7 +188,12 @@ test("new array should be added when new todolist is added", () => {
 });
 
 test("property with todolistId should be deleted", () => {
-  const action = todoListsActions.removeTodoList({ id: "todolistId2" });
+  const id = "todolistId2";
+  const action = todolistsThunks.removeTodolist.fulfilled(
+    { id },
+    "requestId",
+    id
+  );
   const endState = tasksSlice(startState, action);
 
   const keys = Object.keys(endState);
@@ -192,12 +203,15 @@ test("property with todolistId should be deleted", () => {
 });
 
 test("empty arrays should be added when we set todolists", () => {
-  const action = todoListsActions.setTodolists({
-    todolists: [
-      { id: "1", title: "title 1", order: 0, addedDate: "" },
-      { id: "2", title: "title 2", order: 0, addedDate: "" },
-    ],
-  });
+  const action = todolistsThunks.fetchTodolists.fulfilled(
+    {
+      todolists: [
+        { id: "1", title: "title 1", order: 0, addedDate: "" },
+        { id: "2", title: "title 2", order: 0, addedDate: "" },
+      ],
+    },
+    "requestId"
+  );
   const endState = tasksSlice({}, action);
 
   const keys = Object.keys(endState);

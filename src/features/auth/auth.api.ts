@@ -1,13 +1,13 @@
 import { AxiosResponse } from "axios/index";
 import { instance, ResponseType } from "common/api/common.api";
-import { UserType } from "features/TodolistsList/todolists.api";
+import { UserType } from "features/TodolistsList/todolists.api.types";
 
 export const authAPI = {
-  login(data: LoginType) {
+  login(data: LoginParamsType) {
     return instance.post<
       ResponseType<{ id: number }>,
       AxiosResponse<ResponseType<{ id: number }>>,
-      LoginType
+      LoginParamsType
     >(`auth/login`, data);
   },
   logout() {
@@ -18,7 +18,7 @@ export const authAPI = {
   },
 };
 
-export type LoginType = {
+export type LoginParamsType = {
   email: string;
   password: string;
   rememberMe: boolean;

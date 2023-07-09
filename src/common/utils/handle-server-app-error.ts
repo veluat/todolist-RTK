@@ -2,14 +2,26 @@ import { ResponseType } from "common/api/common.api";
 import { Dispatch } from "redux";
 import { appActions } from "app/app.slice";
 
+/**
+ * Обрабатывает ошибку, полученную от сервера, и обновляет состояние приложения.
+ * @template D - Тип данных, возвращаемых сервером.
+ * @param {ResponseType<D>} data - Данные, полученные от сервера.
+ * @param {Dispatch} dispatch - Функция диспетчера для обновления состояния приложения.
+ * @param {boolean} [showError=true] - Флаг, указывающий, нужно ли отображать ошибку.
+ * @returns {void}  ничего
+ */
 export const handleServerAppError = <D>(
   data: ResponseType<D>,
-  dispatch: Dispatch
+  dispatch: Dispatch,
+  showError: boolean = true
 ) => {
-  if (data.messages.length) {
-    dispatch(appActions.setAppError({ error: data.messages[0] }));
-  } else {
-    dispatch(appActions.setAppError({ error: "Some error occurred" }));
+  if (showError) {
+    dispatch(
+      appActions.setAppError({
+        error: data.messages.length ? data.messages[0] : "Some error occurred",
+      })
+    );
   }
-  dispatch(appActions.setRequestStatus({ status: "failed" }));
+
+  dispatch(appActions.setAppStatus({ status: "failed" }));
 };

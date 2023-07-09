@@ -1,8 +1,9 @@
 import { tasksSlice, TasksStateType } from "features/TodolistsList/tasks.slice";
 import {
   TodolistDomainType,
-  todoListsActions,
+  todolistsActions,
   todolistsSlice,
+  todolistsThunks,
 } from "features/TodolistsList/todolists.slice";
 
 test("ids should be equals", () => {
@@ -16,7 +17,11 @@ test("ids should be equals", () => {
     order: 0,
     addedDate: "",
   };
-  const action = todoListsActions.addTodolist({ todolist: todolist });
+  const action = todolistsThunks.addTodolist.fulfilled(
+    { todolist: todolist },
+    "requestId",
+    todolist.title
+  );
 
   const endTasksState = tasksSlice(startTasksState, action);
   const endTodolistsState = todolistsSlice(startTodolistsState, action);
