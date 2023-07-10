@@ -87,8 +87,8 @@ test("correct todolist should change its name", () => {
 
   const endState = todolistsSlice(startState, action);
 
-  expect(endState[0].title).toBe(newTodolistTitle);
-  expect(endState[1].title).toBe("What to buy");
+  expect(endState[0].title).toBe("What to learn");
+  expect(endState[1].title).toBe(newTodolistTitle);
 });
 
 test("correct filter of todolist should be changed", () => {
