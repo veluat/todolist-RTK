@@ -26,6 +26,7 @@ const EditableSpan = memo((props: EditableSpanPropsType) => {
     <TextField
       value={title}
       onBlur={offEditMode}
+      size="small"
       autoFocus
       onChange={onChangeSetLocalTitle}
       onKeyDown={onKeyDownEnterAddItem}
